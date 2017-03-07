@@ -134,7 +134,6 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Class1.cs" />
     <Compile Include="Common\BaseDb.cs" />
     <Compile Include="Common\Db_Academic_Exchange.cs" />
     <Compile Include="Common\Db_Administrators.cs" />
