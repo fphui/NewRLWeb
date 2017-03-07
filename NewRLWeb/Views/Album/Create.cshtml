@@ -1,0 +1,230 @@
+﻿<!--
+    修改人：周煜
+    修改内容：
+             图片上传前本地预览
+             提交文件表单
+-->
+<!--
+    2017.3.1
+    BLM
+    修改样式
+-->
+@model NewRLWeb.Models.Album
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Manage.cshtml";/*2017.2.27 BLM加*/
+
+    //if (ViewBag.Reload != null)
+    //{
+    //    bool isreload = ViewBag.Reload;
+    //    if (isreload)
+    //    {
+    //        Layout = "~/Views/Shared/_Manage.cshtml";
+    //    }
+    //}
+}
+<script type="text/javascript">
+    //判断浏览器是否支持FileReader接口
+    if (typeof FileReader == 'undefined') {
+        document.getElementById("xmTanDiv").InnerHTML = "<h1>当前浏览器不支持FileReader接口</h1>";
+        //使选择控件不可操作
+        document.getElementById("xdaTanFileImg").setAttribute("disabled", "disabled");
+    }
+
+    //选择图片，马上预览
+    function xmTanUploadImg(obj) {
+        var file = obj.files[0];
+
+        console.log(obj); console.log(file);
+        console.log("file.size = " + file.size);  //file.size 单位为byte
+
+        var reader = new FileReader();
+
+        //读取文件过程方法
+        reader.onloadstart = function (e) {
+            console.log("开始读取....");
+        }
+        reader.onprogress = function (e) {
+            console.log("正在读取中....");
+        }
+        reader.onabort = function (e) {
+            console.log("中断读取....");
+        }
+        reader.onerror = function (e) {
+            console.log("读取异常....");
+        }
+        reader.onload = function (e) {
+            console.log("成功读取....");
+
+            var img = document.getElementById("xmTanImg");
+            img.src = e.target.result;
+            //或者 img.src = this.result;  //e.target == this
+        }
+
+        reader.readAsDataURL(file)
+    };
+
+    var PArray = "";
+    var count = 1;
+    var coo = count;
+    function showPreview(source) {
+        if (!isPicFile(source)) {
+            alert("您选择的文件中有非图片文件");
+            source.outerHTML = source.outerHTML;//清空file的value
+            return false;
+        }
+        source.style.display = 'none';
+        var co;
+        var cooo = count;
+        var picSrc = "" + co + "" + "img";
+        for (co = coo - 1; source.files[co] != null; co++) {
+            var div = document.getElementById("divMain");
+            var img1 = document.createElement("div");
+            img1.style.width = "20%";
+            img1.style.float = "left";
+            img1.innerHTML = "<img display='' id='" + cooo + "'  style='width:100%;height:150px;border-color:black;border:2px;border-style:dashed;' onclick='clickImage(this)' />";
+            divMain.appendChild(img1);
+            var img = document.getElementById("" + cooo + "");
+            img.src = window.URL.createObjectURL(source.files[co]);
+            cooo++;
+            count++;
+        }
+        var Picfile = document.createElement("div");
+        Picfile.style.width = "20%";
+        Picfile.style.float = "left";
+        Picfile.innerHTML = "<div style='height150px; width:229px'><input type='file' id='" + picSrc + "' multiple='multiple' style='margin-left:40px; margin-top:30px' name='files' value='继续选择照片'  onchange='showPreview(this)' /></div>";
+        divMain.appendChild(Picfile);
+    }
+    function isPicFile(filename) {
+        for (var countFile = 0; filename.files[countFile] != null; countFile++) {
+            var file1 = filename.files[countFile];
+            if (file1.type == "image/jpeg" || file1.type == "image/png") {
+            }
+            else {
+                return false;
+            }
+        }
+        return true;
+    }
+    function clickImage(Img) {
+        PArray = PArray + Img.id + "/";
+        //alert(PArray);
+        Img.style.display = 'none';
+    }
+    function clickSub() {
+        document.getElementById("txt1").value = PArray;
+        //if (document.getElementById("AlbumName").value == "" || document.getElementById("AlbumType").value == "") {
+        //    alert("请在每个输入框输入合法内容");
+        //    return 0;
+        //}
+        document.getElementById("formMain").submit();
+    }
+</script>
+<style type="text/css">
+    /*a  upload */
+    .a-upload {
+        padding: 4px 10px;
+        height: 30px;
+        width: 120px;
+        line-height: 20px;
+        position: relative;
+        cursor: pointer;
+        color: #888;
+        background: #fafafa;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        overflow: hidden;
+        display: inline-block;
+        *display: inline;
+        *zoom: 1;
+    }
+
+        .a-upload input {
+            position: absolute;
+            font-size: 100px;
+            right: 0;
+            top: 0;
+            opacity: 0;
+            filter: alpha(opacity=0);
+            cursor: pointer;
+        }
+
+        .a-upload:hover {
+            color: #444;
+            background: #ddd;
+            border-color: #ccc;
+            text-decoration: none;
+        }
+</style>
+
+<fieldset>
+    @using (Html.BeginForm("Create", "Album", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+        <legend>Creat</legend>
+        <div class="row">
+            <div class="col-xs-6" style="height: 460px; position: relative">
+                <br />
+                <div class="row">
+                    <div class="editor-label">
+                        @Html.LabelFor(Model => Model.Albumname)
+                    </div>
+                    <div>
+                        @Html.TextBoxFor(model => model.Albumname, new { @class = "form-control", @required = "required", @maxlength = "20" })
+                        @Html.ValidationMessageFor(model => model.Albumname)
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="editor-label">
+                        @Html.LabelFor(Model => Model.Album_Type)
+                    </div>
+                    <div class="col-xs-6" style="margin-left:-14px">
+                        @Html.DropDownList("Album_Type", ViewData["List1"] as SelectList, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Album_Type)
+                    </div>
+                    <div class="col-xs-6 col-md-4  a-upload">
+                        <input type="file" multiple="multiple" required="required" name="files" id="0img" onchange="showPreview(this)" style="width:100%;">选择图片
+                    </div>
+                </div>
+                <div class="row" id="divMain" style="min-height: 410px; position: relative;border:1px solid #444;margin-top:10px;">
+                    <input type="text" id="txt1" readonly="readonly" style="display:none;" />
+                </div>
+                <br />
+                @*<div class="editor-label">
+                        @Html.LabelFor(Model => Model.Link)
+                    </div>
+                    <div>
+                        @Html.TextBoxFor(model => model.Link, new { @class = "form-control", @placeholder = "请输入网址" })
+                        @Html.ValidationMessageFor(model => model.Link)
+                    </div>*@
+                <div class="row" style="margin-top:30px;">
+                    <input type="submit" value="确定" name="Create" @*onclick="create_submit()"*@ style="right: 1%; bottom: 20%;float:right; " />
+                </div>
+            </div>
+            <div class="col-xs-6" style="height: 460px; position: relative">
+                <label for="Pho_Address">相册展示图片</label>
+                <div>
+                    <div>
+                        <img id="xmTanImg" width="450" height="320" src="~/Images/empty.gif" />
+                        @*<div style="display:none">
+                                @Html.EditorFor(model => model.Pho_Address)
+                                @Html.ValidationMessageFor(model => model.Pho_Address)
+                            </div>*@
+                    </div>
+                    <div class="a-upload" style="margin-top:20px; float:right;margin-right:85px;">
+                        <input type="file" required="required" id="xdaTanFileImg" name="xdaTanFileImg" onchange="xmTanUploadImg(this)" accept="image/*" />选择图片
+                        <div id="xmTanDiv"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</fieldset>
+<div class="row" style="margin-top:200px;">
+    @Html.ActionLink("返回", "List", FormMethod.Get)
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

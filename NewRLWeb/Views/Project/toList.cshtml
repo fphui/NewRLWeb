@@ -1,0 +1,79 @@
+﻿@model  IEnumerable<NewRLWeb.Models.Project_Case>
+
+@{
+    ViewBag.Title = "toList";
+    Layout = "~/Views/Shared/_Manage.cshtml";
+}
+
+<p>
+    @Ajax.ActionLink("Create New", "Create", "Project", new AjaxOptions() { UpdateTargetId = "mainContent", HttpMethod = "Get", OnBegin = "active", InsertionMode = InsertionMode.Replace })
+</p>
+<table border='1' cellspacing="0" cellpadding="0">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Projectname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Startdate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Enddate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PhotoAddress)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Coverage)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Cooperativeunit)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProjectType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Abstract)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+         <tr>
+            <td class='onecenter'>
+                @Html.DisplayFor(modelItem => item.Projectname)
+            </td>
+            <td class='onecenter'>
+                @Html.DisplayFor(modelItem => item.Startdate)
+            </td>
+            <td class='onecenter'>
+                @Html.DisplayFor(modelItem => item.Enddate)
+            </td>
+            <td class='onecenter'>
+                @Html.DisplayFor(modelItem => item.PhotoAddress)
+            </td>
+            <td class='onecenter'>
+                @Html.DisplayFor(modelItem => item.Coverage)
+            </td>
+            <td class='onecenter'>
+                @Html.DisplayFor(modelItem => item.Cooperativeunit)
+            </td>
+            <td class='onecenter'>
+                @Html.DisplayFor(modelItem => item.ProjectType)
+            </td>
+            <td class='onecenter'>
+                @Html.DisplayFor(modelItem => item.Abstract)
+            </td>
+            <td class='onecenter'>
+                @Ajax.ActionLink("编辑", "Edit", new { id = item.ProjectID }, new AjaxOptions() { UpdateTargetId = "mainContent", HttpMethod = "Get", OnBegin = "active", InsertionMode = InsertionMode.Replace }) |
+                @Ajax.ActionLink("详情", "Details", new { id = item.ProjectID }, new AjaxOptions() { UpdateTargetId = "mainContent", HttpMethod = "Get", OnBegin = "active", InsertionMode = InsertionMode.Replace }) |
+                @Ajax.ActionLink("删除", "Delete", new { id = item.ProjectID }, new AjaxOptions() { UpdateTargetId = "mainContent", HttpMethod = "Get", OnBegin = "active", InsertionMode = InsertionMode.Replace }))
+            </td>
+
+        </tr>
+    }
+
+</table>
+
+
+

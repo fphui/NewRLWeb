@@ -1,0 +1,187 @@
+﻿@model NewRLWeb.Models.Users
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_UsersCenter.cshtml";
+}
+
+<script src="/Scripts/jquery-ui-1.8.24.js"></script>
+<link rel="stylesheet" href="/resources/demos/style.css" />
+
+<script>
+    $(function () {
+        $("#Publicationtime").datepicker();
+    });
+</script>
+
+<div style="padding-left:30px; padding-right:30px;">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+
+        <fieldset>
+
+            @Html.HiddenFor(model => model.Unique_ID)
+
+            <div class="editor-label">
+                @Html.HiddenFor(model => model.UserID)
+            </div>
+            @*<div class="editor-field">
+                @Html.EditorFor(model => model.UserID)
+                @Html.ValidationMessageFor(model => model.UserID)
+            </div>*@
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Username)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Username)
+                @Html.ValidationMessageFor(model => model.Username)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Password)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Password)
+                @Html.ValidationMessageFor(model => model.Password)
+            </div>
+
+            <div class="editor-label">
+                @Html.HiddenFor(model => model.Photo_Address)
+            </div>
+            @*<div class="editor-field">
+                <img src=@Model.Photo_Address style="height:100px;width:100px;" />
+            </div>*@
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Sex)
+            </div>
+            <div class="editor-field">
+                @Html.RadioButtonFor(model => model.Sex, 0) 男
+                @Html.RadioButtonFor(model => model.Sex, 1) 女
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Subject)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Subject)
+                @Html.ValidationMessageFor(model => model.Subject)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Native)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Native)
+                @Html.ValidationMessageFor(model => model.Native)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Address)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Address)
+                @Html.ValidationMessageFor(model => model.Address)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.QQ)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.QQ)
+                @Html.ValidationMessageFor(model => model.QQ)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Phone_Number)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Phone_Number)
+                @Html.ValidationMessageFor(model => model.Phone_Number)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.E_mail)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.E_mail)
+                @Html.ValidationMessageFor(model => model.E_mail)
+            </div>
+
+            <div class="editor-label" style="display:none;">
+                @Html.LabelFor(model => model.Admission_Data)
+            </div>
+            <div class="editor-field" style="display:none;">
+                @Html.TextBoxFor(model => model.Admission_Data)
+                @Html.ValidationMessageFor(model => model.Admission_Data)
+            </div>
+
+            <div class="editor-label" style="display:none;">
+                @Html.LabelFor(model => model.Graduate_Data)
+            </div>
+            <div class="editor-field" style="display:none;">
+                @Html.TextBoxFor(model => model.Graduate_Data)
+                @Html.ValidationMessageFor(model => model.Graduate_Data)
+            </div>
+
+            <div class="editor-label" style="display:none;">
+                @Html.LabelFor(model => model.Message)
+            </div>
+            <div class="editor-field" style="display:none;">
+                @Html.EditorFor(model => model.Message)
+                @Html.ValidationMessageFor(model => model.Message)
+            </div>
+
+            <div class="editor-label" style="display:none;">
+                @Html.LabelFor(model => model.Education)
+            </div>
+            <div class="editor-field" style="display:none;">
+                @Html.EditorFor(model => model.Education)
+                @Html.ValidationMessageFor(model => model.Education)
+            </div>
+
+            <div class="editor-label" style="display:none;">
+                @Html.LabelFor(model => model.Learning_experience)
+            </div>
+            <div class="editor-field" style="display:none;">
+                @Html.EditorFor(model => model.Learning_experience)
+                @Html.ValidationMessageFor(model => model.Learning_experience)
+            </div>
+
+            <div class="editor-label" style="display:none;">
+                @Html.LabelFor(model => model.Graduate_Direction)
+            </div>
+            <div class="editor-field" style="display:none;">
+                @Html.EditorFor(model => model.Graduate_Direction)
+                @Html.ValidationMessageFor(model => model.Graduate_Direction)
+            </div>
+
+            <div class="editor-label" style="display:none;">
+                @Html.LabelFor(model => model.AlbumID)
+            </div>
+            <div class="editor-field" style="display:none;">
+                @Html.EditorFor(model => model.AlbumID)
+                @Html.ValidationMessageFor(model => model.AlbumID)
+            </div>
+
+            <div class="editor-label" style="display:none;">
+                @Html.LabelFor(model => model.Graduate_Address)
+            </div>
+            <div class="editor-field" style="display:none;">
+                @Html.EditorFor(model => model.Graduate_Address)
+                @Html.ValidationMessageFor(model => model.Graduate_Address)
+            </div>
+
+            <p>
+                <input type="submit" value="确定" />
+            </p>
+        </fieldset>
+    }
+
+    <div>
+        @Html.ActionLink("返回", "Index")
+    </div>
+</div>

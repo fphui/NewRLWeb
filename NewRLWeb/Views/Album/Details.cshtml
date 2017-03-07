@@ -1,0 +1,85 @@
+﻿@model NewRLWeb.Models.Album
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>Album</legend>
+    <div>
+        <div class="row">
+            <div class="col-xs-6" style="height: 330px; position: relative">
+                <div class="form-group">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Albumname)
+                    </div>
+                    <div>
+                        @Html.TextBoxFor(model => model.Albumname, new { @class = "form-control", @readonly = "readonly" })
+                    </div>
+                </div>
+                <br /><br />
+                <div class="row">
+                    <div class="editor-label" style="margin-left:14px">
+                        @Html.LabelFor(model => model.Album_Type)
+                    </div>
+                    <div class="col-xs-6" >
+                        @Html.TextBoxFor(model => model.Album_Type, new { @class = "form-control",@readonly="readonly" })
+                    </div>
+                </div>
+                <br /><br />
+                <div class="row">
+                    <div class="editor-label" style="margin-left:14px">
+                        @Html.LabelFor(model => model.Publicationtime)
+                    </div>
+                    <div class="col-xs-6" >
+                        <input data-val="true" data-val-date="字段 发布日期 必须是日期。" data-val-required="发布日期 字段是必需的。" readonly="readonly" id="Publicationtime" name="Publicationtime" type="text" value="@Model.Publicationtime.ToShortDateString()" class="form-control">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6" style="height: 330px; position: relative">
+                <label for="Pho_Address">相册展示图片</label>
+                <div>
+                    <div>
+                        @if (string.IsNullOrWhiteSpace(Model.Pho_Address))
+                        {
+                            <img id="xmTanImg" width="400" height="300" src="~/Images/empty.gif" />
+                        }
+                        else
+                        {
+                            <img id="xmTanImg" width="400" height="300" src="@Url.Content(Model.Pho_Address)" alt="images" />
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-md-8">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Folderpath)
+                </div>
+                <div class="col-sm-6 col-md-8" style="margin-left:-14px">
+                    @Html.TextBoxFor(model => model.Folderpath, new { @class = "form-control",@readonly="readonly" })
+                </div>
+            </div>
+        </div>
+        <br />
+        @if (!string.IsNullOrWhiteSpace(Model.Link))
+        {
+            <div class="row">
+                <div class="editor-label" style="margin-left:14px">
+                    @Html.LabelFor(model => model.Link)
+                </div>
+                <div class="col-sm-6 col-md-8">
+                    @Html.TextBoxFor(model => model.Link, new { @class = "form-control", @readonly = "readonly" })
+                </div>
+            </div>
+        }
+    </div>
+</fieldset>
+
+<p>
+    @Ajax.ActionLink("编辑", "Edit", "Album", new { id = Model.AlbumID}, new AjaxOptions() { UpdateTargetId = "mainContent", HttpMethod = "Get", OnBegin = "active", InsertionMode = InsertionMode.Replace }) |
+    @Html.ActionLink("返回", "List", "Album",FormMethod.Get)
+</p>

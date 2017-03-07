@@ -1,0 +1,52 @@
+﻿@model NewRLWeb.Models.Rules_Management
+
+@{
+    ViewBag.Title = "Create";
+}
+
+
+@using (Html.BeginForm("Create", "Rules", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>条例——新建</legend>
+         
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Author)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Author)
+            @Html.ValidationMessageFor(model => model.Author)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Coverage)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Coverage)
+            @Html.ValidationMessageFor(model => model.Coverage)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Publicationtime)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Publicationtime)
+            @Html.ValidationMessageFor(model => model.Publicationtime)
+        </div>
+
+        <p>
+            <input type="submit" value="确定" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("返回", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

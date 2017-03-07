@@ -1,0 +1,29 @@
+﻿@{
+    Layout = null;
+}
+@*@using PagedList
+    @using PagedList.Mvc*@
+@model IEnumerable<NewRLWeb.Models.Notice>
+@*@{
+        var data = Model as IPagedList<RLWZ.Models.Notice>;
+    }*@
+@*<ul class="media-list">
+        @foreach (var item in Model)
+        {
+            <li class="media">
+                <div class="text_p">
+                    <p class="text_con">
+                        <a href="">
+                            @item.Coverage
+                        </a>
+                    </p>
+                    <div class="text_dotted">… </div>
+                </div>
+                <div class="publish">
+                    <span>@item.Author</span>&nbsp;&nbsp;<span>@item.Publicationtime</span>
+                </div>
+            </li>
+        }
+    </ul>*@
+@*@Html.PagedListPager(list: data, generatePageUrl: page => Url.Action("HomePage", new { p_n = page }))*@
+

@@ -1,0 +1,100 @@
+﻿@model IEnumerable<NewRLWeb.Models.Notice>
+@using System.Globalization;
+@{
+    Layout = null;
+}
+<!--公告数据绑定成功 add by llt 2017.1.16-->
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+<script>
+    var inner;
+    var color;
+    function clickSub() {
+        document.getElementById("txt1").value = PArray;
+        var a = document.getElementById("txt2").value;
+        document.getElementById("formMain").submit();
+    }
+    function removeNotice() {
+        
+        var te = document.getElementById("UploadBox");
+        te.style.display = "none";
+      //  alert("haha");
+  //      te.style.display = 'none';
+        te.innerHTML="";
+      
+      //  document.body.innerHTML = inner;
+     //   document.body.style.backgroundColor = color;
+
+    }
+    function a()
+    {
+        alert("haha");
+    }
+    var color;
+    function UploadPhoto(txt) {
+       
+        //上传图片框
+   //     document.body.style.backgroundColor = '#d8d8dd';
+        var temp = txt.name;
+        var array = temp.split("?");
+        //var div = document.createElement('div');
+        //div.id = "UploadBox";
+        //div.style.width = '50%';
+        //div.style.height = '80%';
+        //div.style.position = "absolute";
+        //div.style.top = '10%';
+        //div.style.left = '25%';
+        //div.style.backgroundColor = "white";
+        //div.style.display = "block";
+        //div.style.border = "1px";
+        //div.style.border-radius="4px";
+        //document.body.appendChild(div);
+        var div = document.getElementById("UploadBox");
+        div.style.display = 'block';
+        //document.body.innerHTML =document.body.innerHTML+"<div id='UploadBox' style='display:block;width:30%; height:60%; position:fixed;top:20%;left:35%;border:1px solid black; border-radius:5px;'></div>"
+        //var div = document.getElementById("UploadBox");
+        div.style.backgroundColor = "white";
+        
+        //顶部区域(标题和关闭按钮)
+        div.innerHTML = "<div style='width:100%;height:15%;'><h1 style='display:inline-block; left:37%;position:absolute;'>通知公告</h1><a href='javascript:void(0)' onclick='removeNotice();'style='display:inline-block; width:5%;height:auto;left:95%;position:absolute;' ><img src='../Images/guanbi.jpg' style='  background-size:100%;  display:block;width:100%;height:100%;'/></a></div>";
+        //时间和作者
+        div.innerHTML = div.innerHTML + "<span style='float:right;' >" + array[1] + "</sapn>" + " &nbsp;&nbsp;<span style='float:right;'>" + array[2] + "</sapn>  &nbsp;&nbsp;";
+        //正文样式
+        div.innerHTML = div.innerHTML + "<div  style='width:100%;height:70%;top:25%; font-family:Microsoft YaHei;position:absolute;font-size:20px;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + array[0] + "</div>";
+        }
+</script>
+</head>
+<body>
+    <div class="notice">
+        <div class="title">
+            <span class="line"></span>
+            <h3>
+                通知公告
+            </h3>
+        </div>
+        <div id='UploadBox' style='display:none;width:30%; height:60%; position:fixed;top:20%;left:35%;border:1px solid black; border-radius:5px;'></div>
+        <div class="text_notice">
+            <ul>
+                @foreach (var item in Model)
+                {
+                    <li>
+                        <a href="javascript:void(0)" name="@item.Coverage?@item.Author?@item.Publicationtime" onclick="UploadPhoto(this); " value="">@item.Coverage</a> 
+                        <div class="publishnews" >                        
+                            &nbsp;&nbsp;<span style="font-family:'Microsoft YaHei'">@(item.Publicationtime.ToString("yyyy-MM-dd", DateTimeFormatInfo.InvariantInfo))</span>                           
+                         </div>                
+                    </li>             
+                }
+            </ul>.
+        </div>
+        <div class="noticemore">
+            @* 2017.2.25 BLM 修改*@
+            @Html.ActionLink("更多...", "../Notice/Index", new { type = "全部" })
+            @*<a href="../Notice/Index">更多...</a>*@
+        </div>
+    </div>
+</body>
+</html>

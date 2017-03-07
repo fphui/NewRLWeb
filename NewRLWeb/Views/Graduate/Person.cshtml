@@ -1,0 +1,136 @@
+﻿@*@model IEnumerable<RLWZ.ViewModels.Graduate>*@
+@* 修改人：邢亚男
+    修改时间：2016.11.20
+    修改内容：个人简历展示页面 *@
+<html>
+<head>
+<title>
+    </title>
+    @model  NewRLWeb.ViewModels.Graduate
+    <link href="~/Content/Graduate/main.css" rel="stylesheet" />
+    <link href="~/Content/Graduate/person_bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/Graduate/person_style.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-1.3.2.min.js"></script>
+    <script src="~/Scripts/demo.js"></script>
+@*<link href="@Url.Content("~/Content/Graduate/mian.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/Graduate/person_bootstrap.css")" rel="stylesheet" type="text/css" />
+<link href="@("~/Content/Graduate/person_style.css")" rel="stylesheet" type="text/css" />
+    <script src="~/Scripts/demo.js"></script>
+    <script src="~/Scripts/jquery-1.3.2.min.js"></script>*@
+    </head>
+        @*<p>
+                @Html.ActionLink("Create New", "Create")
+            </p>
+            <table>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Unique_ID)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Graduate_information)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Add_Data)
+                    </th>
+                    <th></th>
+                </tr>
+
+            @foreach (var item in Model) {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Unique_ID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Graduate_information)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Add_Data)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+                        @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+                        @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+                    </td>
+                </tr>
+            }
+
+            </table>*@
+        @* 林律庭复制   开始 *@
+        @*<section class="aboutme" id="aboutme">
+                <div class="container">
+                    <div class="row">
+                        <div class=" col-xs-12 col-sm-12 col-md-7 col-lg-7-right">
+                            <h4>@Html.DisplayFor(model  => model.Person.Username) </h4>
+                            <span class="glyphicon glyphicon-map-marker"></span><p>@Html.DisplayFor(model => model.Person.Graduate_Address)</p>
+                            <p><strong>@Html.DisplayNameFor(model => model.Person.Graduate_Data)：</strong> @Html.DisplayFor(model =>  model.Person.Graduate_Data)</p>
+                            <p><strong>@Html.DisplayNameFor(model => model.Person.Learning_experience)：</strong> @Html.DisplayFor(model => model.Person.Learning_experience)</p>
+                            <p><strong>@Html.DisplayNameFor(model => model.Person.Message)：</strong> @Html.DisplayFor(model => model.Person.Message) </p>
+                            <p><strong>@Html.DisplayNameFor(model => model.Informations)：</strong></p>
+                            @foreach(var item in Model.Informations)
+                            {
+                                <p>@Html.DisplayFor(modelItem => item.Graduate_information)</p>
+                            }
+                        </div>
+                        <div class="master-face-left">
+                            <img src="../Content/themes/base/images/1.jpg" alt="" class="img-circle topmar">
+                        </div>
+
+                    </div>
+                </div>
+            </section>*@
+        @* 林律庭复制   结束 *@
+<body>
+    <div id="home" class="banner">
+        <div class="banner-info">
+            <div class="container">
+                <div class="col-md-4 header-left">
+                    <!--   <img src="images/img1.jpg" alt="" />-->
+                    <div class="grid_3 omega" id="next">
+                        <div id="pictures">
+                            <a href="#next">
+                                <img src="~/Images/picture1.png" alt="" />
+                                <img src="~/Images/picture2.png" alt="" />
+                                <img src="~/Images/picture3.png" alt="" />
+                                <img src="~/Images/picture4.png" alt="" />
+                                <img src="~/Images/picture5.png" alt="" />
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8 header-right">
+                    <h2>邢亚男</h2>
+                    <h1>2019届毕业生</h1>
+                    <h6>现工作于巴拉巴拉</h6>
+                    <ul class="address">
+                        <li>
+                            <ul class="address-text">
+                                <li><b>电话</b></li>
+                                <li>1884416巴拉巴拉</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <ul class="address-text">
+                                <li><b>家庭住址 </b></li>
+                                <li>天津巴拉巴拉</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <ul class="address-text">
+                                <li><b>现居地 </b></li>
+                                <li>北京巴拉巴拉</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <ul class="address-text">
+                                <li><b>邮箱</b></li>
+                                <li>1352862898@qq.com</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <!-- <input id="search" class="bntDownload" type="submit" value="查看个人相册" />-->
+                </div>
+            </div>
+        </div>
+    </div>
+    </body>
+</html>

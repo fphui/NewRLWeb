@@ -1,0 +1,39 @@
+﻿@model NewRLWeb.Models.Rules_Management
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+
+<h3>确定删除该条例?</h3>
+<fieldset>
+    <legend>Rules_Management</legend>
+
+    <div class="display-label">
+        @Html.DisplayNameFor(model => model.Author)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Author)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Coverage)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Coverage)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Publicationtime)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Publicationtime)
+    </div>
+</fieldset>
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    <p>
+        <input type="submit" value="Delete" /> |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}

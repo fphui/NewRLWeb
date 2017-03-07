@@ -1,0 +1,42 @@
+﻿@model IEnumerable<NewRLWeb.Models.Large_type>
+
+@{
+    ViewBag.Title = "List";
+    Layout = "~/Views/Shared/_Manage.cshtml";/*2017.2.27 BLM加*/
+
+}
+<table class="table table-hover">
+    <tr>
+        <th>编号</th>
+        <th>类别</th>
+        <th>@Html.DisplayNameFor(model => model.Retain)</th>
+        <th></th>
+    </tr>
+    @{var i = 0;}
+    @foreach (var item in Model)
+    {
+        i++;
+        <tr>
+            <td>
+                @i
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.L_Type)
+            </td>
+            <td>@UIHelper.ShowRetain(item.Retain)</td>
+            <td>
+                @Ajax.ActionLink("编辑", "Edit", "Types", new { id = item.ID }, new AjaxOptions() { UpdateTargetId = "mainContent", HttpMethod = "Get", OnBegin = "active", InsertionMode = InsertionMode.Replace }) |
+                @Ajax.ActionLink("添加小类别", "AddSType", "Types", new { ltype = item.L_Type }, new AjaxOptions() { UpdateTargetId = "mainContent", HttpMethod = "Get", OnBegin = "active", InsertionMode = InsertionMode.Replace }) |
+                @*@Ajax.ActionLink("Edit", "Edit", "Types", new { id = item.L_Type }, new AjaxOptions() { UpdateTargetId = "mainContent", HttpMethod = "Get", OnBegin = "active", InsertionMode = InsertionMode.Replace }) |*@
+                @Ajax.ActionLink("详情", "Details", "Types", new { ltype = item.L_Type }, new AjaxOptions() { UpdateTargetId = "mainContent", HttpMethod = "Get", OnBegin = "active", InsertionMode = InsertionMode.Replace })
+                @if (item.Retain == 1)
+                {
+                    @:| @Ajax.ActionLink("删除", "Delete", "Types", new { ltype = item.L_Type }, new AjaxOptions() { UpdateTargetId = "mainContent", HttpMethod = "Get", OnBegin = "active", InsertionMode = InsertionMode.Replace })
+                }
+            </td>
+        </tr>
+    }
+
+</table>
+
+

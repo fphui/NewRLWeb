@@ -1,0 +1,239 @@
+﻿@model NewRLWeb.ViewModels.Graduate
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+<fieldset>
+    <legend>毕业生——详情</legend>
+    <div class="row" style="position: relative">
+        <div class=" col-xs-12 col-md-8">
+            <div class="row" style="margin-left:-15px">
+                <div class="col-xs-6">
+                    <div class="form-group">
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.Person.UserID)
+                        </div>
+                        <div>
+                            @Html.TextBoxFor(model => model.Person.UserID, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.Person.Username)
+                        </div>
+                        <div>
+                            @Html.TextBoxFor(model => model.Person.Username, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.Person.Admission_Data)
+                        </div>
+                        <div>
+                            <input data-val="true" data-val-date="字段 入学日期 必须是日期。" data-val-required="入学日期 字段是必需的。" readonly="readonly" id="Admission_Data" name="Admission_Data" type="text" value="@Model.Person.Admission_Data.ToShortDateString()" class="form-control">
+                        </div>
+                    </div>
+                    @if (!string.IsNullOrWhiteSpace(Model.Person.E_mail))
+                    {
+                        <div class="form-group">
+                            <div class="editor-label">
+                                @Html.LabelFor(model => model.Person.E_mail)
+                            </div>
+                            <div>
+                                @Html.TextBoxFor(model => model.Person.E_mail, new { @class = "form-control", type = "email", @readonly = "readonly" })
+                            </div>
+                        </div>
+                    }
+                    @if (!string.IsNullOrWhiteSpace(Model.Person.Phone_Number))
+                    {
+                        <div class="form-group">
+                            <div class="editor-label">
+                                @Html.LabelFor(model => model.Person.Phone_Number)
+                            </div>
+                            <div>
+                                @Html.TextBoxFor(model => model.Person.Phone_Number, new { @class = "form-control", type = "tel", @readonly = "readonly" })
+                            </div>
+                        </div>
+                    }
+                    @if (!string.IsNullOrWhiteSpace(Model.Person.Graduate_Address))
+                    {
+                        <div class="form-group">
+                            <div class="editor-label">
+                                @Html.LabelFor(model => model.Person.Graduate_Address)
+                            </div>
+                            <div>
+                                @Html.TextBoxFor(model => model.Person.Graduate_Address, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+                    }
+                    @if (!string.IsNullOrWhiteSpace(Model.Person.Graduate_Direction))
+                    {
+                        <div class="form-group">
+                            <div class="editor-label">
+                                @Html.LabelFor(model => model.Person.Graduate_Direction)
+                            </div>
+                            <div class="editor-field">
+                                @Html.TextBoxFor(model => model.Person.Graduate_Direction, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+                    }
+                </div>
+
+                <div class="col-xs-6">
+                    <div class="form-group">
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.Person.Education)
+                        </div>
+                        <div>
+                            @if (Model.Person.Education == 0)
+                            {
+                                <input class="form-control" readonly="readonly" value="本科生" />
+                            }
+                            else
+                            {
+                                <input class="form-control" readonly="readonly" value="研究生" />
+                            }
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.Person.Sex)
+                        </div>
+                        <div>
+                            @if (Model.Person.Sex == 0)
+                            {
+                                <input class="form-control" readonly="readonly" value="男生" />
+                            }
+                            else
+                            {
+                                <input class="form-control" readonly="readonly" value="女生" />
+                            }
+                        </div>
+                    </div>
+                    @if (!string.IsNullOrWhiteSpace(Model.Person.Graduate_Address))
+                    {
+                        <div class="form-group">
+                            <div class="display-label">
+                                @Html.LabelFor(model => model.Person.Graduate_Data)
+                            </div>
+                            <div>
+                                <input data-val="true" data-val-date="字段 毕业日期 必须是日期。" data-val-required="毕业日期 字段是必需的。" readonly="readonly" id="Graduate_Data" name="Graduate_Data" type="text" value="@Model.Person.Graduate_Data.Value.ToShortDateString()" class="form-control">
+                            </div>
+                        </div>
+                    }
+                    @if (!string.IsNullOrWhiteSpace(Model.Person.Subject))
+                    {
+                        <div class="form-group">
+                            <div class="editor-label">
+                                @Html.LabelFor(model => model.Person.Subject)
+                            </div>
+                            <div>
+                                @Html.TextBoxFor(model => model.Person.Subject, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+                    }
+                    @if (!string.IsNullOrWhiteSpace(Model.Person.QQ))
+                    {
+
+                        <div class="form-group">
+                            <div class="editor-label">
+                                @Html.LabelFor(model => model.Person.QQ)
+                            </div>
+                            <div>
+                                @Html.TextBoxFor(model => model.Person.QQ, new { @class = "form-control", type = "number", @readonly = "readonly" })
+                            </div>
+                        </div>
+                    }
+                    @if (!string.IsNullOrWhiteSpace(Model.Person.Native))
+                    {
+                        <div class="form-group">
+                            <div class="editor-label">
+                                @Html.LabelFor(model => model.Person.Native)
+                            </div>
+                            <div>
+                                @Html.TextBoxFor(model => model.Person.Native, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+                    }
+
+                </div>
+            </div>
+            <div class="row">
+                @if (!string.IsNullOrWhiteSpace(Model.Person.Address))
+                {
+
+
+                    <div class="form-group">
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.Person.Address)
+                        </div>
+                        <div class="col-xs-12 col-md-8" style="margin-left:-15px">
+                            @Html.TextBoxFor(model => model.Person.Address, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+                    <br />
+                }
+                @if (!string.IsNullOrWhiteSpace(Model.Person.Learning_experience))
+                {
+                    <div class="form-group">
+                        <div class="display-label">
+                            @Html.LabelFor(model => model.Person.Learning_experience)
+                        </div>
+                        <div class="display-field">
+                            <textarea class="form-control" readonly="readonly" style="resize: none;" data-val="true" data-val-required="您需要填写学习经历" id="Learning_experience" name="Learning_experience" rows="2">@Model.Person.Learning_experience</textarea>
+                        </div>
+                    </div>
+                    <br />
+                }
+                @if (!string.IsNullOrWhiteSpace(Model.Person.Message))
+                {
+                    <div class="form-group">
+                        <div class="display-label">
+                            @Html.LabelFor(model => model.Person.Message)
+                        </div>
+                        <div class="display-field">
+                            <textarea class="form-control" readonly="readonly" style="resize: none;" data-val="true" data-val-required="您需要填写毕业寄予" id="Message" name="Message" rows="3">@Model.Person.Message</textarea>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="col-xs-6 col-md-4">
+
+        </div>
+
+    </div>
+
+    <h2>毕业变动</h2>
+    <div>
+        <table class="table table-hover">
+            <tr>
+                <th>
+                    变动信息
+                </th>
+                <th>
+                    添加时间
+                </th>
+
+            </tr>
+            @foreach (var item in Model.Informations)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Graduate_information)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Add_Data)
+                    </td>
+
+                </tr>
+            }
+        </table>
+    </div>
+</fieldset>
+<p>
+    @Ajax.ActionLink("编辑", "Edit", new { id = Model.Person.UserID }, new AjaxOptions() { UpdateTargetId = "mainContent", HttpMethod = "Get", OnBegin = "active", InsertionMode = InsertionMode.Replace }) |
+    @Html.ActionLink("返回", "List", FormMethod.Get)
+</p>

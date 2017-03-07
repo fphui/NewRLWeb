@@ -1,0 +1,203 @@
+﻿@model NewRLWeb.Models.News
+
+@{
+    ViewBag.Title = "Edit";
+    //if (ViewBag.Reload != null)
+    //{
+    //    bool isreload = ViewBag.Reload;
+    //    if (isreload)
+    //    {
+    //        Layout = "~/Views/Shared/_Manage.cshtml";
+    //    }
+    //}
+}
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+<script src="~/Scripts/jquery-1.7.1.min.js"></script>
+<script src="~/Scripts/jquery-ui-1.8.24.js"></script>
+<link rel="stylesheet" href="http://jqueryui.com/resources/demos/style.css">
+
+<script>
+    $(function () {
+        $("#Publicationtime").datepicker();
+    });
+</script>
+<script type="text/javascript">
+    //判断浏览器是否支持FileReader接口
+    if (typeof FileReader == 'undefined') {
+        document.getElementById("xmTanDiv").InnerHTML = "<h1>当前浏览器不支持FileReader接口</h1>";
+        //使选择控件不可操作
+        document.getElementById("xdaTanFileImg").setAttribute("disabled", "disabled");
+    }
+
+    //选择图片，马上预览
+    function xmTanUploadImg(obj) {
+        var file = obj.files[0];
+
+        console.log(obj); console.log(file);
+        console.log("file.size = " + file.size);  //file.size 单位为byte
+
+        var reader = new FileReader();
+
+        //读取文件过程方法
+        reader.onloadstart = function (e) {
+            console.log("开始读取....");
+        }
+        reader.onprogress = function (e) {
+            console.log("正在读取中....");
+        }
+        reader.onabort = function (e) {
+            console.log("中断读取....");
+        }
+        reader.onerror = function (e) {
+            console.log("读取异常....");
+        }
+        reader.onload = function (e) {
+            console.log("成功读取....");
+
+            var img = document.getElementById("xmTanImg");
+            img.src = e.target.result;
+            //或者 img.src = this.result;  //e.target == this
+        }
+
+        reader.readAsDataURL(file)
+    }
+</script>
+
+<div style="height: 560px; position: relative;">
+    @*@using (Ajax.BeginForm("Edit", "News", new AjaxOptions { UpdateTargetId = "mainContent", HttpMethod = "Post", InsertionMode = InsertionMode.Replace }))*@
+    @using (Html.BeginForm("Edit", "News", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+
+        <fieldset>
+            <legend>新闻——编辑</legend>
+
+            @Html.HiddenFor(model => model.NewsID)
+            @Html.HiddenFor(model => model.Glance_Number)
+
+            <div class="row">
+                <div class="col-xs-12 col-md-8">
+                    <div class="row">
+                        <div class="col-xs-12 col-md-8">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Title, new { @class = "col-sm-2 control-label", style = "margin-left:-15px", @required = "required", @maxlength = "30" })
+                                <div class="col-sm-10">
+                                    @Html.TextBoxFor(model => model.Title, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.Title)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-xs-6 col-sm-4">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.News_Type, new { @class = "col-sm-4 control-label", style = "margin-left:-15px" })
+                                <div class="col-sm-8">
+                                    @*@Html.TextBoxFor(model => model.News_Type, new { @class = "form-control" })*@
+                                    @Html.DropDownList("News_Type", ViewData["List1"] as SelectList, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.News_Type)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-sm-4">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Publicationtime, new { @class = "col-sm-5 control-label" })
+                                @*<label class="col-sm-5 control-label">日期</label>*@
+                                <div class="col-sm-7">
+                                    <input data-val="true" data-val-date="字段 发布日期 必须是日期。" data-val-required="发布日期 字段是必需的。" readonly="readonly" id="Publicationtime" name="Publicationtime" type="text" value="@Model.Publicationtime.ToShortDateString()" class="form-control">
+                                    @Html.ValidationMessageFor(model => model.Publicationtime)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-sm-4">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Author, new { @class = "col-sm-4 control-label" })
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.Author, new { @class = "form-control", @required = "required", @maxlength = "10" })
+                                    @Html.ValidationMessageFor(model => model.Author)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Abstract)
+                        <textarea class="form-control" style="resize: none;" data-val="true" data-val-required="您需要填写摘要" id="Abstract" name="Abstract" rows="3" required="required" maxlength="100">@Model.Abstract</textarea>
+                        @Html.ValidationMessageFor(model => model.Abstract)
+                    </div>
+                </div>
+                <div class="col-xs-6 col-md-4">
+                    @*<div class="editor-label">
+                        @Html.LabelFor(model => model.PhotoAddress)
+                    </div>*@
+                    <label for="PhotoAddress">标题图片</label>
+                    <div class="editor-field">
+                        <div>
+                            @if (string.IsNullOrEmpty(Model.PhotoAddress))
+                            {
+                                <img id="xmTanImg" width="250" height="150" src="~/Images/empty.gif"/>
+                            }
+                            else
+                            {
+                                <img id="xmTanImg" width="250" height="150" src="@Url.Content(Model.PhotoAddress)" alt="images" />
+                                <div style="display:none">
+                                    @Html.EditorFor(model => model.PhotoAddress)
+                                    @Html.ValidationMessageFor(model => model.PhotoAddress)
+                                </div>                             
+                            }
+                        </div>
+                        <div>
+                            <input type="file" id="xdaTanFileImg" name="xdaTanFileImg" onchange="xmTanUploadImg(this)" accept="image/*" />
+                            <div id="xmTanDiv"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="form-group" style="display:none">
+                    @Html.LabelFor(model => model.Coverage, new { @class = "col-sm-1 control-label" })
+                    <div class="col-sm-9">
+                        @Html.TextBoxFor(model => model.Coverage, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Coverage)
+                    </div>
+                </div>
+                @*<br /><br />*@
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Link, new { @class = "col-sm-1 control-label" })
+                    <div class="col-sm-9">
+                        @Html.TextBoxFor(model => model.Link, new { @class = "form-control", @placeholder = "请输入网址" })
+                        @Html.ValidationMessageFor(model => model.Link)
+                    </div>
+                </div>
+                <br /><br />
+                <div class="form-group">
+                    @Html.LabelFor(model => model.NewsSource, new { @class = "col-sm-1 control-label" })
+                    <div class="col-sm-9">
+                        @Html.TextBoxFor(model => model.NewsSource, new { @class = "form-control", @placeholder = "请输入网址" })
+                        @Html.ValidationMessageFor(model => model.NewsSource)
+                    </div>
+                </div>
+            </div>
+            @*<div class="editor-label">
+                @Html.LabelFor(model => model.CoverageHtml)
+            </div>*@
+            @*<div class="editor-field" style="display:none">
+                @Html.EditorFor(model => model.CoverageTxt)
+                @Html.ValidationMessageFor(model => model.CoverageTxt)
+            </div>*@
+
+            <p>
+                <input type="submit" value="确定" style="right: 17%; position: absolute; bottom: 0; " />
+            </p>
+        </fieldset>
+    }
+</div>
+<div>
+    @Html.ActionLink("返回", "List","News") 
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

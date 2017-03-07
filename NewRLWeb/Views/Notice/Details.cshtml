@@ -1,0 +1,44 @@
+﻿@model NewRLWeb.Models.Notice
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<div style="height: 480px; position: relative;">
+    <fieldset>
+        <legend>Notice</legend>
+        <br />
+        <div class="row">
+            <div class="col-md-3 col-md-offset-3">
+                <div class="editor-label">
+                    @Html.DisplayNameFor(model => model.Author)
+                </div>
+                <div>
+                    @Html.TextBoxFor(model => model.Author, new { @class = "form-control", @readonly = "readonly" })
+                </div>
+            </div>
+        </div>
+        <br /><br />
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="editor-label">
+                    @Html.DisplayNameFor(model => model.Coverage)
+                </div>
+                <div>
+                    <textarea class="form-control" readonly="readonly" style="resize: none;" id="Coverage" name="Coverage" rows="3">@Model.Coverage</textarea>
+                </div>
+            </div>
+        </div>
+        <br /><br />
+        <div class="row">
+            <div class="col-md-3 col-md-offset-3">
+                @Html.DisplayNameFor(model => model.Publicationtime)
+                <input readonly="readonly" id="Publicationtime" name="Publicationtime" type="text" value="@Model.Publicationtime.ToShortDateString()" class="form-control">
+            </div>
+        </div>
+    </fieldset>
+</div>
+    <p>
+        @Ajax.ActionLink("编辑", "Edit", "Notice", new { id = Model.NoticeID }, new AjaxOptions() { UpdateTargetId = "mainContent", HttpMethod = "Get", OnBegin = "active", InsertionMode = InsertionMode.Replace }) |
+        @Html.ActionLink("返回", "List", "Notice")
+    </p>

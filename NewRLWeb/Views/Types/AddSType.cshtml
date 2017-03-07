@@ -1,0 +1,99 @@
+﻿@model IEnumerable<NewRLWeb.Models.Small_Type>
+
+@{
+    ViewBag.Title = "AddSType";
+    //Layout = "~/Views/Shared/_Manage.cshtml";
+}
+<script>
+    //window.onload(a);
+    @*function a(){
+        var b=  document.getElementById("23").value;
+       // var a=@ViewData["smallType"];
+        
+       //alert(a);
+       // document.getElementById("LType").innerHTML =b;
+        document.getElementById("L_Type").value = b;
+        document.getElementById("form0").submit();
+    }*@
+
+</script>
+<h2>Add</h2>
+
+
+    <fieldset>
+        <legend>小类</legend>
+        <div class="row" >
+            @using (Html.BeginForm("Add", "Types", new AjaxOptions { UpdateTargetId = "mainContent", HttpMethod = "Post", InsertionMode = InsertionMode.Replace }))
+{
+    @*@Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)*@
+                <br />
+    <div class="col-xs-12 col-md-8" style="height: 440px; position: relative;">
+        <div class="col-xs-6 col-md-4">
+            <div class="editor-label">
+                <label>大类名称</label>
+            </div>
+            <div class="editor-field">
+                <input class="form-control" id="L_Type" name="L_Type" readonly="readonly" type="text" value="@ViewBag.LType">
+                @*@Html.TextBoxFor(model => model.L_Type, new { @class = "form-control", @readonly = "readonly" })
+                @Html.ValidationMessageFor(model => model.L_Type)*@
+            </div>
+            <br />
+            <div class="editor-label">
+                @*@Html.LabelFor(model => model.S_Type)*@
+                <label>小类名称</label>
+            </div>
+            <div class="editor-field">
+                <input class="form-control" data-val="true" data-val-required="S_Type 字段是必需的。" id="S_Type" maxlength="4" name="S_Type" required="required" type="text" value="">
+                @*@Html.TextBoxFor(model => model.S_Type, new { @class = "form-control", @required = "required", @maxlength = "4" })
+                @Html.ValidationMessageFor(model => model.S_Type)*@
+            </div>
+            <br />
+            <div class="editor-label">
+                <label>是否可删</label>
+            </div>
+            <div class="editor-field">
+                <input checked="checked" data-val="true" data-val-number="字段 是否可删 必须是一个数字。" data-val-range="字段 是否可删 必须在 0 和 1 之间。" data-val-range-max="1" data-val-range-min="0" data-val-required="是否可删 字段是必需的。" id="radio0" name="Retain" type="radio" value="0">否
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input id="radio1" name="Retain" type="radio" value="1">是
+            </div>
+        </div>
+        @*<input type="button" id="23" value="@ViewData["smallType"]" style="display:none;" />*@
+        <p>
+            <input type="submit" value="Create" name="Create" @*onclick="a()"*@ style="right: 10%; position: absolute; bottom: 0; " />
+        </p>
+    </div>
+}
+            <div class="col-xs-6 col-md-4">
+                @if(Model != null)
+                {
+                    <table class="table table-hover">
+                        <tr>
+                            <th>小类名称</th>
+                            <th>是否可删</th>
+                        </tr>
+                        @foreach(var item in Model)
+                        { 
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.S_Type)</td>
+                            <td>@UIHelper.ShowRetain(item.Retain)</td>
+                        </tr>
+                        }
+                    </table>
+                }
+            </div>
+        </div>
+       
+    </fieldset>
+
+
+
+<div>
+    @Html.ActionLink("返回", "List", FormMethod.Get)
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+

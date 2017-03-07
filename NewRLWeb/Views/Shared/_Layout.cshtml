@@ -1,0 +1,168 @@
+﻿<!DOCTYPE html>
+<!--2017.01.15卜令梅-->
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=9,chrome=1">
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Content/bootstrap/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/layoutpage1.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-2.1.1.min.js"></script>
+    <!--周煜 2017.2.21-->
+    <script type="text/javascript">
+        function GoDown() {
+            $(document).scrollTop(document.getElementsByTagName("body")[0].scrollHeight);
+        }
+        //window.location.href = "#bottom"
+        //function MVCGoDown() {
+        //    if (myHiddenVar.value == "true") {
+        //        GoDown();
+        //    }
+        //}
+        $(document).ready(function () {
+            if (myHiddenVar.value == "true") {
+                $(document).scrollTop(document.getElementsByTagName("body")[0].scrollHeight);
+                $.ajax({
+                    async: false,//不加这个下面的js不会自己执行
+                    type: "POST",
+                    url: "/Users/LoginOff",//地址
+                    success: function (FristPage) {
+                    }
+                })
+            }
+        })
+        function LogOff() {
+            $.ajax({
+                async: false,//不加这个下面的js不会自己执行
+                type: "POST",
+                url: "/Users/LoginOff",//地址
+                success: function (FristPage) {
+                    location.reload();
+                }
+            })
+        }
+    </script>
+    <title>@ViewBag.Title</title>
+
+</head>
+<body @*onload="MVCGoDown()"*@>
+    <input type="hidden" value="@Session["LoginFair"]" id="myHiddenVar" />
+    <div class="container">
+        <!--header-->
+        <header>
+            <div class="row clearfix">
+                <div class="col-md-12 column">
+                    <div class="row">
+                        <!--周煜 2017.2.21-->
+                        @if (Session["userName"] == null)
+                        {
+                            <label style="float:right;margin-right:35px;margin-bottom:-20px;margin-top:5px;" onclick="GoDown()">登录</label>
+                        }
+                        else
+                        {
+                            <label style="float:right;margin-left:15px;margin-top:5px;" onclick="LogOff()">退出登录</label>
+                            <div style="float: right; margin-right: 35px; margin-bottom: -20px; margin-top: 5px; " onclick="var path = '/Users/Index?id='+@Session["userId"]; window.open(path)">
+                                <img style="width:25px;height:25px; margin-left:10px;margin-right:15px;" src="@Session["imageUrl"].ToString()" />
+                                @Session["userName"].ToString(),欢迎您
+                            </div>
+
+                        }
+                    </div>
+                    <div class="page-header layout-page-header">
+                        @*<img src="~/Content/msra_logo.png" />*@
+                        <div class="row">
+                            <!--logo-->
+                            <div class="logo col-md-8">
+                                <h3 class="Eng">CUSTRL Research</h3>
+                                <h3>长春理工大学日立项目组</h3>
+                            </div>
+                            <!--search-->
+                            <div class="navbar-form navbar-right col-md-4" role="search" method="post" style="margin-right:15px !important;">
+                                @Html.Partial("_Search")
+                            </div>
+                            @*<form class="navbar-form navbar-right col-md-4" role="search" method="post" style="margin-right:15px !important;">
+                                    <div class="form-group">
+                                            <input type="text" name="searchWord" class="form-control" />
+                                        </div>
+                                        <input type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span>
+                                </form>*@
+                        </div>
+                        @*<div class="divide-line"></div>*@
+                        <!--navigation-->
+                        <div class="row clearfix">
+                            <div class="col-md-12 column">
+                                <nav class="navbar no-marginbottom" role="navigation" style="margin-left:15px;">
+                                    <div>
+                                        <ul class="nav-ul nav navbar-nav">
+                                            <li>@Html.ActionLink("首页", "Index", "Home")</li>
+                                            <li>@Html.ActionLink("学术交流", "HomeIndex", "Academic")</li>
+                                            <li>@Html.ActionLink("相册", "Index", "Album")</li>
+                                            <li>@Html.ActionLink("毕业生", "Index", "Graduate")</li>
+                                            <li>@Html.ActionLink("项目案例", "Index", "Project")</li>
+                                            <li>@Html.ActionLink("新闻中心", "Index", "News")</li>
+                                            <li>@Html.ActionLink("管理条例", "Index", "Rules")</li>
+                                        </ul>
+                                    </div>
+                                </nav>
+                            </div>
+                        </div>
+                        <!--divider line-->
+                        <div class="divide-line"></div>
+                    </div>
+                </div>
+            </div>
+
+        </header>
+        <!--render-->
+        <div id="body">
+            @RenderSection("featured", required: false)
+            <section class="content-wrapper main-content clear-fix" style="padding-top:0px;">
+                @RenderBody()
+            </section>
+        </div>
+
+        <!--footer-->
+        <div class="footer" id="bottom">
+            <!--divider line-->
+            <div class="divide-line"></div>
+            <div>
+                <div class="col-md-4 footer-left">
+                    <!--周煜 2017.2.22-->
+                    @if (Session["LoginFair"] == null || Session["LoginFair"] == "true")
+                    {
+                        @Html.Partial("LoginFoot")
+                    }
+                    else
+                    {
+                        <h1>@Session["userName"].ToString(),欢迎您</h1>
+                    }
+                    @*<form class="footer-form">
+                            账号：<input class="commom-width-height" type="text" required="required" />
+                            <br /><br />
+                            密码：<input class="commom-width-height" type="password" />
+                            <br /><br />
+                            <input class="footer-form-submit" type="submit" value="登录" />
+                        </form>*@
+                </div>
+                <div class="col-md-4 footer-middle">
+                    <h3>地址</h3>
+                    <div>
+                        <p><span class="glyphicon glyphicon-map-marker"></span> 科技大厦</p>
+                        <p><span class="glyphicon glyphicon-hand-right"></span> A1108</p>
+                        <p><span class="glyphicon glyphicon-hand-right"></span> A1113</p>
+                    </div>
+                </div>
+                <div class="col-md-4 footer-right">
+                    <h3>关于我们</h3>
+                    <div>
+                        <p><span class="glyphicon glyphicon-earphone"></span> 18844111111</p>
+                        <p><span class="glyphicon glyphicon-earphone"></span> 18844122222</p>
+                        <p><span class="glyphicon glyphicon-qrcode"></span>   微信公众号</p>
+                        <p><span class="glyphicon glyphicon-phone"></span>   手机客户端</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

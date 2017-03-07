@@ -1,0 +1,198 @@
+﻿@model NewRLWeb.Models.News
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Manage.cshtml";/*2017.2.27 BLM加*/
+}
+<link href="~/Content/themes/Black/theme.css" rel="stylesheet" />
+<script type="text/javascript">
+    //判断浏览器是否支持FileReader接口
+    if (typeof FileReader == 'undefined') {
+        document.getElementById("xmTanDiv").InnerHTML = "<h1>当前浏览器不支持FileReader接口</h1>";
+        //使选择控件不可操作
+        document.getElementById("xdaTanFileImg").setAttribute("disabled", "disabled");
+    }
+    //选择图片，马上预览
+    function xmTanUploadImg(obj) {
+        var file = obj.files[0];
+
+        console.log(obj); console.log(file);
+        console.log("file.size = " + file.size);  //file.size 单位为byte
+
+        var reader = new FileReader();
+
+        //读取文件过程方法
+        reader.onloadstart = function (e) {
+            console.log("开始读取....");
+        }
+        reader.onprogress = function (e) {
+            console.log("正在读取中....");
+        }
+        reader.onabort = function (e) {
+            console.log("中断读取....");
+        }
+        reader.onerror = function (e) {
+            console.log("读取异常....");
+        }
+        reader.onload = function (e) {
+            console.log("成功读取....");
+            var img = document.getElementById("xmTanImg");
+            img.src = e.target.result;
+            //或者 img.src = this.result;  //e.target == this
+        }
+        reader.readAsDataURL(file)
+    };
+</script>
+<div style="position: relative;">
+    @using (Html.BeginForm("Create", "News", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+
+        <fieldset>
+            <div class="col-md-8">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Title, new { @id = "Title_lab" })
+                    @Html.TextBoxFor(model => model.Title, new { @class = "form-control", @required = "required", @maxlength = "30" })
+                    @Html.ValidationMessageFor(model => model.Title)
+                </div>
+                <div class="col-md-12" style="padding:0 0 15px 0;">
+                    <div class="col-md-6" style="padding:0 15px 0 0;">
+                        @Html.LabelFor(model => model.Author)
+                        @Html.TextBoxFor(model => model.Author, new { @class = "form-control", @required = "required", @maxlength = "30" })
+                        @Html.ValidationMessageFor(model => model.Author)
+                    </div>
+                    <div class="col-md-6" style="padding:0 0 0 15px;">
+                        @Html.LabelFor(model => model.News_Type)
+                        @Html.DropDownList("News_Type", ViewData["List1"] as SelectList, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.News_Type)
+                    </div>
+                </div>
+
+                <div class="col-md-12" style="padding:0 0 15px 0;">
+                    <div class="col-md-6" style="padding:0 15px 0 0;">
+                        <label for="Coverage" class="lablestyle">
+                            HTML文件内容@*<a style="color:red;"> *请选择相应的</a>*@
+                        </label>
+                        <!--2017.03.02 BLM start 修改上传按钮样式-->
+                        <div class="inputFileWrapper">
+                            <label for="FirLoad">
+                                <input type="file" name="UpLoadHtm" id="FirLoad" required="required" class="filebtn" accept=".htm" />
+                                <span class="custorm-style">
+                                    <span class="left-text" id="leftText"></span>
+                                    <span class="right-button">浏览...</span>
+                                </span>
+                            </label>
+                        </div>
+                        <script>
+                            var fileBtn = $("#FirLoad");
+                            fileBtn.on("change", function () {
+                                var index = $(this).val().lastIndexOf("\\");
+                                var sFileName = $(this).val().substr((index + 1));
+                                $("#leftText").html(sFileName);
+                            });
+                        </script>
+                        @*<input type="file" name="UpLoadHtm" id="FirLoad" required="required" class="filebtn" accept=".htm" />*@
+                    </div>
+                    <div class="col-md-6" style="padding:0 0 0 15px;">
+                        <label for="Coverage" class="lablestyle">
+                            TXT文件内容@*<a style="color:red;"> *请选择相应的</a>*@
+                        </label>
+                        <!--2017.03.02 BLM start 修改上传按钮样式-->
+                        <div class="inputFileWrapper">
+                            <label for="SecLoad">
+                                <input type="file" name="UpLoadTxt" id="SecLoad" required="required" class="filebtn" accept=".txt" />
+                                <span class="custorm-style">
+                                    <span class="left-text" id="leftText"></span>
+                                    <span class="right-button">浏览...</span>
+                                </span>
+                            </label>
+                        </div>
+                        <script>
+                            var fileBtn = $("#SecLoad");
+                            fileBtn.on("change", function () {
+                                var index = $(this).val().lastIndexOf("\\");
+                                var sFileName = $(this).val().substr((index + 1));
+                                $("#leftText").html(sFileName);
+                            });
+                        </script>
+                        @*<input type="file" name="UpLoadTxt" id="SecLoad" required="required" class="filebtn" accept=".txt" />*@
+                    </div>
+                    <div class="col-md-6" style="padding:15px 15px 0 0;">
+                        <label for="Coverage" class="lablestyle">
+                            附件@*<a style="color:red;"> *请选择附件(可为空)</a>*@
+                        </label>
+
+                        <!--2017.03.02 BLM start 修改上传按钮样式-->
+                        <div class="inputFileWrapper">
+                            <label for="ThrLoad">
+                                <input type="file" name="UpLoadEnc" id="ThrLoad" class="filebtn" accept="image/*" />
+                                <span class="custorm-style">
+                                    <span class="left-text" id="leftText"></span>
+                                    <span class="right-button">浏览...</span>
+                                </span>
+                            </label>
+                        </div>
+                        <script>
+                            var fileBtn = $("#ThrLoad");
+                            fileBtn.on("change", function () {
+                                var index = $(this).val().lastIndexOf("\\");
+                                var sFileName = $(this).val().substr((index + 1));
+                                $("#leftText").html(sFileName);
+                            });
+                        </script>
+
+                        @*<input type="file" name="UpLoadEnc" id="ThrLoad" class="filebtn" accept="image/*" />*@
+                    </div>
+                </div>
+
+                <div>
+                    <div class="form-group lablestyle">
+                        @Html.LabelFor(model => model.Abstract, new { @id = "Abstract_lab" })
+                        <textarea class="form-control" maxlength="100" required="required" style="resize: none;" data-val="true" data-val-required="您需要填写摘要" id="Abstract" name="Abstract" rows="3"></textarea>
+                        @Html.ValidationMessageFor(model => model.Abstract)
+                    </div>
+                </div>
+                <div>
+                    <div class="form-group lablestyle">
+                        @Html.LabelFor(model => model.Link)
+                        @Html.TextBoxFor(model => model.Link, new { @class = "form-control ", @placeholder = "请输入网址" })
+                        @Html.ValidationMessageFor(model => model.Link)
+                    </div>
+                </div>
+                <div>
+                    <div class="form-group lablestyle">
+                        @Html.LabelFor(model => model.NewsSource)
+                        @Html.TextBoxFor(model => model.NewsSource, new { @class = "form-control ", @placeholder = "请输入网址" })
+                        @Html.ValidationMessageFor(model => model.NewsSource)
+                    </div>
+                </div>
+                <div>
+                    <input type="submit" class="submitbtn1" value="确定添加" name="Create" style="float:right; border:none;" />
+                    <div>@Html.ActionLink("返回列表", "List")</div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <label for="Pho_Address" class="lablestyle">新闻展示图片</label>
+                <div>
+                    <div>
+                        @*<img id="xmTanImg" width="350" height="222" src="~/Images/empty.gif" />*@
+                        <img id="xmTanImg" style="width:100%; height:auto;" src="~/Images/empty.gif" />
+                    </div>
+                    @*<div>
+                            <input type="file" required="required" id="xdaTanFileImg" name="xdaTanFileImg" onchange="xmTanUploadImg(this)" accept="image/*" />
+                            <div id="xmTanDiv"></div>
+                        </div>*@
+                    @* 2017.03.02 BLM 修改样式 start *@
+                    <div class="a-upload" style="float:right;">
+                        <input type="file" required="required" id="xdaTanFileImg" name="xdaTanFileImg" onchange="xmTanUploadImg(this)" accept="image/*" />选择图片
+                        <div id="xmTanDiv"></div>
+                    </div>
+                    @* 2017.03.02 end *@
+                </div>
+            </div>
+
+        </fieldset>
+    }
+</div>

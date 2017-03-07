@@ -1,0 +1,21 @@
+﻿@{
+    Layout = "~/Views/Shared/_Manage.cshtml";
+}
+@{
+    var title = (String)(@ViewBag.Title);
+}
+<h2>@ViewBag.Title List</h2>
+<link href="~/Content/Manage/kkpager_blue.css" rel="stylesheet" />
+<script src="~/Scripts/kkpager.js"></script>
+<script src="~/Scripts/getpager.js"></script>
+<p>
+    @Ajax.ActionLink("Create New", "Create", @title, new AjaxOptions() { UpdateTargetId = "mainContent", HttpMethod = "Get", OnBegin = "active", InsertionMode = InsertionMode.Replace })
+</p>
+<div id="result"></div>
+<nav id="kkpager" class="posts block pagination"></nav>
+<script type="text/javascript">
+    $(function () {
+        var action = '@ViewBag.Title';
+        GetArticlesData(1, action);
+    });
+</script>

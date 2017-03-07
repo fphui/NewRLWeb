@@ -1,0 +1,84 @@
+﻿@*修改日期：2016年11月19日
+    修改人：邢亚男
+    修改内容：底部搜索框  *@
+@*毕业生页面  邢亚男  2017/01/19*@
+<!DOCTYPE html>
+<html>
+@*@using PagedList
+    @using PagedList.Mvc*@
+@model IEnumerable<NewRLWeb.ViewModels.GraduateCount>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<head>
+    <meta charset="utf-8">
+    <title>日立项目组</title>
+    <link href="~/Content/bootstrap/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="@Url.Content("~/Content/Graduate/bootstrap.css")" rel="stylesheet" type="text/css" />
+    <link href="~/Content/Graduate/Index.css" rel="stylesheet" />
+    <script src="~/Scripts/echarts.js"></script>
+    <script src="~/Scripts/china.js"></script>
+    <script src="~/Scripts/shine.js"></script>
+</head>
+<body id="graduate">
+    @Html.Action("Map")
+   
+        <div class="col-md-6">
+            <table class="undergraduate">
+                <caption>日立项目组本科生毕业统计信息</caption>
+                <tr>
+                    <th>毕业年份</th>
+                    <th>毕业生人数</th>
+                    <th>就业人数</th>
+                    <th>考研人数</th>
+                </tr>
+                @foreach (var gra in Model)
+                {
+                    var GraduYears = gra.GraduYears;
+                    var UGraduates = gra.UGraduates;
+                    var GraduUWorknum = gra.GraduUWorknum;
+                    var GraduYnum = gra.GraduYnum;
+                    <tr>
+                        <td>@GraduYears</td>
+                        <td>@UGraduates</td>
+                        <td>@GraduUWorknum</td>
+                        <td>@GraduYnum</td>
+                    </tr>
+                }
+
+            </table>
+        </div>
+        <div class="col-md-6">
+            <table class="graduate">
+                <caption>日立项目组研究生毕业统计信息</caption>
+                <tr>
+                    <th>毕业年份</th>
+                    <th>毕业生人数</th>
+                    <th>就业人数</th>
+                    <th>考博人数</th>
+                </tr>
+                @foreach (var gra in Model)
+                {
+                    var GraduYears = gra.GraduYears;
+                    var YGraduates = gra.YGraduates;
+                    var GraduYWorknum = gra.GraduYWorknum;
+                    var GraduBnum = gra.GraduBnum;
+                    <tr>
+                        <td>@GraduYears</td>
+                        <td>@YGraduates</td>
+                        <td>@GraduYWorknum</td>
+                        <td>@GraduBnum</td>
+                    </tr>
+                }
+            </table>
+        </div>
+    <div class="infoo">
+        <a href="/Graduate/Graduate_Info">>>查看全部毕业生信息</a>
+    </div>
+</body>
+</html>
+
+
+

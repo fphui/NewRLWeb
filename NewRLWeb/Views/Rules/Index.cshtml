@@ -1,0 +1,28 @@
+﻿@using NewRLWeb.Models
+@model Rules_Management
+
+@{
+    ViewBag.Title = "Index";
+}
+        <div style="padding-left: 50px; padding-right: 50px; padding-top: 0px;">
+            @{
+                string filePath = @Model.Coverage;
+                filePath = HttpContext.Current.Server.MapPath(filePath);
+                string fileContent = string.Empty;
+                var reader = filePath;
+                StreamReader sr = new StreamReader(reader, System.Text.Encoding.Default);
+                fileContent = sr.ReadToEnd();
+            }
+            @Html.Raw(fileContent)
+            <table>
+                <tr>
+                    <th>
+                        @Model.Author---                    @Model.Publicationtime
+
+                    </th>
+                </tr>
+            </table>
+        </div>
+        <div></div>
+    @*</div>
+</div>*@

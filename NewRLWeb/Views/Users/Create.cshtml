@@ -1,0 +1,177 @@
+﻿@model NewRLWeb.Models.Users
+@{
+    //Layout = "~/Views/Shared/_Manage.cshtml";
+    Layout = "~/Views/Shared/_Manage.cshtml";/*2017.2.27 BLM加*/
+
+}
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+<script src="~/Scripts/jquery-1.7.1.min.js"></script>
+<script src="~/Scripts/jquery-ui-1.8.24.js"></script>
+<link rel="stylesheet" href="http://jqueryui.com/resources/demos/style.css">
+@*<script src="~/Scripts/jquery-1.8.2.min.js"></script>*@
+<script>
+    var pro = ["北京", "天津", "上海", "重庆", "河北", "山西", "辽宁", "吉林", "黑龙江", "江苏", "浙江", "安徽", "福建", "江西", "山东", "河南", "湖北", "湖南", "广东", "海南", "四川", "贵州", "云南", "陕西", "甘肃", "青海", "内蒙古", "广西", "西藏", "宁夏", "新疆维吾尔自治区", "香港", "澳门", "台湾"];
+    $(document).ready(function () {
+        for (var i = 0; i < pro.length; i++) {
+            $option = $("<option/>")
+            $option.attr("value", pro[i]);
+            $option.text(pro[i]);
+            $("#Native").append($option);
+        }
+    });
+    $(function () {
+        $("#Admission_Data").datepicker();
+    });
+</script>
+<div class="row" style="height: 540px; position: relative;">
+    @using (Html.BeginForm("Create", "Users", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+
+        <fieldset>
+            <legend></legend>
+
+            @*<div class="editor-label">
+                    @Html.LabelFor(model => model.Password)
+                </div>
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.Password)
+                    @Html.ValidationMessageFor(model => model.Password)
+                </div>*@
+
+            <div class="col-md-7 col-md-offset-2">
+                <div class="row">
+                    <div class="col-xs-6">
+                        <div class="form-group">
+                            <div class="editor-label">
+                                @Html.LabelFor(model => model.UserID)
+                            </div>
+                            <div>
+                                @Html.TextBoxFor(model => model.UserID, new { @class = "form-control", @required = "required", @maxlength = "10", @placeholder = "必填信息" })
+                                @*<input class="form-control" data-val="true" data-val-length="长度必须在9和10位之间。" data-val-length-max="10" data-val-length-min="9" data-val-remote="已存在该用户" data-val-remote-additionalfields="*.UserID" data-val-remote-url="/Users/CheckUserID" data-val-required="您需要填写学号" id="UserID" name="UserID" type="text" value="">*@
+                                @Html.ValidationMessageFor(model => model.UserID)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="editor-label">
+                                @Html.LabelFor(model => model.Username)
+                            </div>
+                            <div>
+                                @Html.TextBoxFor(model => model.Username, new { @class = "form-control", @required = "required", @maxlength = "10", @placeholder = "必填信息" })
+                                @Html.ValidationMessageFor(model => model.Username)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="editor-label">
+                                @Html.LabelFor(model => model.Education)
+                            </div>
+                            <div>
+                                @Html.RadioButtonFor(model => model.Education, 0, new { @id = "sexradio0", @name = "education", @checked = "checked" })本科生
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                @Html.RadioButtonFor(model => model.Education, 1, new { @id = "sexradio1", @name = "seducation" })研究生
+                                @Html.ValidationMessageFor(model => model.Education)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="editor-label">
+                                @Html.LabelFor(model => model.E_mail)
+                            </div>
+                            <div>
+                                @Html.TextBoxFor(model => model.E_mail, new { @class = "form-control", type = "email", @required = "required", @maxlength = "30" })
+                                @Html.ValidationMessageFor(model => model.E_mail)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @*<div class="editor-label">
+                                    @Html.LabelFor(model => model.Phone_Number)
+                                </div>*@
+                            <label for="Phone_Number">电话号码</label>
+                            <div >
+                                @Html.TextBoxFor(model => model.Phone_Number, new { @class = "form-control", @required = "required", type = "tel", @maxlength = "12" })
+                                @Html.ValidationMessageFor(model => model.Phone_Number)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-6">
+                        <div class="form-group">
+                            <div class="editor-label">
+                                @Html.LabelFor(model => model.Subject)
+                            </div>
+                            <div>
+                                @Html.TextBoxFor(model => model.Subject, new { @class = "form-control", @maxlength = "10" })
+                                @Html.ValidationMessageFor(model => model.Subject)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="editor-label">
+                                @Html.LabelFor(model => model.Sex)
+                            </div>
+                            <div>
+                                <div class="editor-field">
+                                    @Html.RadioButtonFor(model => model.Sex, 0, new { @id = "sexradio0", @name = "sex", @checked = "checked" })男生
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    @Html.RadioButtonFor(model => model.Sex, 1, new { @id = "sexradio1", @name = "sex" })女生
+                                    @Html.ValidationMessageFor(model => model.Sex)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="editor-label">
+                                @Html.LabelFor(model => model.Admission_Data)
+                            </div>
+                            <div>
+                                @*周煜 更改调用的日历控件*@
+                                @Html.TextBoxFor(model => model.Admission_Data, new { @class = "form-control", @required = "required", @id = "Admission_Data", @name = "Admission_Data" })
+                                @Html.ValidationMessageFor(model => model.Admission_Data)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="editor-label">
+                                @Html.LabelFor(model => model.QQ)
+                            </div>
+                            <div>
+                                @Html.TextBoxFor(model => model.QQ, new { @class = "form-control", type = "number", @min = "10001" })
+                                @Html.ValidationMessageFor(model => model.QQ)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="editor-label">
+                                @Html.LabelFor(model => model.Native)
+                            </div>
+                            <div>
+                                @*@Html.TextBoxFor(model => model.Native, new { @class = "form-control"})*@
+                                <select name="Native" id="Native" class="form-control">
+                                    @if (Model != null)
+                                    {
+                                        <option>@Model.Native</option>
+                                    }
+                                </select>
+                                @Html.ValidationMessageFor(model => model.Native)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="editor-label" style="margin:17px">
+                        @Html.LabelFor(model => model.Address)
+                    </div>
+                    <div class="col-xs-12 col-md-8">
+                        @Html.TextBoxFor(model => model.Address, new { @class = "form-control", @maxlength = "50" })
+                        @Html.ValidationMessageFor(model => model.Address)
+                    </div>
+                </div>
+            </div>
+
+            <p>
+                <input type="submit" value="确定" style="right: 17%; position: absolute; bottom: 0; " @*onclick="create_submit()"*@ />
+            </p>
+        </fieldset>
+    }
+</div>
+<div>
+    @Html.ActionLink("返回", "List")
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

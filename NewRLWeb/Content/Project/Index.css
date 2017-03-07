@@ -1,0 +1,42 @@
+﻿/*---邢亚男  2017/1/18   项目案例css样式*/
+/*字体设置*/
+.container {
+    font-family:"微软雅黑","SimSum","Tahoma","Verdana","Helvetica","Arial","sans-serif";
+}
+/*-----左面大标题*/
+.pro-title
+ {
+    padding-left:15px;
+}
+/*-----左面内容小标题*/
+.media-heading {
+font-size:20px;
+}
+/*-----右面大标题*/
+.pro-all-title {
+padding-left:40px;
+}
+/*左面定位*/
+.media-list
+ {
+    padding-top:30px;
+}
+/*右面定位*/
+.all-media {
+    padding-top:10px;
+   padding-left:50px;
+}
+/*-----照片规格*/
+.media-left {
+    height:73px;
+    width:73px;
+}
+/*-----发布人时间定位*/
+.pro-publish
+ {
+    float: right;
+    font-size: 12px;
+    color: #898888;
+    padding-right: 1.2em;
+    height: auto;
+}

@@ -1,0 +1,152 @@
+﻿@model NewRLWeb.Models.Users
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<fieldset>
+    <legend>Users</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Unique_ID)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Unique_ID)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Username)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Username)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Password)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Password)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Photo_Address)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Photo_Address)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Sex)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Sex)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Subject)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Subject)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Native)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Native)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Address)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Address)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.QQ)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.QQ)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Phone_Number)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Phone_Number)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.E_mail)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.E_mail)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Admission_Data)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Admission_Data)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Graduate_Data)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Graduate_Data)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Message)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Message)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Education)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Education)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Learning_experience)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Learning_experience)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Graduate_Direction)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Graduate_Direction)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.AlbumID)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.AlbumID)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Graduate_Address)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Graduate_Address)
+    </div>
+</fieldset>
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    <p>
+        <input type="submit" value="Delete" /> |
+        @Ajax.ActionLink("Back to List", "List", new AjaxOptions { UpdateTargetId = "mainContent", HttpMethod = "Get", InsertionMode = InsertionMode.Replace })
+    </p>
+}

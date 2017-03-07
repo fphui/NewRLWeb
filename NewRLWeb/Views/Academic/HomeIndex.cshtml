@@ -1,0 +1,140 @@
+﻿@model IEnumerable<NewRLWeb.Models.Academic_Exchange>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@*邢亚男  2017/1/15  学术交流页面*@
+
+<link href="~/Content/Manage/kkpager_blue.css" rel="stylesheet" />
+<script src="~/Scripts/kkpager.js"></script>
+<link href="~/Content/bootstrap/css/bootstrap.css" rel="stylesheet" />
+<link href="~/Content/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/Academic/HomeIndex.css" rel="stylesheet" />
+<link href="~/Content/Academic/Index.css" rel="stylesheet" />
+
+<div style="background-repeat:no-repeat; min-height:400px;">
+    <h1 class="bannerText">学术交流</h1>
+    <div class="container" style="width:1140px;">
+        @*<h1 class="Aca-title">学术交流</h1>*@
+        <div>
+            <div class="col-md-8 academic">
+                <div id="result"></div>
+                <nav id="kkpager" class="posts block pagination" style="left: 15%; bottom: 0; "></nav>
+            </div>
+            <div class="aca-all-title">
+                <h3>查看其他</h3>
+            </div>
+            <div class="col-md-4 academic">
+                <h4 class="gra-category">学术时间</h4>
+                <ul class="all-media">
+                    @* 邢亚男 2017/02/25 旁边链接 *@
+                    @*@foreach (var it in Model)
+                        {
+                            <li>
+                                @Html.ActionLink(@it.AcademicName, "../Project/ProjectView/" + @it.AcademicID)
+                            </li>
+                        }*@
+                    @*<li><a href="academic_Info/Academic?type=2017">2017年</a></li>
+                        <li><a href="academic_Info/Academic?type=2016">2016年</a></li>
+                        <li><a href="academic_Info/Academic?type=2015">2015年</a></li>
+                        <li><a href="academic_Info/Academic?type=2014">2014年</a></li>
+                        <li><a href="academic_Info/Academic?type=2013">2013年</a></li>
+                        <li><a href="academic_Info/Academic?type=2012">2012年</a></li>
+                        <li><a href="academic_Info/Academic?type=2011">2011年</a></li>
+                        <li><a href=" List/Academic">查看全部</a></li>*@
+                    <li><a href="HomeIndex?time=2017">2017年</a></li>
+                    <li><a href="HomeIndex?time=2016">2016年</a></li>
+                    <li><a href="HomeIndex?time=2015">2015年</a></li>
+                    <li><a href="HomeIndex?time=2014">2014年</a></li>
+                    <li><a href="HomeIndex?time=2013">2013年</a></li>
+                    <li><a href="HomeIndex?time=2012">2012年</a></li>
+                    <li><a href="HomeIndex?time=2011">2011年</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script type="text/javascript">
+
+    $(function () {
+        GetArticlesData(1);
+    });
+    function getParameter(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]); return null;
+    }
+
+    function GetArticlesData(pageIndex) {
+        var ajaxUrl = '/Academic/AjaxPagingIndex?pageIndex=' + pageIndex + '&time=' + '@ViewBag.Type';
+        var ajaxType = 'post';
+        var ajaxDataType = 'text';
+        var sucFun = function (data, status) {
+            if (data == null && status != "success") {
+                alert("获取数据失败！");
+                return false;
+            }
+            else {
+                $("#result").html(data);
+                ////周煜 2017.2.25
+                if (myHiddenVar.value == "true") {
+                    $(document).scrollTop(document.getElementsByTagName("body")[0].scrollHeight);
+                    $.ajax({
+                        async: false,//不加这个下面的js不会自己执行
+                        type: "POST",
+                        url: "/Users/LoginOff",//地址
+                        success: function (FristPage) {
+                        }
+                    })
+                }
+                //定义分页样式
+                var totalCount = parseInt('@ViewBag.TotalCount');
+                var pageSize = parseInt('@ViewBag.PageSize');
+                var pageNo = getParameter('pno');//该参数为插件自带，不设置好，调用数据的时候当前页码会一直显示在第一页
+                if (!pageNo) {
+                    pageNo = 1;
+                }
+                var totalPages = totalCount % pageSize == 0 ? totalCount / pageSize : (parseInt(totalCount / pageSize) + 1);
+                kkpager.generPageHtml({
+                    pno: pageNo,
+                    total: totalPages,
+                    totalRecords: totalCount,
+                    mode: 'click',
+                    click: function (n) {
+                        this.selectPage(n);//插件自带的方法，手动调用某一页码
+                        searchPage(n);
+                        return false;
+                    }
+                });
+            }
+        };
+        //ajax参数设置
+        var Option =
+                    {
+                        url: ajaxUrl,
+                        type: ajaxType,
+                        dataType: ajaxDataType,
+                        cache: false, //设置为 false 将不会从浏览器缓存中加载请求信息。
+                        async: true, //(默认: true)，所有请求均为异步请求。发送同步请求，请将此选项设置为 false。同步请求将锁住浏览器，用户其它操作必须等待请求完成才可以执行。
+                        timeout: 3600, //设置请求超时时间（毫秒）。此设置将覆盖全局设置。
+                        error: function () { },
+                        success: sucFun,
+                        beforeSend: function () { }
+                    };
+        $.ajax(Option);
+        return false;
+    }
+    //ajax翻页
+    function searchPage(n) {
+        GetArticlesData(n);
+    }
+</script>
+
+
+
+
+
+
+
+

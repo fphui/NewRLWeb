@@ -1,0 +1,34 @@
+﻿@model IEnumerable<NewRLWeb.Models.Album>
+@{
+    Layout = null;
+}
+
+<div class="title">
+    <span class="line"></span>
+    <h3>
+        相册
+    </h3>
+</div>
+<div class="scrollpic">
+    <div id="mybtns" style="width:1140px;height:0px; margin-bottom:0px;">
+        <a href="javascript:;" class="right" id="right" style="margin-right: 30px;z-index:89; top: 135px; overflow: hidden; position:relative;opacity:0.4;"></a>
+        <a href="javascript:;" class="left" id="left" style="margin-left: 0px; z-index: 89; top: 135px; overflow: hidden; position: relative; opacity: 0.4;"></a>
+    </div>
+    <div id="myscroll" style="margin-left:0px;">
+        <div id="myscrollbox">
+            <ul>
+                @foreach (var item in Model)
+                {
+                    <li>
+                        <a href="../Album/Index">
+                            <img src="@item.Pho_Address" width="350" height="240" />
+                            <div class="intro">
+                                <h5>@item.Albumname</h5>
+                            </div>
+                        </a>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>

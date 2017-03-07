@@ -1,0 +1,24 @@
+﻿@model IEnumerable<NewRLWeb.Models.Project_Case>
+<link href="~/Content/bootstrap/css/bootstrap.css" rel="stylesheet" />
+<link href="~/Content/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/Project/Index.css" rel="stylesheet" />
+@* 时间：2012/02/22 邢亚男 项目管理分页 *@
+    <ul class="media-list">
+        @foreach (var item in Model)
+        {
+            <li class="media">
+                <a class="media-left" href="Project/ProjectView/@item.ProjectID">
+                    <img src="~/Images/Project/li-deng-163-20161220.jpg" @*src=@item.PhotoAddress*@ />
+                </a>
+                <div class="media-body">
+                    <a href="Project/ProjectView/@item.ProjectID" class="media-heading">@item.Projectname</a>
+                    <p>@item.Abstract</p>
+                    <div class="pro-publish">
+                        @item.Startdate.ToShortDateString()-@item.Enddate.ToShortDateString()
+                    </div>
+                </div>
+            </li>
+        }
+    </ul>
+
+

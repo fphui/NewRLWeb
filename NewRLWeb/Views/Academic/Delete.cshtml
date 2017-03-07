@@ -1,0 +1,80 @@
+﻿@model NewRLWeb.Models.Academic_Exchange
+
+@{
+    ViewBag.Title = "Delete";
+    //Layout = "~/Views/Shared/_Manage.cshtml";
+}
+@using (Html.BeginForm("Delete", "Academic", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <fieldset>
+        <legend>确定删除该学术交流信息?</legend>
+
+        <div class="row">
+            <div class="col-xs-12 col-md-8">
+                <div class="row">
+
+                    <div class="form-group" style="margin-left:15px">
+                        @Html.LabelFor(model => model.AcademicName)
+                        @Html.TextBoxFor(model => model.AcademicName, new { @class = "form-control", @readonly = "readonly" })
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="form-group" style="margin-left:15px">
+                        @Html.LabelFor(model => model.Abstract)
+                        <textarea class="form-control" readonly="readonly" style="resize: none;" data-val="true" data-val-required="您需要填写摘要" id="Abstract" name="Abstract" rows="2">@Model.Abstract</textarea>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        @Html.LabelFor(model => model.BeginTime)
+                        <input data-val="true" data-val-date="字段 开始日期 必须是日期。" data-val-required="开始日期 字段是必需的。" readonly="readonly" id="BeginTime" name="BeginTime" type="text" value="@Model.BeginTime.ToShortDateString()" class="form-control">
+                    </div>
+                    <div class="col-xs-6">
+                        @Html.LabelFor(model => model.EndTime)
+                        <input data-val="true" data-val-date="字段 结束日期 必须是日期。" data-val-required="结束日期 字段是必需的。" readonly="readonly" id="EndTime" name="EndTime" type="text" value="@Model.EndTime.ToShortDateString()" class="form-control">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6 col-md-4">
+                <label for="Pho_Address">学术展示图片</label>
+                <div>
+                    <div>
+                        @if (string.IsNullOrWhiteSpace(Model.PhotoAddress))
+                        {
+                            <img id="xmTanImg" width="350" height="230" src="~/Images/empty.gif" />
+                        }
+                        else
+                        {
+                            <img id="xmTanImg" width="350" height="230" src="@Url.Content(Model.PhotoAddress)" alt="images" />
+                            <div style="display:none">
+                                @Html.EditorFor(model => model.PhotoAddress)
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        @if (!string.IsNullOrWhiteSpace(Model.Link))
+        {
+            <div class="row">
+                <div class="col-xs-12 col-md-8">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Link)
+                        @Html.TextBoxFor(model => model.Link, new { @class = "form-control", @readonly = "readonly" })
+                    </div>
+                </div>
+            </div>
+        }
+        <br />
+        <p>
+            <input type="submit" value="删除" />
+        </p>
+
+    </fieldset>
+    <p>
+        @Html.ActionLink("返回", "List")
+    </p>
+}

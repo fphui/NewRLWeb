@@ -1,0 +1,22 @@
+﻿@model IEnumerable<NewRLWeb.Models.Academic_Exchange>
+@* 学术交流数据列表 gq 2017/2/22*@
+<link href="~/Content/bootstrap/css/bootstrap.css" rel="stylesheet" />
+<link href="~/Content/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+<ul class="media-list">
+    @foreach (var item in Model)
+    {
+        <li class="media">
+            <a class="media-left" href="Academic_Exchange_View/@item.AcademicID">
+                <img @*src=@item.PhotoAddress*@ src="/Images/Project/li-deng-163-20161220.jpg" />
+            </a>
+            <div class="media-body">
+                <a href="Academic_Exchange_View/@item.AcademicID" class="media-heading">@item.AcademicName</a>
+                <p>@item.Abstract</p>
+                <div class="aca-publish">
+                    @item.BeginTime.ToShortDateString()-@item.EndTime.ToShortDateString()
+                </div>
+            </div>
+        </li>
+    }
+</ul>
+

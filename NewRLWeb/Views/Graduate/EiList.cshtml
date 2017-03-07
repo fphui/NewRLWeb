@@ -1,0 +1,145 @@
+﻿@model IEnumerable<NewRLWeb.Models.Employment_Information>
+
+@{
+    ViewBag.Title = "EiList";
+}
+<link rel="stylesheet" href="~/Content/Graduate/common.css" />
+<script type="text/javascript" src="~/Scripts/jquery-formobilwindow.min.js"></script>
+
+    <script type="text/javascript">
+        var w, h, deleteid;//className;
+        function getSrceenWH() {
+            w = $(window).width();
+            h = $(window).height();
+            $('#dialogBg').width(w).height(h);
+        }
+
+        window.onresize = function () {
+            getSrceenWH();
+        }
+        $(window).resize();
+
+        $(function () {
+            getSrceenWH();
+            //显示弹窗
+            $("td #delete").click(function () {
+                $('#dialogBg').fadeIn(300);
+                $(this).next().removeAttr('class').addClass('animated bounceIn').fadeIn();
+                //$('#dialog').removeAttr('class').addClass('animated bounceIn').fadeIn();
+                //deleteid = $(this).attr("name");
+                //$('button a').attr('href', '/Graduate/DeleteEi/' + deleteid + '');
+            });
+            $("td #edit").click(function () {
+                $('#dialogBg').fadeIn(300);
+                $(this).next().removeAttr('class').addClass('animated bounceIn').fadeIn();
+            });
+            //关闭弹窗
+            $('.claseDialogBtn').click(function () {
+                $('#dialogBg').fadeOut(300);//, function () {
+                    //$('#dialog').addClass('bounceOutUp').fadeOut();
+                    $(this).parent().parent().addClass('bounceOutUp').fadeOut();
+                //});
+            });
+
+            $("td div #Save").click(function () {
+                var inf = $(this).next(".col-xs-12.col-md-10").children("#Graduate_information").val();
+                if (inf != "") {
+                    var postData = { id: $(this).next().next("#ID").val(), info: $(this).next(".col-xs-12.col-md-10").children("#Graduate_information").val() };
+                    var url = "@Url.Action("EditEi")";
+                    $.ajax({
+                        url: url,
+                        sync: false,
+                        type: "POST",
+                        data: postData,
+                        cache: false,
+                        global: false,
+                        dataType: 'html',
+                        error: function () {
+                            alert('修改失败！');
+                        },
+                        success: function (msg) {
+                            $("#EIList").html(msg);
+                        }
+                    });
+                }
+                else
+                    alert('修改去向信息不能为空！');
+            });
+        });
+    </script>
+<fieldset>
+@if (Model != null && Model.Count() != 0)
+{
+    <legend></legend>
+    <h3>毕业变动</h3>
+    
+    <table class="table table-hover">
+        <tr>
+            <th>
+                @*@Html.DisplayNameFor(model => model.Graduate_information)*@
+                流向信息
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Add_Data)
+            </th>
+            <th></th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @*@Html.DisplayFor(modelItem => item.Graduate_information)*@
+                    @UIHelper.StrSub(item.Graduate_information,25)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Add_Data)
+                </td>
+                <td>
+                    @*@Ajax.ActionLink("Edit", "Edit", new { id = item.ID }, new AjaxOptions() { UpdateTargetId = "EIList", HttpMethod = "Post", OnBegin = "active", InsertionMode = InsertionMode.Replace })*@
+                    <a id="edit" name="edit">Edit</a>  
+                    <div id="dialog" class="animated">
+                        <div class="dialogTop">
+                            <label style="float:left">修改此条信息？</label>
+                            <a href="javascript:;" class="claseDialogBtn">关闭</a>
+                        </div>                                        
+                        <div class="row" style="height:280px; position: relative">
+                            <br /><br />
+                            <input type="button" id="Save" name="Save" value="Save" style="width:60px; right: 25px; position: absolute; bottom: 0; " /> 
+                            <div class="col-xs-12 col-md-10" style="margin-left:20px">
+                                <label>流向信息</label>
+                                <textarea class="form-control" maxlength="50" required="required" style="resize: none;" data-val="true" data-val-required="您需要填写毕业流向" id="Graduate_information" name="Graduate_information" rows="2">@item.Graduate_information</textarea>
+                            </div>
+                            <input type="hidden" id="ID" name="ID" value="@item.ID" />
+                        </div>                      
+                    </div>
+                    &nbsp;|
+                    @*@Ajax.ActionLink("Delete", "DeleteEi", new { id = item.ID }, new AjaxOptions() { UpdateTargetId = "EIList", HttpMethod = "Post", OnBegin = "active", InsertionMode = InsertionMode.Replace })*@
+                    <a id="delete" name="delete">Delete</a>
+                    <div id="dialog" class="animated">
+                        <div class="dialogTop">
+                            <label style="float:left">确定删除此条信息？</label>
+                            <a href="javascript:;" class="claseDialogBtn">关闭</a>
+                        </div>
+                        <div class="row" style="height: 280px; position: relative">
+                            <br />
+                            <div class="row" style="margin-left:20px">
+                                <div class="col-xs-12 col-md-10">
+                                    <label>流向信息</label>
+                                    <textarea class="form-control" maxlength="50" readonly="readonly" style="resize: none;" data-val="true" data-val-required="您需要填写毕业流向" id="Graduate_information" name="Graduate_information" rows="2">@item.Graduate_information</textarea>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="col-xs-6 col-md-4" style="margin-left:20px">
+                                <label>添加时间</label>
+                                <input class="form-control" id="Add_Data" name="Add_Data" readonly="readonly" type="text" value="@item.Add_Data.ToShortDateString()" />
+                            </div>                          
+                            <button style="right: 25px; position: absolute; bottom: 0; ">@Ajax.ActionLink("删除", "DeleteEi", new { id = item.ID }, new AjaxOptions() { UpdateTargetId = "EIList", HttpMethod = "Post", OnBegin = "active", InsertionMode = InsertionMode.Replace })</button>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        }
+        </table>
+    <div id="dialogBg"></div>
+    }
+</fieldset>

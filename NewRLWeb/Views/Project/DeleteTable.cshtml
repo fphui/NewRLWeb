@@ -1,0 +1,96 @@
+﻿@model IEnumerable<NewRLWeb.Models.Project_Case>
+
+@{
+    ViewBag.Title = "DeleteList";
+    //Layout = "~/Views/Shared/_Manage.cshtml";
+}
+<script>
+    $("#chkAll").click(function () {
+        if (this.checked) {
+            $("input[name='checks']").each(function () { this.checked = true; });
+        }
+        else {
+            $("input[name='checks']").each(function () { this.checked = false; });
+        }
+    });
+</script>
+@using (Html.BeginForm("MultDelete", "Project", FormMethod.Post))
+{
+    <table class="table table-hover">
+        <tr>
+            <th>
+                <input type="checkbox" id="chkAll" />全选
+            </th>
+            @*<th>
+                    @Html.DisplayNameFor(model => model.ProjectID)
+                </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.Projectname)
+            </th>
+            @*<th>
+                    @Html.DisplayNameFor(model => model.PhotoAddress)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Coverage)
+                </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.Startdate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Enddate)
+            </th>
+            @*<th>
+                    @Html.DisplayNameFor(model => model.Cooperativeunit)
+                </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.Abstract)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProjectType)
+            </th>
+            <th></th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @*@Html.CheckBox("checks", new { value = @ })*@
+                    <input type="checkbox" id="checks" name="checks" value="@item.ProjectID" />
+                </td>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.ProjectID)
+                    </td>*@
+                <td>
+                    @*@Html.DisplayFor(modelItem => item.Projectname)*@
+                    @UIHelper.StrSub(item.Projectname, 15)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Startdate)
+                </td>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.PhotoAddress)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Coverage)
+                    </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.Enddate)
+                </td>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.Cooperativeunit)
+                    </td>*@
+                <td>
+                    @*@Html.DisplayFor(modelItem => item.Abstract)*@
+                    @UIHelper.StrSub(item.Abstract, 25)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProjectType)
+                </td>
+            </tr>
+        }
+
+
+    </table>
+    <input type="submit" name="BtnDelete" value="删除" style="right: 13%; position: absolute; bottom: -10%; " />
+}
+

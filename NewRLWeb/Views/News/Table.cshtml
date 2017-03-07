@@ -1,0 +1,100 @@
+﻿@model IEnumerable<NewRLWeb.Models.News>
+
+@{
+    ViewBag.Title = "Table";
+    //Layout = "~/Views/Shared/_Manage.cshtml";
+}
+<style type="text/css">
+    .onecenter {
+        text-align: center;
+        width: 200px;
+    }
+</style>
+<table class="table table-hover">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        @*<th>
+                @Html.DisplayNameFor(model => model.Smalltitle)
+            </th>*@
+
+        <th>
+                @Html.DisplayNameFor(model => model.Abstract)
+            </th>
+        @*<th>
+            @Html.DisplayNameFor(model => model.PhotoAddress)
+        </th>
+    <th>
+        @Html.DisplayNameFor(model => model.Coverage)
+    </th>*@
+        <th>
+            @Html.DisplayNameFor(model => model.News_Type)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Publicationtime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Glance_Number)
+        </th>
+        @*<th>
+                @Html.DisplayNameFor(model => model.Link)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NewsSource)
+            </th>*@
+        <th>
+            @Html.DisplayNameFor(model => model.Author)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @*@Html.DisplayFor(modelItem => item.Title)*@
+                @UIHelper.StrSub(item.Title,20)
+            </td>
+            @*<td>
+                    @Html.DisplayFor(modelItem => item.Smalltitle)
+                </td>*@
+
+            <td>
+                    @*@Html.DisplayFor(modelItem => item.Abstract)*@
+                @UIHelper.StrSub(item.Abstract,20)
+                </td>
+            @*<td>
+            @Html.DisplayFor(modelItem => item.PhotoAddress)
+        </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Coverage)
+    </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.News_Type)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Publicationtime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Glance_Number)
+            </td>
+            @*<td>
+                    @Html.DisplayFor(modelItem => item.Link)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NewsSource)
+                </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.Author)
+            </td>
+            <td>
+                @Ajax.ActionLink("编辑", "Edit", "News", new { id = item.NewsID }, new AjaxOptions() { UpdateTargetId = "mainContent", HttpMethod = "Get", OnBegin = "active", InsertionMode = InsertionMode.Replace }) |
+                @Ajax.ActionLink("详情", "Details", "News", new { id = item.NewsID }, new AjaxOptions() { UpdateTargetId = "mainContent", HttpMethod = "Get", OnBegin = "active", InsertionMode = InsertionMode.Replace }) |
+                @Ajax.ActionLink("删除", "Delete", "News", new { id = item.NewsID }, new AjaxOptions() { UpdateTargetId = "mainContent", HttpMethod = "Get", OnBegin = "active", InsertionMode = InsertionMode.Replace })
+            </td>
+        </tr>
+    }
+
+</table>
+

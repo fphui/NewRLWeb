@@ -1,0 +1,257 @@
+﻿@model NewRLWeb.Models.Users
+
+@{
+    Layout = "~/Views/Shared/_UsersCenter.cshtml";
+}
+<script src="~/Scripts/UploadPhoto.js"></script>
+<script>
+    var IsAlbum=1;
+
+    var temp=@Model.AlbumID;
+    IsAlbum=0;
+    window.onload=function()
+    {
+        var jsonarray = eval(@Html.Raw( @ViewBag.photo));
+        var loop=1;
+        for( ;loop<=4;loop++)
+        {
+            var te=Number(loop);
+            var temp="Show"+loop;
+            if(jsonarray[loop-1]!=null)
+                document.getElementById(temp).src=jsonarray[loop-1];
+            else
+            {
+                document.getElementById(temp).style.display="none";
+            }
+        }
+
+    }
+
+    //检验该用户是否存在相册
+    function DealPhoto()
+    {
+
+        UploadPhoto();
+        document.getElementById("txt2").value=@Model.Unique_ID;
+    }
+    function CreateAlbum()
+    {
+        //  window.location.href="/Album/CreatePersonAblum?id="+@Model.UserID;
+        // alert("haha");
+    }
+    function EnterAlbum()
+    {
+        window.location.href="/Album/photos?id="+@Model.AlbumID+"&name="+@Model.Unique_ID;
+    }
+    //判断是否存在相册
+
+</script>
+<style type="text/css">
+    .userform {
+        margin: auto;
+    }
+
+    .editor-field-line {
+        border-bottom: 1px dashed #808080;
+        width: 100%;
+    }
+    .Infotitle{
+        font-size:18px;
+        font-weight:600;
+        padding-top:5px;
+        padding-bottom:10px;
+    }
+    .editor-label {
+        text-align: center;
+        color: #808080;
+    }
+</style>
+
+<div>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+
+        <fieldset style="margin-bottom:30px;">
+            <div class="userform">
+                <div class="col-lg-12">
+                    <div class="col-lg-6">
+                        <div class="Infotitle">基本信息</div>
+                        <div class="editor-label col-lg-3">
+                            @Html.LabelFor(model => model.UserID)
+                        </div>
+                        <div class="editor-field col-lg-9">
+                            @Model.UserID
+                            <hr class="editor-field-line" />
+                        </div>
+
+                        <div class="editor-label col-lg-3 ">
+                            @Html.LabelFor(model => model.Username)
+                        </div>
+                        <div class="editor-field col-lg-9">
+                            @Model.Username
+                            <hr class="editor-field-line" />
+                        </div>
+
+                        <div class="editor-label col-lg-3">
+                            @Html.LabelFor(model => model.Sex)
+                        </div>
+                        <div class="editor-field col-lg-9">
+                            @{
+        if (@Model.Sex == 0)
+        {
+                    <div>
+                        男
+                    </div>
+
+        }
+        else if (@Model.Sex == 1)
+        {
+                    <div>女</div>
+
+        }
+        else
+        {
+                    <div>请修改个人信息</div>
+        }
+                            }
+                            <hr class="editor-field-line" />
+                        </div>
+                        <div class="editor-label col-lg-3">
+                            @Html.LabelFor(model => model.Subject)
+                        </div>
+                        <div class="editor-field col-lg-9">
+                            @Model.Subject
+                            <hr class="editor-field-line" />
+                        </div>
+
+
+                        @*<hr style="height:1px;border:none;border-top:1px dashed #808080; width:400px;" />*@
+                        
+                        @*<hr style="height:1px;border:none;border-top:1px dashed #808080; width:400px;" />*@
+                       
+                        @*<hr style="height:1px;border:none;border-top:1px dashed #808080; width:400px;" />*@
+                        
+                        <div class="editor-label" style="display:none">
+                            @Html.LabelFor(model => model.AlbumID)
+                        </div>
+                        <div class="editor-field" style="display:none">
+                            @Model.AlbumID
+                        </div>
+                        <div class="editor-label col-lg-3">
+                            <p style="font-family: 'Microsoft YaHei','微软雅黑','SimSum','Tahoma','Verdana','Helvetica','Arial','sans-serif';font-weight:bold">相册展示</p>
+                        </div>
+                        <div class="editor-field col-lg-9" id="PhotoShow">
+                            <a href="#" onclick=" EnterAlbum();"><img id="Show1" style="width:70px;height:70px;display:inline-block;" src=@Model.Photo_Address /></a>
+                            <a href="#" onclick=" EnterAlbum();"><img id="Show2" style="width:70px;height:70px;display:inline-block;" src=@Model.Photo_Address /></a>
+                            <a href="#" onclick=" EnterAlbum();"><img id="Show3" style="width:70px;height:70px;display:inline-block;" src=@Model.Photo_Address /></a>
+                            <a href="#" onclick=" EnterAlbum();"><img id="Show4" style="width:70px;height:70px;display:inline-block;" src=@Model.Photo_Address /></a>
+                            <a href="#" onclick=" DealPhoto();"><img class="albumShow" id="AddPhoto" style="width:60px;height:60px;display:inline-block;" src="~/Images/tianjia.jpg"></a>
+                            <hr class="editor-field-line" />
+                        </div>
+
+                        @*<hr style="height:1px;border:none;border-top:1px dashed #808080; width:400px;" />*@
+                        
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="Infotitle">联系信息</div>
+                        <div class="editor-label col-lg-3">
+                            @Html.LabelFor(model => model.Native)
+                        </div>
+                        <div class="editor-field col-lg-9">
+                            @Model.Native
+                            <hr class="editor-field-line" />
+                        </div>
+                        <div class="editor-label col-lg-3">
+                            @Html.LabelFor(model => model.Address)
+                        </div>
+                        <div class="editor-field col-lg-9">
+                            @Model.Address
+                            <hr class="editor-field-line" />
+                        </div>
+                        @*<hr style="height:1px;border:none;border-top:1px dashed #808080; width:400px;" />*@
+                        <div class="editor-label col-lg-3">
+                            @Html.LabelFor(model => model.QQ)
+                        </div>
+                        <div class="editor-field col-lg-9">
+                            @Model.QQ
+                            <hr class="editor-field-line" />
+                        </div>
+                        @*<hr style="height:1px;border:none;border-top:1px dashed #808080; width:400px;" />*@
+                        <div class="editor-label col-lg-3">
+                            @Html.LabelFor(model => model.E_mail)
+                        </div>
+                        <div class="editor-field col-lg-9">
+                            @Model.E_mail
+                            <hr class="editor-field-line" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="col-lg-6">
+                        <div class="Infotitle">教育信息</div>
+                        <div class="editor-label col-lg-3">
+                            @Html.LabelFor(model => model.Admission_Data)
+                        </div>
+                        <div class="editor-field col-lg-9">
+                            @Model.Admission_Data
+                            <hr class="editor-field-line" />
+                        </div>
+                        @*<hr style="height:1px;border:none;border-top:1px dashed #808080; width:400px;" />*@
+                        <div class="editor-label col-lg-3">
+                            @Html.LabelFor(model => model.Graduate_Data)
+                        </div>
+                        <div class="editor-field col-lg-9">
+                            @Model.Graduate_Data
+                            <hr class="editor-field-line" />
+                        </div>
+                       
+                        <div class="editor-label col-lg-3">
+                            @Html.LabelFor(model => model.Education)
+                        </div>
+                        <div class="editor-field col-lg-9">
+                            @Model.Education
+                            <hr class="editor-field-line" />
+                        </div>
+
+                        <div class="editor-label col-lg-3">
+                            @Html.LabelFor(model => model.Learning_experience)
+                        </div>
+                        <div class="editor-field col-lg-9">
+                            @Model.Learning_experience
+                            <hr class="editor-field-line" />
+                        </div>
+
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="Infotitle">毕业信息</div>
+                        <div class="editor-label col-lg-3">
+                            @Html.LabelFor(model => model.Message)
+                        </div>
+                        <div class="editor-field col-lg-9">
+                            @Model.Message
+                            <hr class="editor-field-line" />
+                        </div> 
+
+                        <div class="editor-label col-lg-3">
+                            @Html.LabelFor(model => model.Graduate_Direction)
+                        </div>
+                        <div class="editor-field col-lg-9">
+                            @Model.Graduate_Direction
+                            <hr class="editor-field-line" />
+                        </div>
+
+                        <div class="editor-label col-lg-3">
+                            @Html.LabelFor(model => model.Graduate_Address)
+                        </div>
+                        <div class="editor-field col-lg-9">
+                            @Model.Graduate_Address
+                            <hr class="editor-field-line" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    }
+</div>

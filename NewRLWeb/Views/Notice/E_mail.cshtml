@@ -1,0 +1,63 @@
+﻿@model IEnumerable<NewRLWeb.ViewModels.EmailTo>
+
+@{
+    ViewBag.Title = "E_mail";
+    Layout = null;
+}
+<!--
+    2017.3.1
+    BLM
+    修改全选js
+-->
+<script type="text/javascript">
+    //$(function () {
+    //    $("#chkAll").click();
+    //    $("input[name='Mail']").each(function () { this.checked = true; });
+    //});
+    //$("#chkAll").click(function () {
+    //    if (this.checked) {
+    //        $("input[name='Mail']").each(function () { this.checked = true; });
+    //    }
+    //    else {
+    //        $("input[name='Mail']").each(function () { this.checked = false; });
+    //    }
+    //});
+    
+    $(function () {
+        $("#checkAll").click(function () {
+            $('input[name="Mail"]').attr("checked", this.checked);
+        });
+        var $subBox = $("input[name='Mail']");
+        $subBox.click(function () {
+            $("#checkAll").attr("checked", $subBox.length == $("input[name='Mail']:checked").length ? true : false);
+        });
+    });
+</script>
+@*<h2>E_mail</h2>*@
+<table class="table table-hover">
+    <tr>
+        <th>
+            <input type="checkbox" id="checkAll" checked="checked" />全选
+        </th>
+        <th>
+            <label>收件人</label>
+        </th>
+        <th>
+            <label>邮箱</label>
+        </th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <th>
+                <input type="checkbox" id="Mail" name="Mail" value="@item.Mail" checked="checked" />
+            </th>
+            <th>
+                <label>@item.Name</label>
+            </th>
+            <th>
+                <label>@item.Mail</label>
+            </th>
+        </tr>
+    }
+</table>

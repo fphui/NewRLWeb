@@ -1,0 +1,58 @@
+﻿@model NewRLWeb.Models.Large_type
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Manage.cshtml";/*2017.2.27 BLM加*/
+
+}
+
+
+<div style="height: 480px; position: relative;">
+    @using (Html.BeginForm("Create", "Types", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+
+        <fieldset>
+            <legend></legend>
+            <br />
+            <div class="row">
+                <div class="col-md-3 col-md-offset-3">
+                    <div class="editor-label">
+                        @*@Html.LabelFor(model => model.L_Type)*@
+                        <label>类别名称</label>
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(model => model.L_Type, new { @class = "form-control", @required = "required", @maxlength = "4" })
+                        @Html.ValidationMessageFor(model => model.L_Type)
+                    </div>
+                </div>
+            </div>
+            <br /><br />
+            <div class="row">
+                <div class="col-md-3 col-md-offset-3">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Retain)
+                    </div>
+                    <div class="editor-field">
+                        @Html.RadioButtonFor(model => model.Retain, 0, new { @id = "radio0", @name = "retain", @checked = "checked" })否
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        @Html.RadioButtonFor(model => model.Retain, 1, new { @id = "radio1", @name = "retain" })是
+                        @Html.ValidationMessageFor(model => model.Retain)
+                    </div>
+                </div>
+            </div>
+            <p>
+                <input type="submit" value="确定" name="Create" style="right: 17%; position: absolute; bottom: 0; " />
+            </p>
+        </fieldset>
+
+    }
+</div>
+<div>
+    @Html.ActionLink("返回", "List", FormMethod.Get)
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

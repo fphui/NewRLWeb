@@ -1,0 +1,90 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+<html>
+
+
+<head>
+    <title>@ViewBag.Title</title>
+    <script src="~/Scripts/jquery-1.7.1.min.js" type="text/javascript"></script>
+    <link type="text/css" href="~/Content/Home/index.css" rel="stylesheet" />
+    <script language="JavaScript">
+        function xx() {
+            var container = docudment.getElementById("slider3");
+            container.appendChild(container.firstChild);
+        }
+        setInterval("xx()", 1500);
+    </script>
+    <!------2017.01.16  photo------>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var blw = $("#myscrollbox li").width();
+            //获取单个子元素所需宽度
+            var liArr = $("#myscrollbox ul").children("li");
+            //获取子元素数量
+            var mysw = $("#myscroll").width();
+            //获取子元素所在区域宽度
+            var mus = parseInt(mysw / blw);
+            //计算出需要显示的子元素的数量
+            var length = liArr.length - mus - 1;
+            //计算子元素可移动次数（被隐藏的子元素数量）
+            var i = 0
+            $("#right").click(function () {
+                i++
+                //点击i加1
+                if (i < length) {
+                    $("#myscrollbox").css("left", -(blw * i));
+                    //子元素集合向左移动，距离为子元素的宽度乘以i。
+                }
+                else {
+                    i = length;
+                    $("#myscrollbox").css("left", -(blw * length));
+                    //超出可移动范围后点击不再移动。最后几个隐藏的元素显示时i数值固定位已经移走的子元素数量。
+                }
+            });
+            $("#left").click(function () {
+                i--
+                //点击i减1
+                if (i >= 0) {
+                    $("#myscrollbox").css("left", -(blw * i));
+                    //子元素集合向右移动，距离为子元素的宽度乘以i。
+                }
+                else {
+                    i = 0;
+                    $("#myscrollbox").css("left", 0);
+                    //超出可移动范围后点击不再移动。最前几个子元素被显示时i为0。
+                }
+            });
+        });
+    </script>
+    <!------------------------------------------->
+    <!--[if lte IE 8]>
+        <script type="text/javascript">
+        alert("您的浏览器版本过低，可能无法正常浏览，请升级浏览器！");
+    </script>
+    <![endif]-->
+
+</head>
+<body>
+    <div class="page1_banner " id="Banner">
+        @Html.Action("Banner")
+    </div>
+    <div class="page2_news " id="News">
+        <div class="col-md-8" style="padding-left:0px;">
+            @Html.Action("News")
+        </div>
+        <div class="col-md-4">
+            @Html.Action("Notice")
+        </div>
+    </div>
+
+    <div class="page3_scroll " id="Photos">
+        @Html.Action("Photos")
+    </div>
+
+    <div class="page4_aboutus " id="Aboutus">
+        @Html.Action("Aboutus")
+    </div>
+
+</body>
+</html>

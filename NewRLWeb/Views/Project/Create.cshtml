@@ -1,0 +1,217 @@
+﻿@model NewRLWeb.Models.Project_Case
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Manage.cshtml";/*2017.2.27 BLM加*/
+    
+    //if (ViewBag.Reload != null)
+    //{
+    //    bool isreload = ViewBag.Reload;
+    //    if (isreload)
+    //    {
+    //        Layout = "~/Views/Shared/_Manage.cshtml";
+    //    }
+    //}
+}
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+<script src="~/Scripts/jquery-1.7.1.min.js"></script>
+<script src="~/Scripts/jquery-ui-1.8.24.js"></script>
+<link rel="stylesheet" href="http://jqueryui.com/resources/demos/style.css">
+<script type="text/javascript">
+
+    //判断浏览器是否支持FileReader接口
+    if (typeof FileReader == 'undefined') {
+        document.getElementById("xmTanDiv").InnerHTML = "<h1>当前浏览器不支持FileReader接口</h1>";
+        //使选择控件不可操作
+        document.getElementById("xdaTanFileImg").setAttribute("disabled", "disabled");
+    }
+    //选择图片，马上预览
+    function xmTanUploadImg(obj) {
+        var file = obj.files[0];
+
+        console.log(obj); console.log(file);
+        console.log("file.size = " + file.size);  //file.size 单位为byte
+
+        var reader = new FileReader();
+
+        //读取文件过程方法
+        reader.onloadstart = function (e) {
+            console.log("开始读取....");
+        }
+        reader.onprogress = function (e) {
+            console.log("正在读取中....");
+        }
+        reader.onabort = function (e) {
+            console.log("中断读取....");
+        }
+        reader.onerror = function (e) {
+            console.log("读取异常....");
+        }
+        reader.onload = function (e) {
+            console.log("成功读取....");
+
+            var img = document.getElementById("xmTanImg");
+            img.src = e.target.result;
+            //或者 img.src = this.result;  //e.target == this
+        }
+
+        reader.readAsDataURL(file)
+    };
+
+    $(function () {
+        $("#Startdate").datepicker();
+    });
+    $(function () {
+        $("#Enddate").datepicker();
+    });
+</script>
+<!--//////////////////////////////////////////////////////周煜 2017.1.15////////////////////////////////////////////////////////////////////-->
+@*<script src="/Scripts/jquery-1.7.1.min.js"></script>
+    <script src="/Scripts/jquery-ui-1.8.24.js"></script>
+    <link rel="stylesheet" href="/resources/demos/style.css" />*@
+<div style="height: 520px; position: relative;">
+    @using (Html.BeginForm("Create", "Project", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {   
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+
+        <fieldset>
+            <legend></legend>
+
+            <div class="row">
+                <div class="col-xs-12 col-md-8">
+                    <div class="row">
+
+                        <div class="form-group" style="margin-left:15px">
+                            @Html.LabelFor(model => model.Projectname, new { @id = "Title_lab" })
+                            @Html.TextBoxFor(model => model.Projectname, new { @class = "form-control", @required = "required",@maxlength="50" })
+                            @Html.ValidationMessageFor(model => model.Projectname)
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="form-group" style="margin-left:15px">
+                            @Html.LabelFor(model => model.Abstract, new { @id = "Abstract_lab" })
+                            <textarea class="form-control" required="required" style="resize: none;" data-val="true" data-val-required="您需要填写简介" id="Abstract" name="Abstract" rows="3"></textarea>
+                            @Html.ValidationMessageFor(model => model.Abstract)
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            @Html.LabelFor(model => model.Startdate)
+                            @Html.TextBoxFor(model => model.Startdate, new { @class = "form-control", @required = "required", @maxlength = "50",@id="Startdate", @name="Startdate" })
+                            @*<input data-val="true" data-val-date="字段 起始日期 必须是日期。" data-val-required="起始日期 字段是必需的。" required="required" readonly="readonly" id="Startdate" name="Startdate" type="text" value=null class="form-control">*@
+                            @Html.ValidationMessageFor(model => model.Startdate)
+                        </div>
+                        <div class="col-xs-6">
+                            @Html.LabelFor(model => model.Enddate)
+                            @Html.TextBoxFor(model => model.Enddate, new { @class = "form-control", @required = "required", @maxlength = "50",@id="Enddate", @name="Enddate" })
+                            @*<input data-val="true" data-val-date="字段 结束日期 必须是日期。" data-val-required="结束日期 字段是必需的。" required="required" readonly="readonly" id="Enddate" name="Enddate" type="text" value="" class="form-control">*@
+                            @Html.ValidationMessageFor(model => model.Enddate)
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-md-4">
+                    <label for="Pho_Address">项目展示图片</label>
+                    <div>
+                        <div>
+                            <img id="xmTanImg" width="350" height="230" src="~/Images/empty.gif" />
+                        </div>
+                        <div class="a-upload">
+                            <input type="file" required="required" id="xdaTanFileImg" name="xdaTanFileImg" onchange="xmTanUploadImg(this)" accept="image/*" />选择图片
+                            <div id="xmTanDiv"></div>
+                        </div>
+                        @*<div>
+                            <input type="file" required="required" id="xdaTanFileImg" name="xdaTanFileImg" onchange="xmTanUploadImg(this)" accept="image/*" />
+                            <div id="xmTanDiv"></div>
+                        </div>*@
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-6 col-sm-4">
+                        @Html.LabelFor(model => model.Cooperativeunit)
+                        @Html.TextBoxFor(model => model.Cooperativeunit, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Cooperativeunit)
+                </div>
+                <div class="col-xs-6 col-sm-4">
+                        @Html.LabelFor(model => model.ProjectType)
+                        @Html.DropDownList("ProjectType", ViewData["List1"] as SelectList, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.ProjectType)
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-xs-4 col-sm-6">
+                    <label for="Coverage">
+                        内容<a style="color:red;"> *请选择相应的HTML文件</a>
+                    </label>
+                    <!--2017.03.02 BLM start 修改上传按钮样式-->
+                    <div class="inputFileWrapper">
+                        <label for="FirLoad">
+                            <input type="file" required="required" name="UpLoadHtm" id="FirLoad" class="filebtn" onchange="changeHtm(this)" />
+                            <span class="custorm-style">
+                                <span class="left-text" id="leftText"></span>
+                                <span class="right-button">浏览...</span>
+                            </span>
+                        </label>
+                    </div>
+                    <script>
+                        var fileBtn = $("#FirLoad");
+                        fileBtn.on("change", function () {
+                            var index = $(this).val().lastIndexOf("\\");
+                            var sFileName = $(this).val().substr((index + 1));
+                            $("#leftText").html(sFileName);
+                        });
+                    </script>
+
+                    @*<input type="file" required="required" name="UpLoadHtm" id="FirLoad" class="filebtn" accept=".htm" />*@
+                    @*<input type="file" required="required" name="UpLoadHtm" id="FirLoad" class="filebtn" onchange="changeHtm(this)" />*@
+                    <script>
+                        function changeHtm(o)
+                        {
+                            if ((o.value.indexOf('.Htm') > -1)||(o.value.indexOf('.Html') > -1))
+                             
+                        }
+                    </script>
+                </div>
+                <div class="col-xs-4 col-sm-6">
+                    <label for="Coverage">
+                        附件<a style="color:red;"> *请选择附件(可为空)</a>
+                    </label>
+
+                    <!--2017.03.02 BLM start 修改上传按钮样式-->
+                    <div class="inputFileWrapper">
+                        <label for="ThrLoad">
+                            <input type="file" name="UpLoadEnc" id="ThrLoad" class="filebtn" onchange="changeEnc(this)" />
+                            <span class="custorm-style">
+                                <span class="left-text" id="leftText"></span>
+                                <span class="right-button">浏览...</span>
+                            </span>
+                        </label>
+                    </div>
+                    <script>
+                        var fileBtn = $("#ThrLoad");
+                        fileBtn.on("change", function () {
+                            var index = $(this).val().lastIndexOf("\\");
+                            var sFileName = $(this).val().substr((index + 1));
+                            $("#leftText").html(sFileName);
+                        });
+                    </script>
+                    @*<input type="file" name="UpLoadEnc" id="ThrLoad" class="filebtn" accept="image/*" />*@
+                    @*<input type="file" name="UpLoadEnc" id="ThrLoad" class="filebtn" onchange="changeEnc(this)" />*@
+                </div>
+            </div>
+            <p>
+                <input type="submit" @*onclick="create_submit()"*@ value="新建" name="Create" style="right: 17%; position: absolute; bottom: 0; " />
+            </p>
+        </fieldset>
+    }
+</div>
+<div>
+    @Html.ActionLink("返回", "List")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

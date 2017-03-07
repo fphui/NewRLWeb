@@ -1,0 +1,70 @@
+﻿@{
+    ViewBag.Title = "ProjectView";
+}
+@using NewRLWeb.Models
+@using NewRLWeb.ViewModels
+@model ProjectCase
+@*<section class="contact">
+        <div class="example">
+
+        </div>
+    </section>*@
+
+<!Doctype html>
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+    <link href="~/Content/Project/projectview.css" rel="stylesheet" />
+</head>
+<body>
+    <div id="proexample">
+        <div class="container">
+            <p>
+                @Html.ActionLink("Back to List", "Index")
+            </p>
+            <table>
+                <tr>
+                    <th>
+                        @Model.pojectcase.Projectname
+                    </th>
+                </tr>
+                <tr>
+                    <th>
+                        @Model.pojectcase.ProjectType
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        @foreach (var item in Model.member)
+                        {
+                            @Html.ActionLink(item.Username + "\t", "../Users/Index", new { id = @item.UserID})
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        @Model.pojectcase.Startdate.ToShortDateString()-@Model.pojectcase.Enddate.ToShortDateString()
+                    </th>
+                    <th>
+                        @Model.pojectcase.Cooperativeunit
+                    </th>
+                </tr>
+                <tr>
+                    <th>
+                        @Model.pojectcase.Abstract
+                    </th>
+                </tr>
+            </table>
+            @{
+                string filePath = @Model.pojectcase.Coverage;
+                filePath = HttpContext.Current.Server.MapPath(filePath);
+                string fileContent = string.Empty;
+                var reader = filePath;
+                StreamReader sr = new StreamReader(reader, System.Text.Encoding.Default);
+                fileContent = sr.ReadToEnd();
+            }
+            @Html.Raw(fileContent)
+        </div>
+    </div>
+</body>
+</html>

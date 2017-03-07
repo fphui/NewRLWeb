@@ -1,0 +1,26 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+    Layout = "~/Views/Shared/_Manage.cshtml";
+}
+@using NewRLWeb.ViewModels
+@model Email
+
+<body>
+    <form action="/E_mail/SendMail" method="post">
+        收件人：<br />
+        @foreach (var item in Model.emailTo)
+        {
+            <input type="checkbox" id="Mail" name="Mail" value="@item.Mail" checked="checked" />
+            <label style="width:200px">@item.Name</label>
+            <label>@item.Mail</label>
+            <br />
+        }
+        <br />
+        主&nbsp;&nbsp;&nbsp;&nbsp;题：<input type="text" id="mailSubject" name="mailSubject" value=@Model.mailSubject readonly="readonly"/><br />
+        内&nbsp;&nbsp;&nbsp;&nbsp;容：<input type="text" id="mailContent" name="mailContent" value=@Model.mailContent readonly="readonly"/><br />
+        <input type="submit" name="BtnSave" value="发送" />
+    </form>
+</body>
+
+
+

@@ -1,0 +1,179 @@
+﻿@model IEnumerable<NewRLWeb.Models.Users>
+@using PagedList
+@using PagedList.Mvc
+@{
+    var data = Model as IPagedList<RLWZ.Models.Users>;
+}
+<link href="@Url.Content("~/Content/PagedList.css")" rel="stylesheet" type="text/css" />
+@*<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.UserID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Username)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Password)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Sex)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Photo_Address)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Subject)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Native)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Address)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.QQ)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Phone_Number)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.E_mail)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Admission_Data)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Graduate_Data)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Message)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Education)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Learning_experience)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Graduate_Direction)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AlbumID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Graduate_Address)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Username)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Password)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Sex)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Photo_Address)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Subject)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Native)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Address)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.QQ)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Phone_Number)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.E_mail)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Admission_Data)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Graduate_Data)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Message)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Education)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Learning_experience)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Graduate_Direction)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AlbumID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Graduate_Address)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Unique_ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Unique_ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Unique_ID })
+        </td>
+    </tr>
+}
+
+</table>*@
+<div class="container">
+    @{var i = 0;}
+    @foreach (var item in Model)
+    {
+        var unique_id = item.Unique_ID;
+        i++;
+        if (i % 2 != 0)
+        {
+            <div class="row">
+                <div class=" col-xs-12 col-sm-12 col-md-7 col-lg-7">
+                    <p><strong>@Html.DisplayNameFor(model => model.Graduate_Data):</strong> @Html.DisplayFor(modelItem => item.Graduate_Data)</p>
+                    <p><strong>@Html.DisplayNameFor(model => model.Learning_experience):</strong> @Html.DisplayFor(modelItem => item.Learning_experience)</p>
+                    <p><strong>@Html.DisplayNameFor(model => model.Message):</strong> @Html.DisplayFor(modelItem => item.Message)</p>
+                    <a href="~/Graduate/Person?ui=@unique_id" class="bntDownload">查看更多</a>
+                </div>
+                <div class="master-face-right">
+                    <h4>@Html.DisplayFor(modelItem => item.Username)</h4>
+                    <img src="@item.Photo_Address" alt="" class="img-circle topmar">
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="row">
+                <div class=" col-xs-12 col-sm-12 col-md-7 col-lg-7-right">
+                    <p><strong>@Html.DisplayNameFor(model => model.Graduate_Data):</strong> @Html.DisplayFor(modelItem => item.Graduate_Data)</p>
+                    <p><strong>@Html.DisplayNameFor(model => model.Learning_experience):</strong> @Html.DisplayFor(modelItem => item.Learning_experience)</p>
+                    <p><strong>@Html.DisplayNameFor(model => model.Message):</strong> @Html.DisplayFor(modelItem => item.Message)</p>
+                    <a href="~/Graduate/Person?ui=@unique_id" class="bntDownload-left">查看更多</a>
+                </div>
+                <div class="master-face-left">
+                    <h4>@Html.DisplayFor(modelItem => item.Username)</h4>
+                    <img src="@item.Photo_Address" alt="" class="img-circle topmar">
+                </div>
+            </div>
+        }
+    }
+</div>
+@Html.PagedListPager(list: data, generatePageUrl: page => Url.Action("Pages", new { p = page }))

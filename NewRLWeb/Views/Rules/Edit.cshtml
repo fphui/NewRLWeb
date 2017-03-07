@@ -1,0 +1,97 @@
+﻿@model NewRLWeb.Models.Rules_Management
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Manage.cshtml";
+}
+
+<h2>条例修改</h2>
+<script type="text/javascript">
+    var PArray = "";
+    var count = 1;
+    var coo = count;
+    var num=0;
+    function showPreview(source) {
+        if (!isPicFile(source)) {
+            alert("您选择的文件不是一个html文件");
+            source.outerHTML = source.outerHTML;//清空file的value
+            return false;
+        }
+    }
+    function isPicFile(filename) {
+        for (var countFile = 0; filename.files[countFile] != null; countFile++) {
+            var file1 = filename.files[countFile];           
+            if (file1.type == "text/html") {
+                num++;
+            }
+            else {
+                return false;
+            }
+        }
+        return true;
+    }
+    function clickImage(Img) {
+        PArray = PArray + Img.id + "/";
+        //alert(PArray);
+        Img.style.display = 'none';
+    }
+    function ClickSub() {
+        if (num == 1) {
+            document.getElementById("form").submit();
+            return true;
+        }
+        else {
+            alert("您还没上传文件！");
+            return false;
+        }
+    }
+</script>
+@using (Html.BeginForm("Edit", "Rules", FormMethod.Post, new { enctype = "multipart/form-data",id="form"  }))
+{
+   @Html.AntiForgeryToken();
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+
+        @Html.HiddenFor(model => model.ID)
+
+            <div class="editor-label" style="float:left; margin-right:20px;">
+                @Html.LabelFor(model => model.Author)
+            </div>
+        <div class="editor-field" style="float: left; margin-right: 40px;">
+            @Html.HiddenFor(model => model.Author)
+            <label style="font-weight:normal;">王鹏</label>
+        </div>
+            <div class="editor-label" style="float: left; margin-right: 20px;">
+                @Html.LabelFor(model => model.Coverage)
+            </div>
+
+            <div class="editor-label" style="display: none;">
+                @Html.LabelFor(model => model.Publicationtime)
+            </div>
+        
+            <div class="editor-field" style="display: none;float:left;">
+                @Html.EditorFor(model => model.Publicationtime)
+                @Html.ValidationMessageFor(model => model.Publicationtime)
+            </div>
+            <div id="divMain" style="float:left;">
+                <input type="file" id="0img" name="files" multiple="multiple" value="选择文件" onchange="showPreview(this);" />
+            </div>
+        <input type="button" value="上传" id="sub" onclick="ClickSub()" style="float:left; height:24px; line-height:normal; margin-left:5px" />
+    </fieldset>
+}
+
+<div style="padding-left: 50px; padding-right: 50px; padding-top: 0px;">
+    @{
+        string filePath = @Model.Coverage;
+        filePath = HttpContext.Current.Server.MapPath(filePath);
+        string fileContent = string.Empty;
+        var reader = filePath;
+        StreamReader sr = new StreamReader(reader, System.Text.Encoding.Default);
+        fileContent = sr.ReadToEnd();
+    }
+    @Html.Raw(fileContent)
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }

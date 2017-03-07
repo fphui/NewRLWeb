@@ -1,0 +1,106 @@
+﻿
+<!DOCTYPE html>
+@{
+    ViewBag.Title = "HomePage";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+    <link href="~/Content/bootstrap/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/Album/Index.css" rel="stylesheet" type="text/css" />
+
+    <link href="~/Content/Manage/kkpager_blue.css" rel="stylesheet" />
+    <script src="~/Scripts/kkpager.js"></script>
+
+    <script src="~/Scripts/jquery.min.js"></script>
+    <script src="~/Content/bootstrap/js/bootstrap.min.js"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.upmenu').click(function () {
+                if ($(this).siblings('ul').css('display') == 'none') {
+                    $(this).parent('li').siblings('li').removeClass('upmenu');
+                    $(this).addClass('upmenu');
+                    $(this).siblings('ul').slideDown(100).children('li');
+                    if ($(this).parents('li').siblings('li').children('ul').css('display') == 'block') {
+                        $(this).parents('li').siblings('li').children('ul').parent('li').children('a').removeClass('upmenu');
+                        $(this).parents('li').siblings('li').children('ul').slideUp(100);
+
+                    }
+                } else {
+                    //控制自身变成+号
+                    $(this).removeClass('upmenu');
+                    //控制自身菜单下子菜单隐藏
+                    $(this).siblings('ul').slideUp(100);
+                    //控制自身子菜单变成+号
+                    $(this).siblings('ul').children('li').children('ul').parent('li').children('a').addClass('upmenu');
+                    //控制自身菜单下子菜单隐藏
+                    $(this).siblings('ul').children('li').children('ul').slideUp(100);
+
+                    //控制同级菜单只保持一个是展开的（-号显示）
+                    $(this).siblings('ul').children('li').children('a').removeClass('upmenu');
+                }
+            })
+        });
+    </script>
+
+</head>
+
+<body>
+    <!--2017.01.18-->
+    <div class="container" style="width:1140px;">
+        <div class="col-md-3">
+            <aside>
+                <div class="dropdown-menu-left">
+                    @*<div class="titalu">
+                        <h2 class="heading">
+                            <span>相册</span>
+                        </h2>
+                    </div>*@
+                    <ul id="main-nav" class="nav nav-tabs nav-stacked">
+                        <li role="presentation">
+                            <hr class="divider" />
+                            <a href="#name" class="nav-header collapsed upmenu active" data-toggle="collapse tab" role="tab">
+                                名称
+                                <span class="pull-right glyphicon glyphicon-chevron-down"></span>
+                            </a>
+                            <ul id="name" class="nav nav-list collapse secondmenu">
+                                <li>@Html.ActionLink("全部", "Index", new { Type = "全部" })</li>
+                                <li>@Html.ActionLink("日常工作", "Index", new { Type = "日常工作" })</li>
+                                <li>@Html.ActionLink("运动比赛", "Index", new { Type = "运动比赛" })</li>
+                                <li>@Html.ActionLink("外出活动", "Index", new { Type = "外出活动" })</li>
+                                <li>@Html.ActionLink("聚餐活动", "Index", new { Type = "聚餐活动" })</li>
+                                <li>@Html.ActionLink("个人相册", "Index", new { Type = "个人" })</li>
+                            </ul>
+                        </li>
+                        <li role="presentation">
+                            <hr class="divider" />
+                            <a href="#number" class="nav-header collapsed upmenu" data-toggle="collapse tab" role="tab">
+                                排行榜
+                                <span class="pull-right glyphicon glyphicon-chevron-down"></span>
+                            </a>
+                            <ul id="number" class="nav nav-list collapse secondmenu">
+                                <li>
+                                    <a href="../Album/Index" role="tab" aria-controls="album_number1" data-toggle="tab">
+                                        评论最热
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="../Album/Index" role="tab" aria-controls="album_number2" data-toggle="tab">
+                                        最新发布
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </aside>
+        </div>
+        <div>
+            @RenderBody()
+        </div>
+    </div>
+</body>
+</html>

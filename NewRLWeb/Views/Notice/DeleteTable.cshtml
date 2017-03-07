@@ -1,0 +1,66 @@
+﻿@model IEnumerable<NewRLWeb.Models.Notice>
+
+@{
+    Layout = null;
+}
+
+<script>
+    $("#chkAll").click(function () {
+        if (this.checked) {
+            $("input[name='checks']").each(function () { this.checked = true; });
+        }
+        else {
+            $("input[name='checks']").each(function () { this.checked = false; });
+        }
+    });
+</script>
+<style type="text/css">
+    .onecenter {
+        text-align: center;
+        width: 200px;
+    }
+</style>
+<div style="height: 520px; position: relative;">
+    @using (Html.BeginForm("MultDelete", "Notice", FormMethod.Post))
+    {
+        <table class="table table-hover">
+            <tr>
+                <th>
+                    <input type="checkbox" id="chkAll" />全选
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Author)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Coverage)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Publicationtime)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @*@Html.CheckBox("checks", new { value = @ })*@
+                        <input type="checkbox" id="checks" name="checks" value="@item.NoticeID" />
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Author)
+                    </td>
+                    <td>
+                        @*@Html.DisplayFor(modelItem => item.Coverage)*@
+                        @UIHelper.StrSub(item.Coverage, 55)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Publicationtime)
+                    </td>
+                </tr>
+            }
+
+        </table>
+    <input type="submit" name="BtnDelete" value="删除" style="right: 13%; position: absolute; bottom: 0; " />
+    }
+</div>

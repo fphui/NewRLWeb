@@ -1,0 +1,76 @@
+﻿@model NewRLWeb.Models.Notice
+
+@{
+    ViewBag.Title = "Create";
+    //if (ViewBag.Reload != null)
+    //{
+    //    bool isreload = ViewBag.Reload;
+    //    if (isreload)
+    //    {
+    //        Layout = "~/Views/Shared/_Manage.cshtml";
+    //    }
+    //}
+    Layout = "~/Views/Shared/_Manage.cshtml";/*2017.2.27 BLM加*/
+}
+<div>
+    @using (Html.BeginForm("Create", "Notice", FormMethod.Post))
+{
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+
+        <fieldset>
+            <legend></legend>           
+            <div class="row">
+                <div class="col-xs-9 col-md-6" style="height: 460px; position: relative; margin-left:20px">
+                    <br /><br />
+                    <div class="row">
+                        <div class="col-xs-6 col-md-4" style="margin-left:-10px">
+                            <div class="editor-label">
+                                @Html.LabelFor(model => model.Author)
+                            </div>
+                            <div>
+                                <!--周煜 2017.2.23-->
+                                @Html.TextBoxFor(model => model.Author, new { @class = "form-control", @required = "required", @maxlength = "30" })
+                                @*<input type="text" class="form-control" value="@Session["Name"].ToString()" readonly="readonly" id="Author" name="Author"/>*@
+                                @Html.ValidationMessageFor(model => model.Author)
+                            </div>
+                        </div>
+                    </div>
+                    <br /><br />
+                    <div class="row">
+                        <div>
+                            <div class="editor-label">
+                                @Html.LabelFor(model => model.Coverage)
+                            </div>
+                            <div>
+                                @*@Html.EditorFor(model => model.Coverage)*@
+                                <textarea class="form-control" @*style="resize: none;"*@ data-val="true" data-val-required="您需要填写内容" id="Coverage" name="Coverage" rows="3" required="required" maxlength="300"></textarea>
+                                @Html.ValidationMessageFor(model => model.Coverage)
+                            </div>
+                        </div>
+                    </div>
+                    @*<div class="editor-label" style="display:none;">
+                @Html.LabelFor(model => model.Publicationtime)
+            </div>
+            <div class="editor-field" style="display:none;">
+                @Html.EditorFor(model => model.Publicationtime)
+                @Html.ValidationMessageFor(model => model.Publicationtime)
+            </div>*@
+                    <p>
+                        <input type="submit" @*onclick="create_submit()"*@ value="确定" style="right: 1%; position: absolute; bottom: 20%; " />
+                    </p>
+                </div>
+                <div class="col-xs-7 col-md-5" style="height: 460px; overflow-y:scroll">
+                    @Html.Action("E_mail")
+                </div>
+            </div>
+        </fieldset>
+    }
+</div>
+    <div>
+        @Html.ActionLink("返回", "List")
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }

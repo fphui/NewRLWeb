@@ -1,0 +1,146 @@
+﻿@model NewRLWeb.Models.Users
+
+@{
+    ViewBag.Title = "Delete";
+    //Layout = "~/Views/Shared/_Manage.cshtml";
+}
+
+@using (Html.BeginForm("Delete", "Graduate", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <fieldset>
+        <legend>确定删除该毕业生？</legend>
+
+        @*<div class="editor-label">
+                @Html.LabelFor(model => model.Password)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Password)
+                @Html.ValidationMessageFor(model => model.Password)
+            </div>*@
+
+        <div class="col-md-7 col-md-offset-2">
+            <div class="row">
+                <div class="col-xs-6">
+                    <div class="form-group">
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.UserID)
+                        </div>
+                        <div>
+                            @Html.TextBoxFor(model => model.UserID, new { @class = "form-control", @readonly = "readonly" })
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.Username)
+                        </div>
+                        <div>
+                            @Html.TextBoxFor(model => model.Username, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.Education)
+                        </div>
+                        <div>
+                            @if (Model.Education == 0)
+                            {
+                                <div>
+                                    @Html.TextBox("0","本科生", new { @class = "form-control", @readonly = "readonly" })
+                                </div>
+                            }
+                            else
+                            {
+                                <div>
+                                    @Html.TextBox("1","研究生", new { @class = "form-control", @readonly = "readonly" })
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.E_mail)
+                        </div>
+                        <div>
+                            @Html.TextBoxFor(model => model.E_mail, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Phone_Number">电话号码</label>
+                        <div>
+                            @Html.TextBoxFor(model => model.Phone_Number, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-6">
+                    <div class="form-group">
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.Subject)
+                        </div>
+                        <div>
+                            @Html.TextBoxFor(model => model.Subject, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.Sex)
+                        </div>
+                        <div>
+                            @if (Model.Sex == 0)
+                            {
+                                <div>
+                                    @Html.TextBox("0", "男生", new { @class = "form-control", @readonly = "readonly" })
+                                </div>
+                            }
+                            else
+                            {
+                                <div>
+                                    @Html.TextBox("1", "女生", new { @class = "form-control", @readonly = "readonly" })
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.Admission_Data)
+                        </div>
+                        <div>
+                            @Html.TextBoxFor(model => model.Admission_Data, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.QQ)
+                        </div>
+                        <div>
+                            @Html.TextBoxFor(model => model.QQ, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.Native)
+                        </div>
+                        <div>
+                            @Html.TextBoxFor(model => model.Native, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="editor-label" style="margin:17px">
+                    @Html.LabelFor(model => model.Address)
+                </div>
+                <div class="col-xs-12 col-md-8">
+                    @Html.TextBoxFor(model => model.Address, new { @class = "form-control", @readonly = "readonly" })
+                </div>
+            </div>
+        </div>
+        <p>
+            <input type="submit" value="确定" style="right: 17%; position: absolute; bottom: 0; " @*onclick="create_submit()"*@ />
+        </p>
+    </fieldset>
+}
+<div>
+    @Html.ActionLink("返回", "List", FormMethod.Get)
+</div>

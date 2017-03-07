@@ -1,0 +1,78 @@
+﻿<!DOCTYPE html>
+@{
+    ViewBag.Title = "HomePage";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+    <link href="~/Content/news_style.css" rel="stylesheet" />
+    <link href="~/Content/News/Index.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="~/Scripts/jquery-1.8.2.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.inactive').click(function () {
+                if ($(this).siblings('ul').css('display') == 'none') {
+                    $(this).parent('li').siblings('li').removeClass('inactives');
+                    $(this).addClass('inactives');
+                    $(this).siblings('ul').slideDown(100).children('li');
+                    if ($(this).parents('li').siblings('li').children('ul').css('display') == 'block') {
+                        $(this).parents('li').siblings('li').children('ul').parent('li').children('a').removeClass('inactives');
+                        $(this).parents('li').siblings('li').children('ul').slideUp(100);
+
+                    }
+                } else {
+                    //控制自身变成+号
+                    $(this).removeClass('inactives');
+                    //控制自身菜单下子菜单隐藏
+                    $(this).siblings('ul').slideUp(100);
+                    //控制自身子菜单变成+号
+                    $(this).siblings('ul').children('li').children('ul').parent('li').children('a').addClass('inactives');
+                    //控制自身菜单下子菜单隐藏
+                    $(this).siblings('ul').children('li').children('ul').slideUp(100);
+
+                    //控制同级菜单只保持一个是展开的（-号显示）
+                    $(this).siblings('ul').children('li').children('a').removeClass('inactives');
+                }
+            })
+        });
+    </script>
+</head>
+
+<body>
+    <!--2017.01.18-->
+    <div class="container" style="width:1140px;">
+        <div class="">
+            <div class="col-md-2 column sider-list">
+                <ul>
+                    <li>
+                        <a class="inactive" href="#">新闻动态</a>
+                        <ul id="la" style="display:none;">
+                            <li> @Html.ActionLink("全部", "../News/Index", new { Type = "全部" })</li>
+                            <li>@Html.ActionLink("日常工作", "../News/Index", new { Type = "日常工作" }) </li>
+                            <li> @Html.ActionLink("运动比赛", "../News/Index", new { Type = "运动比赛" })</li>
+                            <li> @Html.ActionLink("外出活动", "../News/Index", new { Type = "外出活动" }) </li>
+                            <li> @Html.ActionLink("聚餐活动", "../News/Index", new { Type = "聚餐活动" })</li>
+                            @*<li>@Html.ActionLink("最新动态", "../News/Index", new { type = "最新动态" })</li>
+                            <li>@Html.ActionLink("最热新闻", "../News/Index", new { type = "最新新闻" })</li>*@
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="inactive" href="#">通知公告</a>
+                        <ul style="display:none;">
+                            <li>@Html.ActionLink("全部", "../Notice/Index", new { type = "全部" })</li>
+                            <li>@Html.ActionLink("普通公告", "../Notice/Index", new { type = "普通公告" })</li>
+                            <li>@Html.ActionLink("纳新通知", "../Notice/Index", new { type = "纳新通知" })</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-10 column">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+</body>
+</html>

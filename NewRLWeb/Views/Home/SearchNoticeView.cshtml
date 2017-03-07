@@ -1,0 +1,24 @@
+﻿@model IEnumerable<NewRLWeb.Models.Notice>
+<link href="~/Content/News/Index.css" rel="stylesheet" type="text/css" />
+<link href="~/Content/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="~/Content/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<ul class="media-list">
+    @foreach (var item in Model)
+    {
+        <li class="media">
+            <a class="media-left" href="#">
+                <img src="~/Images/image001.jpg" />
+            </a>
+            <div class="media-body">
+                <p class="text-news content-c">
+                    @item.Coverage
+                </p>
+            </div>
+            <div class="media-right content-right">
+                <span></span>
+                <span>@item.Author</span><br />
+                <span>@item.Publicationtime.ToShortDateString()</span>
+            </div>
+        </li>
+    }
+</ul>

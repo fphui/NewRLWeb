@@ -1,0 +1,81 @@
+﻿@model IEnumerable<NewRLWeb.Models.Academic_Exchange>
+
+@{
+    ViewBag.Title = "DeleteList";
+    //Layout = "~/Views/Shared/_Manage.cshtml";
+}
+
+<script>
+    $("#chkAll").click(function () {
+        if (this.checked) {
+            $("input[name='checks']").each(function () { this.checked = true; });
+        }
+        else {
+            $("input[name='checks']").each(function () { this.checked = false; });
+        }
+    });
+</script>
+<!--周煜2017.1.15-->
+
+
+@*<p>
+    @Html.ActionLink("Create New", "Create")
+</p>*@
+
+
+<div style="height: 480px; position: relative;">
+    @using (Html.BeginForm("MultDelete", "Academic", FormMethod.Post))
+    {
+        <table class="table table-hover">
+            <tr>
+                <th>
+                    <input type="checkbox" id="chkAll" />全选
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.AcademicName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Abstract)
+                </th>
+                @*<th>
+                    @Html.DisplayNameFor(model => model.Coverage)
+                </th>*@
+                <th>
+                    @Html.DisplayNameFor(model => model.BeginTime)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EndTime)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <input type="checkbox" id="checks" name="checks" value="@item.AcademicID" />
+                    </td>
+                    <td>
+                        @*@Html.DisplayFor(modelItem => item.AcademicName)*@
+                        @UIHelper.StrSub(item.AcademicName, 20)
+                    </td>
+                    <td>
+                        @*@Html.DisplayFor(modelItem => item.Abstract)*@
+                        @UIHelper.StrSub(item.Abstract,25)
+                    </td>
+                    @*<td>
+                        @Html.DisplayFor(modelItem => item.Coverage)
+                    </td>*@
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BeginTime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EndTime)
+                    </td>
+                </tr>
+            }
+
+        </table>
+    <input type="submit" name="BtnDelete" value="删除" style="right: 13%; position: absolute; bottom: -10%; " />
+    }
+</div>

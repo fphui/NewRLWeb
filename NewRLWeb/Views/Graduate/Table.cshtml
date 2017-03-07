@@ -1,0 +1,176 @@
+﻿@model IEnumerable<NewRLWeb.Models.Users>
+
+@{
+    ViewBag.Title = "List";
+    //    Layout = "~/Views/Shared/_Manage.cshtml";
+}
+<style type="text/css">
+    .onecenter {
+        text-align: center;
+        width: 200px;
+    }
+</style>
+<body>
+    <div>
+        <table class="table table-hover">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.UserID)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Username)
+                </th>
+                @*<th>
+                        @Html.DisplayNameFor(model => model.Password)
+                    </th>*@
+                <th>
+                    @Html.DisplayNameFor(model => model.Sex)
+                </th>
+                @*<th>
+                        @Html.DisplayNameFor(model => model.Photo_Address)
+                    </th>*@
+                @*<th>
+                    @Html.DisplayNameFor(model => model.Subject)
+                </th>*@
+                @*<th>&nbsp;</th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Native)
+                    </th>
+                    <th>&nbsp;</th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Address)
+                    </th>
+                    <th>&nbsp;</th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.QQ)
+                    </th>*@
+                @*<th>
+                    @Html.DisplayNameFor(model => model.Phone_Number)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.E_mail)
+                </th>*@
+                <th>
+                    @Html.DisplayNameFor(model => model.Admission_Data)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Graduate_Data)
+                </th>
+                @*<th>&nbsp;</th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Message)
+                    </th>
+                    <th>&nbsp;</th>*@
+                    <th>
+                        @Html.DisplayNameFor(model => model.Education)
+                    </th>
+                    @*<th>&nbsp;</th>
+    <th>
+        @Html.DisplayNameFor(model => model.Learning_experience)
+    </th>
+    <th>&nbsp;</th>*@
+                    <th>
+                        @Html.DisplayNameFor(model => model.Graduate_Direction)
+                    </th>
+                    @*<th>&nbsp;</th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.AlbumID)
+                    </th>*@
+                <th>
+                    @Html.DisplayNameFor(model => model.Graduate_Address)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Username)
+                    </td>
+                    @*<td>
+                            @Html.DisplayFor(modelItem => item.Password)
+                        </td>*@
+                    <td>
+                        @*@if (item.Sex == 0)
+                            {
+                                <div>男</div>
+                            }
+                            else if (item.Sex == 1)
+                            {
+                                <div>女</div>
+                            }*@
+                        @UIHelper.ShowSex(item.Sex)
+                        @*@Html.DisplayFor(modelItem => item.Sex)*@
+                    </td>
+                    @*<td>
+                            @Html.DisplayFor(modelItem => item.Photo_Address)
+                        </td>*@
+                    @*<td>
+                        @Html.DisplayFor(modelItem => item.Subject)
+                    </td>*@
+                    @*<th>&nbsp;</th>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Native)
+                        </td>
+                        <th>&nbsp;</th>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Address)
+                        </td>
+                        <th>&nbsp;</th>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.QQ)
+                        </td>*@
+                    @*<td>
+                        @Html.DisplayFor(modelItem => item.Phone_Number)
+                    </td>
+                    <td>
+                        @item.E_mail
+                    </td>*@
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Admission_Data)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Graduate_Data)
+                    </td>
+                    @*<th>&nbsp;</th>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Message)
+                        </td>
+                        <th>&nbsp;</th>*@
+                        <td>
+                            @UIHelper.ShowEducation(item.Education)
+                        </td>
+                        @*<th>&nbsp;</th>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Learning_experience)
+                        </td>
+                        <th>&nbsp;</th>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Graduate_Direction)
+                        </td>
+                        <th>&nbsp;</th>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AlbumID)
+                        </td>*@
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Graduate_Direction)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Graduate_Address)
+                    </td>
+                    <td>
+                        @Ajax.ActionLink("编辑", "Edit", "Graduate", new { id = item.UserID }, new AjaxOptions() { UpdateTargetId = "mainContent", HttpMethod = "Get", OnBegin = "active", InsertionMode = InsertionMode.Replace }) |
+                        @Ajax.ActionLink("毕业流向", "CreateEi", "Graduate", new { id = item.UserID }, new AjaxOptions() { UpdateTargetId = "mainContent", HttpMethod = "Get", OnBegin = "active", InsertionMode = InsertionMode.Replace }) |
+                        @Ajax.ActionLink("详情", "Details", "Graduate", new { id = item.UserID }, new AjaxOptions() { UpdateTargetId = "mainContent", HttpMethod = "Get", OnBegin = "active", InsertionMode = InsertionMode.Replace }) |
+                        @Ajax.ActionLink("删除", "Delete", "Graduate", new { id = item.UserID }, new AjaxOptions() { UpdateTargetId = "mainContent", HttpMethod = "Get", OnBegin = "active", InsertionMode = InsertionMode.Replace })
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+</body>

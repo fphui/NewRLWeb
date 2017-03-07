@@ -1,0 +1,86 @@
+﻿@model IEnumerable<NewRLWeb.Models.Users>
+
+@{
+    ViewBag.Title = "Create";
+    //Layout = "~/Views/Shared/_Manage.cshtml";
+    Layout = "~/Views/Shared/_Manage.cshtml";/*2017.2.27 BLM加*/
+
+}
+<script type="text/javascript">
+    $("#chkAll").click(function () {
+        if (this.checked) {
+            $("input[name='checks']").each(function () { this.checked = true; });
+        }
+        else {
+            $("input[name='checks']").each(function () { this.checked = false; });
+        }
+    });
+</script>
+<body>
+    <div style="height: 560px; position: relative;">
+        @using (Html.BeginForm("MultCreate", "Graduate",FormMethod.Post))
+        {
+            <table class="table table-hover">
+                <tr>
+                    <th>
+                        <input type="checkbox" id="chkAll" />全选
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.UserID)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Username)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Sex)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Native)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Admission_Data)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Education)
+                    </th>
+                    <th></th>
+                </tr>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            <input type="checkbox" id="checks" name="checks" value="@item.UserID" />
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.UserID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Username)
+                        </td>
+                        <td>
+                            @UIHelper.ShowSex(item.Sex)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Native)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Admission_Data)
+                        </td>
+                        <td>
+                            @UIHelper.ShowEducation(item.Education)
+                        </td>
+                    </tr>
+                }
+
+            </table>
+            if (Model.Count() > 0)
+            {
+                <input type="submit" name="BtnCreate" value="确定" style="right: 13%; position: absolute; bottom: 20px; " />
+            }
+
+        }
+    </div>
+</body>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

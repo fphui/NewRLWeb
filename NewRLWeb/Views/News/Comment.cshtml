@@ -1,0 +1,20 @@
+﻿@model IEnumerable<NewRLWeb.Models.Commment>
+@{
+    Layout = null;
+}
+@if (Model != null)
+{
+    <ul>
+        @foreach (var item in Model)
+        {
+            <li>
+                <div class="comment-div">
+                    <span>@item.Username</span>
+                    <span>:</span>
+                    <span>@item.CommentText</span>
+                </div>
+                <span> @item.CommentTime</span>
+            </li>
+        }
+    </ul>
+}

@@ -1,0 +1,217 @@
+﻿@model IEnumerable<NewRLWeb.Models.Small_Type>
+
+@{
+    ViewBag.Title = "Edit";
+    //Layout = "~/Views/Shared/_Manage.cshtml";
+}
+@*
+    2017.03.01
+    BLM
+    修改弹窗
+*@
+<link rel="stylesheet" href="~/Content/Types/common.css" />
+<script type="text/javascript" src="~/Scripts/jquery-formobilwindow.min.js"></script>
+<script type="text/javascript">
+    var w, h, deleteid;//className;
+    function getSrceenWH() {
+        w = $(window).width();
+        h = $(window).height();
+        $('#dialogBg').width(w).height(h);
+    }
+
+    window.onresize = function () {
+        getSrceenWH();
+    }
+    $(window).resize();
+
+    $(function () {
+        getSrceenWH();
+        //显示弹窗
+        $("td #delete").click(function () {
+            $('#dialogBg').fadeIn(300);
+            $(this).next().removeAttr('class').addClass('animated bounceIn').fadeIn();
+        });
+        $("td #edit").click(function () {
+            $('#dialogBg').fadeIn(300);
+            $(this).next().removeAttr('class').addClass('animated bounceIn').fadeIn();
+        });
+        //关闭弹窗
+        $('.claseDialogBtn').click(function () {
+            $('#dialogBg').fadeOut(300);//, function () {
+            $(this).parent().parent().addClass('bounceOutUp').fadeOut();
+        });
+        $("td div #Save").click(function () {
+
+            var val = $(this).next().next().next(".row").children('input:radio[name="Retain"]:checked').val();
+            var SId = $(this).next().next().next().next("#STypeID").val();
+
+            if (val != 1)
+                val == 0;
+            var postData = { id: SId, check: val };
+            var url = "@Url.Action("EditSt","Types")";
+            //弹窗关闭2017.03.01 start
+            $('#dialogBg').fadeOut(300);
+            $(this).parent().parent().addClass('bounceOutUp').fadeOut();
+            //弹窗关闭2017.03.01 end
+            $.ajax({
+                url: url,
+                async: false,
+                type: "POST",
+                data: postData,
+                cache: false,
+                global: false,
+                dataType: 'html',
+                error: function () {
+                    alert('修改失败！');
+                },
+                success: function () {
+                    alert('修改成功！');
+                }
+            });
+
+        });
+    });
+</script>
+
+<h2>Edit</h2>
+<fieldset>
+    <legend></legend>
+    <div class="row" style="min-height:480px">
+        <div class="col-md-6 col-md-offset-3">
+            @using (Html.BeginForm("Edit", "Types", FormMethod.Post))
+            {
+                <br />
+                <div class="row" style="height: 200px; position: relative">
+                    <div class="col-xs-6">
+                        <input id="ID" name="ID" required="required" type="hidden" value="@ViewBag.ID" />
+                        <div class="editor-label">
+                            <label>大类名称</label>
+                        </div>
+                        <div class="editor-field">
+                            <input class="form-control" id="L_Type" name="L_Type" @*readonly="readonly"*@ type="text" value="@ViewBag.LType">
+                        </div>
+                        <br />
+                        <div class="editor-label">
+                            <label>是否可删</label>
+                        </div>
+                        <div class="editor-field">
+                            @if (ViewBag.Retain == 0)
+                            {
+                                <input checked="checked" data-val="true" data-val-number="字段 是否可删 必须是一个数字。" data-val-range="字段 是否可删 必须在 0 和 1 之间。" data-val-range-max="1" data-val-range-min="0" data-val-required="是否可删 字段是必需的。" id="radio0" name="Retain" type="radio" value="0">@:否
+                                @:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <input id="radio1" name="Retain" type="radio" value="1">@:是
+                    }
+                            else
+                            {
+                                <input data-val="true" data-val-number="字段 是否可删 必须是一个数字。" data-val-range="字段 是否可删 必须在 0 和 1 之间。" data-val-range-max="1" data-val-range-min="0" data-val-required="是否可删 字段是必需的。" id="radio0" name="Retain" type="radio" value="0">@:否
+                                @:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <input checked="checked" id="radio1" name="Retain" type="radio" value="1">@:是
+                    }
+                        </div>
+                        <p>
+                            <input type="submit" value="Edit" name="Edit" @*onclick="a()"*@ style="right: 10%; position: absolute; bottom: 0; " />
+                        </p>
+                    </div>
+                    <p style="left: 0%; position: absolute; bottom: -20px">
+                        @Ajax.ActionLink("添加小类别", "AddSType", "Types", new { ltype = @ViewBag.LType }, new AjaxOptions() { UpdateTargetId = "mainContent", HttpMethod = "Get", OnBegin = "active", InsertionMode = InsertionMode.Replace })
+                    </p>
+                </div>
+                <br />
+            }
+
+            @if (Model != null)
+            {
+                <table class="table table-hover">
+                    <tr>
+                        <th>小类名称</th>
+                        <th>是否可删</th>
+                        <th></th>
+                    </tr>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.S_Type)</td>
+                            <td>@UIHelper.ShowRetain(item.Retain)</td>
+                            <td>
+                                <a id="edit" name="edit">Edit</a>
+                                <div id="dialog" class="animated">
+                                    <div class="dialogTop">
+                                        <label style="float:left">修改此类别？</label>
+                                        <a href="javascript:;" class="claseDialogBtn">关闭</a>
+                                    </div>
+                                    <div class="row" style="height:180px; position: relative">
+                                        <br />
+                                        @*<button style="right: 25px; position: absolute; bottom: 0; ">@Ajax.ActionLink("保存..", "Editst", new { id = item.ID }, new AjaxOptions() { UpdateTargetId = "mainContent", HttpMethod = "Post", OnBegin = "active", InsertionMode = InsertionMode.Replace })</button>*@
+                                        <input type="button" id="Save" name="Save" value="保存" style="width:60px; right: 25px; position: absolute; bottom: 0; " />
+                                        <div class="row">
+                                            <div class="col-xs-12 col-md-10" style="margin-left:20px">
+                                                <label>小类名称</label>
+                                                <input class="form-control" id="S_Type" name="S_Type" readonly="readonly" type="text" value="@item.S_Type">
+
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="row" style="margin-left:20px">
+                                            <div class="editor-label">
+                                                <label>是否可删</label>
+                                            </div>
+                                            @if (item.Retain == 0)
+                                            {
+                                                <input id="radio0" name="Retain" type="radio" value="0" checked="checked" />@:否
+                                                @:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                <input id="radio1" name="Retain" type="radio" value="1" />@:是
+                                            }
+                                            else
+                                            {
+                                                <input id="radio0" name="Retain" type="radio" value="0" />@:否
+                                                @:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                <input checked="checked" id="radio1" name="Retain" type="radio" value="1" />@:是
+                                        }
+
+                                        </div>
+                                        <input type="hidden" id="STypeID" name="ID" value="@item.ID" />
+                                    </div>
+                                </div>
+                                @if (item.Retain == 1)
+                                {
+                                    @:&nbsp;|
+                                    <a id="delete" name="delete">Delete</a>
+                                }
+                                <div id="dialog" class="animated">
+                                    <div class="dialogTop">
+                                        <label style="float:left">确定删除此类别？</label>
+                                        <a href="javascript:;" class="claseDialogBtn">关闭</a>
+                                    </div>
+                                    <div class="row" style="height: 180px; position: relative">
+                                        <br />
+                                        <div class="row" style="margin-left:20px">
+                                            <div class="col-xs-12 col-md-10">
+                                                <label>小类名称</label>
+                                                <input class="form-control" id="S_Type" name="S_Type" readonly="readonly" type="text" value="@item.S_Type">
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <button style="right: 25px; position: absolute; bottom: 0; ">@Ajax.ActionLink("删除", "DeleteSt", new { id = item.ID }, new AjaxOptions() { UpdateTargetId = "mainContent", HttpMethod = "Post", OnBegin = "active", InsertionMode = InsertionMode.Replace })</button>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </table>
+                <div id="dialogBg"></div>
+            }
+        </div>
+
+    </div>
+
+</fieldset>
+
+
+
+<div>
+    @Html.ActionLink("返回", "List", FormMethod.Get)
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

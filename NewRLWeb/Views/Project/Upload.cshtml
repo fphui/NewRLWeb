@@ -1,0 +1,55 @@
+﻿@{
+    Layout = "~/Views/Shared/_Manage.cshtml";
+}
+<style type="text/css">
+    #Secdiv {
+        position: absolute;
+        width: 400px;
+        height: 200px;
+        left: 50%;
+        top: 50%;
+        margin-left: -200px;
+        margin-top: -100px;
+        border: 0px solid #00F;
+    }
+</style>
+<fieldset>
+    <legend>上传附件</legend>
+    <div id="Firdiv" style="display:block;">
+        @using (Html.BeginForm("uploadHtml", "Project", FormMethod.Post, new { ID = "user_head_form", enctype = "multipart/form-data" }))
+        {
+            <input type="file" name="head" id="FirLoad" class="filebtn" />
+            <input type="text" name="type" id="type" value="1" hidden="hidden" />
+            <p style="color:red;">*请选择相应的HTML文件</p>
+            <a href=""><input type="submit" value="确认上传Html" name="Create" /></a>
+
+        }
+    </div>
+    <script>
+        var str =@Html.Raw(Json.Encode(@ViewBag.str))
+            window.onload = function () {
+                SecOC();
+            }
+        function SecOC() {
+            if (str == "0") {
+                document.getElementById("Secdiv").style.display = "none";
+                document.getElementById("Firdiv").style.display = "block";
+            }
+            else if (str == "1") {
+                document.getElementById("Secdiv").style.display = "block";
+                document.getElementById("Firdiv").style.display = "none";
+            }
+
+        }
+
+    </script>
+    <div id="Secdiv" style="display:none;">
+        @using (Html.BeginForm("uploadEnclosure", "Project", FormMethod.Post, new { ID = "user_head_form", enctype = "multipart/form-data" }))
+        {
+            <input type="file" name="head" id="ThrLoad" class="filebtn" multiple="multiple" accept="image/*" required="required" />
+            <input type="text" name="type" id="type" value="1" hidden="hidden" />
+            <p style="color:red;">*请选择相应的图片附件</p>
+            <a href=""><input type="submit" value="确认上传附件" name="Create" /></a>
+        }
+    </div>
+</fieldset>

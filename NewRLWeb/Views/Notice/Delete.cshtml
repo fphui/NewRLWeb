@@ -1,0 +1,53 @@
+﻿@model NewRLWeb.Models.Notice
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<div style="height: 480px; position: relative;">
+    
+    <fieldset>
+        <legend>确定删除该公告?</legend>
+        <br />
+        <div class="row">
+            <div class="col-md-3 col-md-offset-3">
+                <div class="editor-label">
+                    @Html.DisplayNameFor(model => model.Author)
+                </div>
+                <div>
+                    @Html.TextBoxFor(model => model.Author, new { @class = "form-control", @readonly = "readonly" })
+                </div>
+            </div>
+        </div>
+        <br /><br />
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="editor-label">
+                    @Html.DisplayNameFor(model => model.Coverage)
+                </div>
+                <div>
+                    <textarea class="form-control" readonly="readonly" style="resize: none;" id="Coverage" name="Coverage" rows="3">@Model.Coverage</textarea>
+                </div>
+            </div>
+        </div>
+        <br /><br />
+        <div class="row">
+            <div class="col-md-3 col-md-offset-3">
+                @Html.DisplayNameFor(model => model.Publicationtime)
+                <input readonly="readonly" id="Publicationtime" name="Publicationtime" type="text" value="@Model.Publicationtime.ToShortDateString()" class="form-control">
+            </div>
+        </div>
+    </fieldset>
+</div>
+<div style="text-align:center">
+    @using (Html.BeginForm("Delete", "Notice", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <p>
+            <input type="submit" value="确定" /> |
+        </p>
+    }
+</div>
+<p>
+    @Html.ActionLink("返回", "List")
+</p>

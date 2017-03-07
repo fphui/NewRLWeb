@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+</head>
+<body>
+    <div>
+        @RenderBody()
+        @helper ShowSex(byte sex)
+        {
+                if (sex == 0)
+                {
+                    @:男
+                }
+                else if (sex == 1)
+                {
+                    @:女
+                }
+                else
+                {
+                    @:Error
+                }
+       }
+
+       @helper ShowEducation(byte education)
+       {
+           if (education == 0)
+           {
+               @:本科
+           }
+           else if (education == 1)
+           {
+               @:硕士
+           }
+           else
+           {
+               @:Error
+           }
+       }
+
+       @helper ShowRetain(byte retain)
+       {
+           if (retain == 0)
+           {
+               @:否
+           }
+           else
+           {
+               @:是
+           }
+       }
+
+       @helper StrSub(string str,int length = 40)
+       {
+           if (str.Length > length)
+           {
+               str = str.Substring(0, length) + "...";
+           }   
+           @str                 
+       }
+    </div>
+</body>
+</html>

@@ -1,0 +1,66 @@
+﻿@model IEnumerable<NewRLWeb.Models.Users>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Manage.cshtml";
+}
+<!--2017.2.24 BLM-->
+<style type="text/css">
+    .demo-chat {
+        width: 50%;
+        margin: 0 auto;
+    }
+</style>
+<body>
+    <div class="htmleaf-container">
+        <div class="htmleaf-content">
+            <div class="demo-chat">
+                <canvas id="canvas" height="450" width="600"></canvas>
+            </div>
+        </div>
+    </div>
+    <script src="~/Scripts/Chart.js"></script>
+    <script>
+        function getdata() {
+            var l = new Array();
+            $.ajax({
+                async: false,
+                type: "Post",
+                url: "/Users/EachClass",
+                success: function (data) {
+                    li = eval(data);
+                    for (var count = 0; count < li.length; count++)//拆分
+                    {
+                        l[count] = Number(li[count]);
+                    }
+                },
+                error:function(){
+                    alert("全部毕业！");
+                }
+            })
+            return l;
+        }
+        var list = new Array();
+        list = getdata();
+        var randomScalingFactor = function () { return Math.round(Math.random() * 100) };
+        var barChartData = {
+            labels: ["大二", "大三", "大四", "研一", "研二", "研三"],
+            datasets: [
+                {
+                    fillColor: "rgba(220,220,220,0.5)",
+                    strokeColor: "rgba(220,220,220,0.8)",
+                    highlightFill: "rgba(220,220,220,0.75)",
+                    highlightStroke: "rgba(220,220,220,1)",
+                    //data: ["20", "30", "10", "50", "40", "6", "15"]
+                    data: ["" + list[0] + "", "" + list[1] + "", "" + list[2] + "", "" + list[3] + "", "" + list[4] + "", "" + list[5] + ""]
+                }
+            ]
+
+        }
+        window.onload = function () {
+            var ctx = document.getElementById("canvas").getContext("2d");
+            window.myBar = new Chart(ctx).Bar(barChartData, {
+                responsive: true
+            });
+        }
+    </script>
+</body>

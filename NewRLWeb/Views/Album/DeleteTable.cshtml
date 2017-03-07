@@ -1,0 +1,70 @@
+﻿@model IEnumerable<NewRLWeb.Models.Album>
+
+@{
+    ViewBag.Title = "DeleteList";
+    //Layout = "~/Views/Shared/_Manage.cshtml";
+}
+<script>
+    $("#chkAll").click(function () {
+        if (this.checked) {
+            $("input[name='checks']").each(function () { this.checked = true; });
+        }
+        else {
+            $("input[name='checks']").each(function () { this.checked = false; });
+        }
+    });
+</script>
+<div style="height: 480px; position: relative;">
+    @using (Html.BeginForm("MultDelete", "Album", FormMethod.Post))
+    {
+        <table class="table table-hover">
+            <tr>
+                <th>
+                    <input type="checkbox" id="chkAll" />全选
+                </th>
+                <th>展示图片</th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Albumname)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Album_Type)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Publicationtime)
+                </th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <input type="checkbox" id="checks" name="checks" value="@item.AlbumID" />
+                    </td>
+                    <td>
+                        <div>
+                            @if (string.IsNullOrEmpty(item.Pho_Address))
+                            {
+                                <img id="Img" width="100" height="50" src="~/Images/empty.gif" />
+                            }
+                            else
+                            {
+                                <img id="Img" width="100" height="50" src="@Url.Content(item.Pho_Address)" alt="images" />
+                            }
+                        </div>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Albumname)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Album_Type)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Publicationtime)
+                    </td>
+                </tr>
+            }
+
+        </table>
+    <input type="submit" name="BtnDelete" value="删除" style="right: 13%; position: absolute; bottom: -10%; " />
+    }
+    </div>

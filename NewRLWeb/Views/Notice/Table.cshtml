@@ -1,0 +1,50 @@
+﻿@model IEnumerable<NewRLWeb.Models.Notice>
+
+@{
+    ViewBag.Title = "Table";
+    //Layout = "~/Views/Shared/_Manage.cshtml";
+}
+
+@*<h2>Table</h2>*@
+<style type="text/css">
+    .onecenter {
+        text-align: center;
+        width: 200px;
+    }
+</style>
+<table class="table table-hover">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Author)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Coverage)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Publicationtime)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Author)
+            </td>
+            <td>
+                @*@Html.DisplayFor(modelItem => item.Coverage)*@
+                @UIHelper.StrSub(item.Coverage, 45)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Publicationtime)
+            </td>
+            <td>
+                @Ajax.ActionLink("编辑", "Edit", "Notice", new { id = item.NoticeID }, new AjaxOptions() { UpdateTargetId = "mainContent", HttpMethod = "Get", OnBegin = "active", InsertionMode = InsertionMode.Replace }) |
+                @Ajax.ActionLink("详情", "Details", "Notice", new { id = item.NoticeID }, new AjaxOptions() { UpdateTargetId = "mainContent", HttpMethod = "Get", OnBegin = "active", InsertionMode = InsertionMode.Replace }) |
+                @Ajax.ActionLink("删除", "Delete", "Notice", new { id = item.NoticeID }, new AjaxOptions() { UpdateTargetId = "mainContent", HttpMethod = "Get", OnBegin = "active", InsertionMode = InsertionMode.Replace })
+            </td>
+        </tr>
+    }
+
+</table>

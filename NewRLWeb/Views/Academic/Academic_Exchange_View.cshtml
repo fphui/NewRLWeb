@@ -1,0 +1,30 @@
+﻿<!--周煜 2016.11.13-->
+@{
+    ViewBag.Title = "Academic_Exchange_View";
+}
+@using NewRLWeb.Models;
+@model Academic_Exchange
+<!--2016.11.16 周煜-->
+@*<h2>Academic_Exchange_View</h2>*@
+@Html.ActionLink("返回列表", "Index", new { id=1 },new{style="font-size:25px;margin-left:5%;"})
+<section class="contact">
+    <div class="page2_news container" style="border: 1px">
+        <div>
+            <h1 style="margin-left:45%;">@Model.AcademicName</h1>
+            <h2 style="margin-left:60%;">@Model.Abstract</h2>
+            <br />
+            @{
+                string filePath = @Model.Coverage;
+                filePath = HttpContext.Current.Server.MapPath(filePath);
+                string fileContent = string.Empty;
+                var reader = filePath;
+                StreamReader sr = new StreamReader(reader, System.Text.Encoding.Default);
+                fileContent = sr.ReadToEnd();
+            }
+            @Html.Raw(fileContent)
+            <div style="float:right;margin-right:5%;">
+                <h1>@Model.BeginTime - @Model.EndTime </h1>
+            </div>
+        </div>
+    </div>
+</section>

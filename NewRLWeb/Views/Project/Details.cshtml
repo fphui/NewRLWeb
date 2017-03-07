@@ -1,0 +1,72 @@
+﻿@model NewRLWeb.Models.Project_Case
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<div style="height: 520px; position: relative;">
+    <fieldset>
+        <legend>Project</legend>
+        <div class="row">
+            <div class="col-xs-12 col-md-8">
+                <div class="row">
+
+                    <div class="form-group" style="margin-left:15px">
+                        @Html.LabelFor(model => model.Projectname, new { @id = "Title_lab" })
+                        @Html.TextBoxFor(model => model.Projectname, new { @class = "form-control", @readonly = "readonly" })
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="form-group" style="margin-left:15px">
+                        @Html.LabelFor(model => model.Abstract, new { @id = "Abstract_lab" })
+                        <textarea class="form-control" style="resize: none;" readonly="readonly" data-val="true" data-val-required="您需要填写简介" id="Abstract" name="Abstract" rows="3">@Model.Abstract</textarea>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        @Html.LabelFor(model => model.Startdate)
+                        <input data-val="true" readonly="readonly" data-val-date="字段 起始日期 必须是日期。" data-val-required="起始日期 字段是必需的。" id="Startdate" name="Startdate" type="text" value="@Model.Startdate.ToShortDateString()" class="form-control">
+                    </div>
+                    <div class="col-xs-6">
+                        @Html.LabelFor(model => model.Enddate)
+                        <input data-val="true" readonly="readonly" data-val-date="字段 结束日期 必须是日期。" data-val-required="结束日期 字段是必需的。" id="Enddate" name="Enddate" type="text" value="@Model.Enddate.ToShortDateString()" class="form-control">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6 col-md-4">
+                <label for="Pho_Address">项目展示图片</label>
+                <div>
+                    <div>
+                        @if (string.IsNullOrWhiteSpace(Model.PhotoAddress))
+                        {
+                            <img id="xmTanImg" width="350" height="230" src="~/Images/empty.gif" />
+                        }
+                        else
+                        {
+                            <img id="xmTanImg" width="350" height="230" src="@Url.Content(Model.PhotoAddress)" alt="images" />
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            @if (!string.IsNullOrWhiteSpace(Model.Cooperativeunit))
+            {
+                <div class="col-xs-6 col-sm-4">
+                    @Html.LabelFor(model => model.Cooperativeunit)
+                    @Html.TextBoxFor(model => model.Cooperativeunit, new { @class = "form-control", @readonly = "readonly" })
+                </div>
+            }
+            <div class="col-xs-6 col-sm-4">
+                @Html.LabelFor(model => model.ProjectType)
+                @Html.TextBoxFor(model => model.ProjectType, new { @class = "form-control", @readonly = "readonly" })
+            </div>
+        </div>
+        <br />
+    </fieldset>
+</div>
+    <p>
+        @Ajax.ActionLink("编辑", "Edit", new { id = Model.ProjectID }, new AjaxOptions() { UpdateTargetId = "mainContent", HttpMethod = "Get", OnBegin = "active", InsertionMode = InsertionMode.Replace }) |
+        @Html.ActionLink("返回", "List")
+    </p>

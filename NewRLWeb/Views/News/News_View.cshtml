@@ -1,0 +1,122 @@
+﻿@{
+    ViewBag.Title = "NewsView";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using NewRLWeb.Models
+@model News
+
+<!doctype html>
+<html>
+<head>
+    <link href="~/Content/News/Index.css" rel="stylesheet" />
+    <title>@ViewBag.Title</title>
+    <script src="~/Scripts/kindeditor-all-min.js"></script>
+    <script src="~/kindeditor/lang/zh-CN.js"></script>
+    <link href="~/kindeditor/themes/default/default.css" rel="stylesheet" />
+    <script>
+        //评论编辑初始化（kindeditor）
+        KindEditor.ready(function (K) {
+            var editor;
+            KindEditor.options.filterMode = false;
+            editor = K.create('textarea[name="content"]', {
+                resizeType: 1,
+                pluginsPath: "../kindeditor/plugins/",
+                allowPreviewEmoticons: false,
+                resizeType: 0,
+                allowImageUpload: false,
+                items: [
+                      'forecolor', 'emoticons', 'bold', 'italic', 'underline',
+                     '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+                    'insertunorderedlist', '|', ]
+            });
+        });
+        //获取评论文本
+        function GoDown() {
+            $(document).scrollTop(document.getElementsByTagName("body")[0].scrollHeight);
+            alert("请先登录！");
+        }
+    </script>
+
+</head>
+<body>
+    <div class="News_View">
+        <p>
+            @Html.ActionLink(">>返回新闻列表", "Index")
+        </p>
+        <h2 class="news_title">@Model.Title</h2>
+        <div class="col-lg-12">
+            <div style="margin-bottom:0; float:left; margin-left:2px;">
+                <span class="news_author">作者 : @Model.Author</span>
+            </div>
+            <div style="margin-bottom:0;float:left;margin-left:20px;">
+                <span class="news_date">日期 : @Model.Publicationtime</span>
+            </div>
+            <div style="float:left;margin-left:20px;">
+                <span class="news_glancenumber">已浏览次数 : @Model.Glance_Number</span>
+            </div>
+        </div>
+        @*<p style="margin-bottom:0;">
+                <span class="news_author">作者 : @Model.Author</span>
+            </p>
+            <p style="margin-bottom:0;">
+                <span class="news_date">日期 : @Model.Publicationtime</span>
+            </p>
+            <p>
+                <span class="news_glancenumber">已浏览次数 : @Model.Glance_Number</span>
+            </p>*@
+        <div style="margin-top:60px;">
+            @{
+                string filePath = @Model.Coverage;
+                filePath = HttpContext.Current.Server.MapPath(filePath);
+                string fileContent = string.Empty;
+                var reader = filePath;
+                StreamReader sr = new StreamReader(reader, System.Text.Encoding.Default);
+                fileContent = sr.ReadToEnd();
+            }
+            @Html.Raw(fileContent)
+        </div>
+        <p style="margin-top:10px;">
+            <span class="news_source">新闻来源 : @Model.Link</span>
+        </p>
+        @*<table>
+                <tr>
+                    <th>
+                        @Model.Link
+                    </th>
+                    <th>
+                        @Model.NewsSource
+                    </th>
+                </tr>
+            </table>*@
+        <div>
+            @Html.Action("Comment", new { Newsid = Model.NewsID })
+        </div>
+        @using (Html.BeginForm("GetComment", "News", new { id = Model.NewsID }, FormMethod.Post,new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+            <div class="form-body">
+                @*<div class="headprotrait">
+                    <img class="img-circle" src="~/Images/News/head.png" />
+                </div>*@
+                <div class="inputarea">
+                    <div class="content">
+                        <textarea id="content" name="content" placeholder="评论一下吧"></textarea>
+                    </div>
+                    <div class="form-submit">
+                        @if(Session["userId"] != null && Session["username"] != null)
+                        {
+                            <input type="submit" value="发表评论" name="发表评论" />
+                        }
+                        else
+                        {
+                            <input type="button" value="发表评论" name="发表评论" onclick="GoDown()" />
+                        }
+
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</body>
+</html>

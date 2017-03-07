@@ -1,0 +1,77 @@
+﻿@{
+    Layout = null;
+}
+@model IEnumerable<NewRLWeb.Models.News>
+@using System.Globalization;
+<div class="news">
+    <div class="title">
+        <span class="line"></span>
+        <h3>
+            新闻动态
+        </h3>
+    </div>
+    <ul class="media-list">
+        @foreach (var item in Model)
+        {
+            <li class="media">
+                <a class="media-left" href="/News/News_View/@item.NewsID">
+                    <img src="~/Images/image001.jpg"/>
+                    @*<img src=@item.PhotoAddress />*@
+                </a>
+                <div class="media-body">
+                    <a class="media-heading" href="/News/News_View/@item.NewsID">@item.Title</a>
+                    <p class="text-news">
+                        @item.Abstract
+                    </p>
+                    <div class="publishnews">
+                        <span>@item.Author</span>&nbsp;&nbsp;<span>@(item.Publicationtime.ToString("yyyy-MM-dd", DateTimeFormatInfo.InvariantInfo))</span>
+                    </div>
+                </div>
+            </li>
+        }
+        @*<li class="media">
+            <a class="media-left" href="#">
+                <img src="~/Images/image001.jpg" />
+            </a>
+            <div class="media-body">
+                <a class="media-heading">《吉林日报》报道日立学生科技创新</a>
+                <p class="text-news">
+                    《吉林日报》报道日立学生科技创新报道日立学生科技创新报道日立学生科技创新报道日立学生科技创新报道日立学生科技创新报道日立学生科技创新报道日立学生科技
+                </p>
+                <div class="publishnews">
+                    <span>发布人</span>&nbsp;&nbsp;<span>2016/10/26</span>
+                </div>
+            </div>
+        </li>
+        <li class="media">
+
+            <a class="media-left" href="#">
+                <img src="/Content/Home/images/cloud.jpg" alt="...">
+            </a>
+            <div class="media-body">
+                <a class="media-heading">《吉林日报》报道日立学生科技创新</a>
+                <p class="text-news">
+                    《吉林日报》报道日立学生科技创新报道日立学生科技创新报道日立学生科技创新报道日立学生科技创新报道日立学生科技创新报道日立学生科技创新报道日立学生科技
+                </p>
+                <div class="publishnews">
+                    <span>发布人</span>&nbsp;&nbsp;<span>2016/10/26</span>
+                </div>
+            </div>
+        </li>
+        <li class="media">
+            <a class="media-left" href="#">
+                <img src="/Content/Home/images/cloud.jpg" alt="...">
+            </a>
+            <div class="media-body">
+                <a class="media-heading">《吉林日报》报道日立学生科技创新</a>
+                <p class="text-news">
+                    《吉林日报》报道日立学生科技创新报道日立学生科技创新报道日立学生科技创新报道日立学生科技创新报道日立学生科技创新报道日立学生科技创新报道日立学生科技
+                </p>
+                <div class="publishnews">
+                    <span>发布人</span>&nbsp;&nbsp;<span>2016/10/26</span>
+                </div>
+            </div>
+        </li>*@
+    </ul>
+    <div class="newsmore"><a href="~/News/Index">更多...</a></div>
+</div>

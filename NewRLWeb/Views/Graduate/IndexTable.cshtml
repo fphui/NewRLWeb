@@ -1,0 +1,61 @@
+﻿@* 邢亚男 2017/02/23 毕业生详细信息分页 *@
+@*@model IEnumerable<NewRLWeb.ViewModels.Graduate>*@
+@model IEnumerable<NewRLWeb.Models.Users>
+<link href="~/Content/Graduate/Index.css" rel="stylesheet" />
+<link href="~/Content/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<ul class="media-list">
+    @foreach (var item in Model)
+    { 
+      <li class="media">
+          <a class="media-left" href="ProjectView/">
+              <img src="~/Images/Project/li-deng-163-20161220.jpg" />
+          </a>
+          <div class="media-body">
+              <p>姓名：@item.Username </p>
+              <p>毕业时间：@item.Graduate_Data</p>
+              <p>毕业去向：@item.Graduate_Direction</p>
+              <p class="sendword">毕业寄语：@item.Message</p>
+              <a href="/Album/Photos?id=@item.AlbumID&&name=@item.Unique_ID">>>跳转至个人相册</a>
+          </div>
+      </li>
+    }
+</ul>
+@*<div class="media-list">
+        <div class="media">
+            <a class="media-left" href="ProjectView/">
+                <img src="~/Images/Project/li-deng-163-20161220.jpg" />
+            </a>
+            <div class="media-body">
+                <p>姓名：姓名</p>
+                <p>毕业时间：2017-01-01</p>
+                <p>毕业去向：北京读研</p>
+                <p class="sendword">毕业寄语：祝日立项目组越办越好！</p>
+                <a href="#">>>跳转至个人相册</a>
+            </div>
+        </div>
+        <div class="media">
+            <a class="media-left" href="ProjectView/">
+                <img src="~/Images/Project/li-deng-163-20161220.jpg" />
+            </a>
+            <div class="media-body">
+                <p>姓名：姓名</p>
+                <p>毕业时间：2017-01-01</p>
+                <p>毕业去向：北京读研</p>
+                <p class="sendword">毕业寄语：祝日立项目组越办越好！</p>
+                <a href="#">>>跳转至个人相册</a>
+            </div>
+        </div>
+    </div>
+    <div class="media">
+        <a class="media-left" href="ProjectView/">
+            <img src="~/Images/Project/li-deng-163-20161220.jpg" />
+        </a>
+        <div class="media-body">
+            <p>姓名：姓名</p>
+            <p>毕业时间：2017-01-01</p>
+            <p>毕业去向：北京读研</p>
+            <p class="sendword">毕业寄语：祝日立项目组越办越好！</p>
+            <a href="#">>>跳转至个人相册</a>
+        </div>
+    </div>*@

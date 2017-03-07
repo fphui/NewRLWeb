@@ -1,0 +1,73 @@
+﻿@{
+    ViewBag.Title = "_Manage";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <meta charset="utf-8">
+    <title>后台管理系统</title>
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    @*<link href="~/Content/bootstrap/css/bootstrap.css" rel="stylesheet" />*@
+    <link href="~/Content/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/themes/Black/theme.css" rel="stylesheet" type="text/css" />
+    <script src="~/Scripts/jquery-1.7.1.min.js" type="text/javascript"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    @*<script src="~/Scripts/user.js"></script>*@
+</head>
+<body style="height:100%;">
+    @* 修改时间：2017/02/21
+        修改人：邢亚男
+        修改内容：加style *@
+    <div>
+        <div class="navbar navbar-inverse navbar-fixed-left" style="margin-bottom: 0px; border-radius:0px !important;">
+            <div class="container">
+                <!--12.5 -->
+                <div class="navbar-collapse  navbar-right  collapse manage-header">
+                    @* 修改时间：2017/02/21
+                        修改人：邢亚男
+                        修改内容：加style *@
+                    <ul class="nav-ul nav navbar-nav" style=" position:absolute;right:20px; ">
+                        <li>@Html.ActionLink("<<返回首页", "Index", "Home")</li>
+                        <li>@Html.ActionLink("退出管理", "Login", "Manage")</li>
+                        <li><img src="@Url.Content("~/Images/Users_Head/empty.png")" width="40" height="40" /></li>
+                        @*<li>@Session["Name"].ToString()</li>*@
+                    </ul>
+                </div>
+                <!--12.5 -->
+            </div>
+        </div>
+        <div>
+            @RenderSection("featured", required: false)
+        </div>
+        @*菜单*@
+        <div style="height:100%;">
+            @Html.Partial("../Manage/SiderMenu")
+        </div>
+        <!--12.5 style增加 卜令梅-->
+        <div class="contain manage-contain" id="mainContent" style="position: relative; height: 637px;">
+            @RenderBody()
+        </div>
+        <!--12.5 style增加 卜令梅-->
+        @*<script src="~/Content/bootstrap/js/bootstrap.js"></script>*@
+        <script src="~/Content/bootstrap/js/bootstrap.min.js"></script>
+        @*<script src="~/Scripts/bootstrap.min.js" type="text/javascript"></script>*@
+        <script type="text/javascript">
+            $("[rel=tooltip]").tooltip()
+            $(function () {
+                $('.demo-cancel-click').click(function () { return false; });
+            });
+            function active() {
+                $(".nav-list li").removeClass("active");
+            }
+
+        </script>
+        @RenderSection("scripts", required: false)
+    </div>
+</body>
+</html>

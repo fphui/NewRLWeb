@@ -1,0 +1,98 @@
+﻿@model IEnumerable<NewRLWeb.Models.Users>
+
+@{
+    ViewBag.Title = "List";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<body>
+    
+        <table class="table table-hover">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.UserID)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Username)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Sex)
+                </th>
+                @*<th>
+                    @Html.DisplayNameFor(model => model.Subject)
+                </th>*@
+                <th>
+                    @Html.DisplayNameFor(model => model.Native)
+                </th>
+                @*<th>
+                    @Html.DisplayNameFor(model => model.Address)
+                </th>*@
+                @*<th>
+                    @Html.DisplayNameFor(model => model.QQ)
+                </th>*@
+                <th>
+                    @Html.DisplayNameFor(model => model.Phone_Number)
+                </th>
+                @*<th>
+                    @Html.DisplayNameFor(model => model.E_mail)
+                </th>*@
+                <th>
+                    @Html.DisplayNameFor(model => model.Admission_Data)
+                </th>
+                @*<th>
+                    @Html.DisplayNameFor(model => model.Graduate_Data)
+                </th>*@
+                <th>
+                    @Html.DisplayNameFor(model => model.Education)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Username)
+                    </td>
+                    <td>
+                        @UIHelper.ShowSex(item.Sex)
+                    </td>
+                    @*<td>
+                        @Html.DisplayFor(modelItem => item.Subject)
+                    </td>*@
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Native)
+                    </td>
+                    @*<td>
+                        @Html.DisplayFor(modelItem => item.Address)
+                    </td>*@
+                    @*<td>
+                        @Html.DisplayFor(modelItem => item.QQ)
+                    </td>*@
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Phone_Number)
+                    </td>
+                    @*<td>
+                        @item.E_mail
+                    </td>*@
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Admission_Data)
+                    </td>
+                    @*<td>
+                        @Html.DisplayFor(modelItem => item.Graduate_Data)
+                    </td>*@
+                    <td>
+                        @UIHelper.ShowEducation(item.Education)
+                    </td>
+                    <td>
+                        @Ajax.ActionLink("编辑", "Manage_Edit", "Users", new { id = item.UserID }, new AjaxOptions() { UpdateTargetId = "mainContent", HttpMethod = "Get", OnBegin = "active", InsertionMode = InsertionMode.Replace }) |
+                        @Ajax.ActionLink("详情", "Details", "Users", new { id = item.UserID }, new AjaxOptions() { UpdateTargetId = "mainContent", HttpMethod = "Get", OnBegin = "active", InsertionMode = InsertionMode.Replace }) |
+                        @Ajax.ActionLink("删除", "Delete", "Users", new { id = item.UserID }, new AjaxOptions() { UpdateTargetId = "mainContent", HttpMethod = "Get", OnBegin = "active", InsertionMode = InsertionMode.Replace })
+                    </td>
+                </tr>
+            }
+
+        </table>
+</body>

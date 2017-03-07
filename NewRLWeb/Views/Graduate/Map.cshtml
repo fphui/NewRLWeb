@@ -1,0 +1,109 @@
+﻿@model IEnumerable<NewRLWeb.ViewModels.Map>
+
+<!-- 代码 开始 -->
+<div id="main" style=" width:100%; height:600px; ">
+
+</div>
+
+<script type="text/javascript">
+    var Map =@Html.Raw(Json.Encode(@Model))
+    function randomData(province) {
+        for (i = 0; i < 34; i++) {
+            if (Map[i].Province == province)
+                return Map[i].numOfGraduate;
+        }
+        return 0;
+    }
+    var myChart = echarts.init(document.getElementById('main'), 'shine');
+
+    var option = {
+        title: {
+            text: '日立项目组毕业生去向',
+            subtext: ' ',
+            left: 'center'
+        },
+        tooltip: {
+            trigger: 'item'
+        },
+        legend: {
+            orient: 'vertical',
+            left: 'left',
+            data: ['本省毕业生人数']
+        },
+        visualMap: {
+            min: 0,
+            max: 5,
+            left: 'left',
+            top: 'bottom',
+            text: ['高', '低'],           // 文本，默认为数值文本
+            calculable: true
+        },
+        toolbox: {
+            show: true,
+            orient: 'vertical',
+            left: 'right',
+            top: 'center',
+            feature: {
+                dataView: { readOnly: false },
+                restore: {},
+                saveAsImage: {}
+            }
+        },
+        series: [
+            {
+                name: '本省毕业生人数',
+                type: 'map',
+                mapType: 'china',
+                roam: false,
+                label: {
+                    normal: {
+                        show: true
+                    },
+                    emphasis: {
+                        show: true
+                    }
+                },
+                data: [
+                    { name: '北京', value: randomData("北京") },
+                    { name: '天津', value: randomData("天津") },
+                    { name: '上海', value: randomData("上海") },
+                    { name: '重庆', value: randomData("重庆") },
+                    { name: '河北', value: randomData("河北") },
+                    { name: '河南', value: randomData("河南") },
+                    { name: '云南', value: randomData("云南") },
+                    { name: '辽宁', value: randomData("辽宁") },
+                    { name: '黑龙江', value: randomData("黑龙江") },
+                    { name: '湖南', value: randomData("湖南") },
+                    { name: '安徽', value: randomData("安徽") },
+                    { name: '山东', value: randomData("山东") },
+                    { name: '新疆', value: randomData("新疆") },
+                    { name: '江苏', value: randomData("江苏") },
+                    { name: '浙江', value: randomData("浙江") },
+                    { name: '江西', value: randomData("江西") },
+                    { name: '湖北', value: randomData("湖北") },
+                    { name: '广西', value: randomData("广西") },
+                    { name: '甘肃', value: randomData("甘肃") },
+                    { name: '山西', value: randomData("山西") },
+                    { name: '内蒙古', value: randomData("内蒙古") },
+                    { name: '陕西', value: randomData("陕西") },
+                    { name: '吉林', value: randomData("吉林") },
+                    { name: '福建', value: randomData("福建") },
+                    { name: '贵州', value: randomData("贵州") },
+                    { name: '广东', value: randomData("广东") },
+                    { name: '青海', value: randomData("青海") },
+                    { name: '西藏', value: randomData("西藏") },
+                    { name: '四川', value: randomData("四川") },
+                    { name: '宁夏', value: randomData("宁夏") },
+                    { name: '海南', value: randomData("海南") },
+                    { name: '台湾', value: randomData("台湾") },
+                    { name: '香港', value: randomData("香港") },
+                    { name: '澳门', value: randomData("澳门") }
+                ]
+            }
+
+        ]
+    };
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+</script>
+<!-- 代码 结束 -->

@@ -1,0 +1,50 @@
+﻿@model NewRLWeb.Models.Administrator
+@{
+    Layout = null;
+    ViewBag.title = "管理员登录";
+}
+
+<link rel="stylesheet" type="text/css" href="~/Content/Manage/style.css" />
+
+<div class="wrapper">
+    @*<h1>Animated Form Switching</h1>
+        <h2>Demo: click the <span>orange links</span> to see the form animating and switching</h2>*@
+    <h1 style="margin-left:18%">日立项目组后台管理系统</h1>
+    <br /><br />
+    <div class="content">
+        <div id="form_wrapper" class="form_wrapper">
+            <form class="login active" method="post" autocomplete="off">
+
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
+                <h3>登陆</h3>
+                <div> 
+                    <label>用户名:</label>
+                    @*<input type="text" />
+                        <span class="error">This is an error</span>*@
+                    <input data-val="true" data-val-required="用户名 字段是必需的。" required="required" id="Username" name="Username" type="text" value="">
+                    @Html.ValidationMessageFor(m => m.Username)
+                </div>
+                <div>
+                    <label>密码:</label>
+                    <!--[if IE]>
+                        <input data-val="true" data-val-required="密码 字段是必需的。" required="required" id="Password" type="password" name="Password" autocomplete="off" />
+                    <![endif]--> 
+                    <![if !IE]>
+                    <input data-val="true" data-val-required="密码 字段是必需的。" required="required" id="Password" type="text" name="Password" onfocus="this.type='password'" autocomplete="off">
+                    <![endif]> 
+                        @Html.ValidationMessageFor(m => m.Password)
+</div>
+                <div class="bottom">
+                    <input type="submit" value="确定" />
+                    @*<a href="register.html" rel="register" class="linkform">You don't have an account yet? Register here</a>*@
+                    <div class="clear"></div>
+                </div>
+            </form>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

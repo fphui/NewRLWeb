@@ -1,0 +1,314 @@
+﻿@model IEnumerable<NewRLWeb.Models.Commment>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/kindeditor/themes/default/default.css" rel="stylesheet" />
+<script src="~/Scripts/kindeditor-all-min.js"></script>
+<script src="~/kindeditor/lang/zh-CN.js"></script>
+<link href="~/Content/Album/Photos.css" rel="stylesheet" />
+<link href="~/Content/Album/Comment.css" rel="stylesheet" />
+<script src="~/Scripts/turnPhoto.js"></script>
+<style>
+    .lightboxRightControl, .lightboxLeftControl {
+        position: fixed;
+        top: 47%;
+        z-index: 10000;
+        cursor: pointer;
+        display: block;
+        width: 4%;
+        height: 8%;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -o-user-select: none;
+        user-select: none;
+        text-decoration: none;
+        -webkit-tap-highlight-color: rgba(0,0,0,0);
+    }
+
+    a:hover, a:visited, a:link, a:active {
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -o-user-select: none;
+        user-select: none;
+        text-decoration: none;
+        -webkit-tap-highlight-color: rgba(0,0,0,0);
+    }
+</style>
+<script>
+    ///评论编辑器初始化
+    KindEditor.ready(function (K) {
+        var editor;
+        KindEditor.options.filterMode = false;
+        editor = K.create('textarea[name="content"]', {
+            resizeType: 1,
+            pluginsPath: "../kindeditor/plugins/",
+            allowPreviewEmoticons: false,
+            resizeType: 0,
+            allowImageUpload: false,
+            items: [
+                  'forecolor', 'emoticons', 'bold', 'italic', 'underline',
+                 '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+                'insertunorderedlist', '|', ]
+        });
+    })
+    var loop = 1;
+    var jsonarray;
+    //初始化图片
+    $().ready(function LoadPicture() {
+        var temp2 = eval(@Html.Raw( @ViewBag.temp));
+        if (temp2.length == 0) {
+            for (var temp = 1; temp <= 9; temp++) {
+                document.getElementById(temp).style.display = "none";
+            }
+            alert("该相册无图片！");
+        }
+        else {
+
+            jsonarray = eval(@Html.Raw( @ViewBag.temp));
+            document.getElementById("NowPage").innerHTML = "第" + loop + "页";
+            document.getElementById("AllPage").innerHTML = " / " + "共" + Math.ceil(jsonarray.length / 9) + "页";
+            var tempA = loop;
+
+            for (var temp = 1; temp <= 9; temp++) {
+                if (temp <= jsonarray.length) {
+
+                    document.getElementById(tempA).style.display = "block";
+                    document.getElementById(tempA).src = jsonarray[tempA - 1].Address;
+                    document.getElementById(tempA).title = tempA; //jsonarray[tempA - 1].PhotoID;
+                    document.getElementById(tempA).name = jsonarray[tempA - 1].PhotoID;
+                    tempA++;
+                }
+                else {
+                    document.getElementById(tempA).style.display = "none";
+                    tempA++;
+                }
+            }
+        }
+    }
+    );
+
+    //图片放大
+    function OpenAlbum(ImgId) {
+
+        document.getElementById("BigImg").src = document.getElementById(ImgId).src;
+        document.getElementById("BigImg").title = document.getElementById(ImgId).title;
+        document.getElementById("Album").style.display = "none";
+        document.getElementById("ShowPhoto").style.display = "block";
+        document.getElementById("LeftPage").innerHTML = document.getElementById(ImgId).title;
+        document.getElementById("RightPage").innerHTML = eval(jsonarray).length;
+        var ajaxUrl = '/Album/GetComment?TypeID=' + document.getElementById(ImgId).name;
+        var ajaxType = 'post';
+        var ajaxDataType = 'text';
+        var Option =
+            {
+                url: ajaxUrl,
+                type: ajaxType,
+                dataType: ajaxDataType,
+                cache: false, //设置为 false 将不会从浏览器缓存中加载请求信息。
+                async: true, //(默认: true)，所有请求均为异步请求。发送同步请求，请将此选项设置为 false。同步请求将锁住浏览器，用户其它操作必须等待请求完成才可以执行。
+                timeout: 3600, //设置请求超时时间（毫秒）。此设置将覆盖全局设置。
+                error: function () { },
+                success: sucFun,
+                beforeSend: function () { }
+            };
+        $.ajax(Option);
+    }
+
+    //图片缩小
+    function CloseAlbum() {
+        document.getElementById("ShowPhoto").style.display = "none";
+        document.getElementById("Album").style.display = "block";
+    }
+
+    //图片上一页（放大状态）
+    function TurnLeftBigPhoto() {
+
+        temp = document.getElementById("BigImg").title;
+        if (temp == 1) {
+            alert("已经是第一页！");
+        }
+        else {
+            document.getElementById("BigImg").src = jsonarray[temp - 2].Address;
+            document.getElementById("BigImg").title = temp - 1;
+            document.getElementById("LeftPage").innerHTML = temp - 1;
+            document.getElementById("BigImg").name = jsonarray[temp - 2].PhotoID;
+        }
+        var ajaxUrl = '/Album/GetComment?TypeID=' + document.getElementById("BigImg").name;
+        var ajaxType = 'post';
+        var ajaxDataType = 'text';
+        var Option =
+            {
+                url: ajaxUrl,
+                type: ajaxType,
+                dataType: ajaxDataType,
+                cache: false, //设置为 false 将不会从浏览器缓存中加载请求信息。
+                async: true, //(默认: true)，所有请求均为异步请求。发送同步请求，请将此选项设置为 false。同步请求将锁住浏览器，用户其它操作必须等待请求完成才可以执行。
+                timeout: 3600, //设置请求超时时间（毫秒）。此设置将覆盖全局设置。
+                error: function () { },
+                success: sucFun,
+                beforeSend: function () { }
+            };
+        $.ajax(Option);
+    }
+
+    //图片下一页（放大状态）
+    function TurnRightBigPhoto() {
+
+        temp = document.getElementById("BigImg").title;
+        if (temp == eval(jsonarray).length) {
+            alert("已经是最后一页！");
+        }
+        else {
+            document.getElementById("BigImg").title = (parseInt(temp) + 1);
+            document.getElementById("BigImg").src = jsonarray[temp].Address;
+            document.getElementById("LeftPage").innerHTML = (parseInt(temp) + 1);
+
+            document.getElementById("BigImg").name = jsonarray[temp].PhotoID;
+        }
+        var ajaxUrl = '/Album/GetComment?TypeID=' + document.getElementById("BigImg").name;
+        var imgUrl = '/Album/GetUserPhoto?TypeID=' + document.getElementById("BigImg").name;
+        var ajaxType = 'post';
+        var ajaxDataType = 'text';
+        var Option =
+            {
+                url: ajaxUrl,
+                type: ajaxType,
+                dataType: ajaxDataType,
+                cache: false, //设置为 false 将不会从浏览器缓存中加载请求信息。
+                async: true, //(默认: true)，所有请求均为异步请求。发送同步请求，请将此选项设置为 false。同步请求将锁住浏览器，用户其它操作必须等待请求完成才可以执行。
+                timeout: 3600, //设置请求超时时间（毫秒）。此设置将覆盖全局设置。
+                error: function () { },
+                success: sucFun,
+                beforeSend: function () { }
+            };
+        $.ajax(Option);
+    }
+
+    //显示图标
+    function ShowTurnButton() {
+        document.getElementById("leftControl").style.display = "block";
+        document.getElementById("rightControl").style.display = "block";
+
+    }
+
+    //隐藏图标
+    function HideTurnButton() {
+        document.getElementById("leftControl").style.display = "none";
+        document.getElementById("rightControl").style.display = "none";
+
+    }
+
+    //图片上一页（预览状态）
+    function TurnLeftNormalPhoto() {
+        if (loop == 1) {
+            alert("已经是第一页！");
+        }
+        else {
+            loop--;
+            document.getElementById("NowPage").innerHTML = "第" + loop + "页";
+            var tempA = loop;
+            for (var temp = 1; temp <= 9; temp++) {
+                document.getElementById(temp).style.display = "block";
+                document.getElementById(temp).src = jsonarray[(tempA - 1) * 9 + temp - 1].Address;
+                document.getElementById(temp).title = (tempA - 1) * 9 + temp;
+                document.getElementById(temp).name = jsonarray[(tempA - 1) * 9 + temp - 1].PhotoID;
+            }
+        }
+    }
+
+    //图片下一页（预览状态）
+    function TurnRightNormalPhoto() {
+
+        if ((loop * 9) >= eval(jsonarray).length) {
+            alert("已经是最后一页！");
+        }
+        else {
+            loop++;
+            document.getElementById("NowPage").innerHTML = "第" + loop + "页";
+            var tempA = loop;
+            for (var temp = 1; temp <= 9; temp++) {
+                if (((tempA - 1) * 9 + temp - 1) < jsonarray.length) {
+                    document.getElementById(temp).style.display = "block";
+                    document.getElementById(temp).src = jsonarray[(tempA - 1) * 9 + temp - 1].Address;
+                    document.getElementById(temp).title = (tempA - 1) * 9 + temp;
+                    document.getElementById(temp).name = jsonarray[(tempA - 1) * 9 + temp - 1].PhotoID;
+                }
+                else {
+                    document.getElementById(temp).style.display = "none";
+                }
+            }
+        }
+    }
+    //获取评论文本
+    function a() {
+        html = editor.html();
+        // 同步数据后可以直接取得textarea的value
+        editor.sync();
+    }
+
+</script>
+<div>
+    <div class="NameBackground">
+        <span class="AlbumName">@ViewBag.AlbumName</span>
+    </div>
+    <br />
+    <div class="xttblog">
+        <ul class="box" id="Album">
+            <li><a href="javascript:void(0);" onclick="OpenAlbum(1)" title=""><img alt="图片加载失败" id="1" src="" /></a></li>
+            <li><a href="javascript:void(0);" onclick="OpenAlbum(2)" title=""><img alt="图片加载失败" id="2" src="" /></a></li>
+            <li><a href="javascript:void(0);" onclick="OpenAlbum(3)" title=""><img alt="图片加载失败" id="3" src="" /></a></li>
+            <li><a href="javascript:void(0);" onclick="OpenAlbum(4)" title=""><img alt="图片加载失败" id="4" src="" /></a></li>
+            <li><a href="javascript:void(0);" onclick="OpenAlbum(5)" title=""><img alt="图片加载失败" id="5" src="" /></a></li>
+            <li><a href="javascript:void(0);" onclick="OpenAlbum(6)" title=""><img alt="图片加载失败" id="6" src="" /></a></li>
+            <li><a href="javascript:void(0);" onclick="OpenAlbum(7)" title=""><img alt="图片加载失败" id="7" src="" /></a></li>
+            <li><a href="javascript:void(0);" onclick="OpenAlbum(8)" title=""><img alt="图片加载失败" id="8" src="" /></a></li>
+            <li><a href="javascript:void(0);" onclick="OpenAlbum(9)" title=""><img alt="图片加载失败" id="9" src="" /></a></li>
+        </ul>
+        <div>
+            <input id="last" class="TurnPageButton" type="button" value="上一页" onclick="TurnLeftNormalPhoto()">
+            <span id="NowPage"></span><span id="AllPage"></span>
+            <input id="next" class="TurnPageButton" type="button" value="下一页" onclick="TurnRightNormalPhoto()">
+        </div>
+    </div>
+    <div class="lightboxContainer" id="ShowPhoto" style="display:none; margin-top:100px">
+        <div class="lightboxBackground">
+            <div id="photoBox" style=" " onmousemove="ShowTurnButton()" onmouseout="HideTurnButton()">
+                <img style="width: 95%; height:auto;max-height:90%;left:5%;" id="BigImg" src="~/Images/Album/first/left.png" alt="图片加载失败" onclick="CloseAlbum()">
+                <p class="lightboxPaginator">
+                    <span id="RightPage"></span>
+                    <span id="MidPage">/</span>
+                    <span id="LeftPage"></span>
+                </p>
+                <a href="javascript:void(0);" class="lightboxLeftControl" id="leftControl" onclick="TurnLeftBigPhoto()"></a>
+                <a href="javascript:void(0);" class="lightboxRightControl" id="rightControl" onclick="TurnRightBigPhoto()"></a>
+            </div>
+
+        </div>
+        <form action="Comment" id="Comment" name="Comment" method="post">
+            <div id="editor" class="editor" style=" overflow:auto;">
+                <h2 style="color:blueviolet">评论区</h2>
+                @if (Model != null)
+                {
+                    <ul>
+                        @foreach (var item in Model)
+                        {
+                            <li>
+                                <div class="comment-div">
+                                    <span>@item.Username</span>
+                                    <span>:</span>
+                                    <span>@item.CommentText</span>
+                                </div>
+                                <span> @item.CommentTime</span>
+                            </li>
+                        }
+                    </ul>
+                }
+                <div class="content">
+                    <textarea id="content" name="content" style=" width:100%;height:auto; z-index:1000; bottom:0"></textarea>
+                    <input type="submit" value="发送评论" style="float:right;bottom:0" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+

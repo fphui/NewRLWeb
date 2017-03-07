@@ -1,0 +1,10 @@
+﻿<link href="~/Content/bootstrap/css/bootstrap.css" rel="stylesheet" />
+<link href="~/Content/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/layoutpage1.css" rel="stylesheet" />
+@using (Html.BeginForm("SearchNews", "Home", FormMethod.Post, new { Type = "新闻" }))
+{
+        <div class="form-group">
+            <input type="text" name="searchWord" class="form-control" />
+        </div>
+        <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
+}

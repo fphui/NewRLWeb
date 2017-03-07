@@ -1,0 +1,24 @@
+﻿<ul class="dropdown-menu pull-right" style="display:none; margin-top:40px;">
+    @if (Request.IsAuthenticated)
+    { }
+    else
+    {
+        @Ajax.BeginForm("LoginHead", "Users", new AjaxOptions { HttpMethod = "Post", UpdateTargetId = "loginhead", InsertionMode = InsertionMode.Replace })
+        {
+            <li>
+                <form style="width:230px; height:336px;">
+                    <div>
+                        <img style="margin-left:25%;" src="../Images/Users_Head/1.jpg" alt="" class="img-circle loginimg">
+                    </div>
+                    <div class="login" style="color:#808080;">
+                        <label>账号</label>
+                        <input type="text" class="form-control" id="account" placeholder="请输入账号" required="required" name="account">
+                        <label>密码</label>
+                        <input type="password" class="form-control" id="password" placeholder="请输入密码" required="required" name="password">
+                        <input type="submit" class="btn btn-default" value="登录" />
+                    </div>
+                </form>
+            </li>
+        }
+    }
+</ul>

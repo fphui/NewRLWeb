@@ -1,0 +1,102 @@
+﻿@model IEnumerable<NewRLWeb.Models.Users>
+@*<style type="text/css">
+    body {
+        background-image: url(~/Content/img/a.jpg);
+        background-size: 100%,100%;
+    }
+
+    .person1 {
+        height: 150px;
+        width: 150px;
+        border-radius: 50%;
+        border: 15px outset #ffd800;
+        margin: 10px auto;
+        position: absolute;
+        left: 10%;
+        top: 10%;
+    }
+
+    .person1_info {
+        /*border-left: 1px solid white;
+            border-right: 1px solid white;
+            border-top: 1px solid white;
+            border-bottom: 5px double white;*/
+        border: 5px solid white;
+        background-color: white;
+        border-radius: 20px;
+        width: 900px;
+        height: 60px;
+        position: absolute;
+        top: 20%;
+        left: 28%;
+        box-shadow: 10px 10px 10px #999;
+        -moz-box-shadow: 10px 10px 10px #999;
+        -webkit-box-shadow: 10px 10px 10px #999;
+    }
+
+    a:hover {
+        opacity: 0.5;
+    }
+</style>
+
+<div id="Big">
+    <div id="person1">
+        <a href="#"><div class="person1"><img src="~/Content/img/person1.jpg" style="height:150px;width:150px;border-radius:50%;" /></div></a>
+        <div class="person1_info"><p style="color:black; font-family: 新宋体; font-size: 18px; margin-left:15%;">寄语：巴拉巴拉巴拉</p> </div>
+    </div>
+    <div id="person2">
+        <a href="#"><div class="person1" style="position: absolute; top: 45%; border: 15px outset #943a3a;"><img src="~/Content/img/person1.jpg" style="height: 150px; width: 150px; border-radius: 50%; " /></div></a>
+        <div class="person1_info" style="position:absolute;top:55%;"><p style=" color:black; font-family :新宋体; font-size :18px; margin-left:15%;">寄语：巴拉巴拉巴拉</p> </div>
+    </div>
+    <div id="person3">
+        <a href="#"><div class="person1" style="position: absolute; top: 80%; border: 15px outset #2d2bba;">
+                        <img src="~/Content/img/person1.jpg" style="height: 150px; width: 150px; border-radius: 50%;" /></div></a>
+        <div class="person1_info" style="position:absolute;top:90%;"><p style="color:black; font-family: 新宋体; font-size: 18px; margin-left:15%;">寄语：巴拉巴拉巴拉</p> </div>
+    </div>
+</div>*@
+
+<div class="container">
+    @{var i = 0;}
+    @foreach (var item in Model)
+    {
+        var unique_id = item.Unique_ID;
+        i++;
+        if (i % 2 != 0)
+        {
+            <div class="row">
+                <div class=" col-xs-12 col-sm-12 col-md-7 col-lg-7">
+                    <p><strong>@Html.DisplayNameFor(model => model.Graduate_Data):</strong> @Html.DisplayFor(modelItem => item.Graduate_Data)</p>
+                    <p><strong>@Html.DisplayNameFor(model => model.Learning_experience):</strong> @Html.DisplayFor(modelItem => item.Learning_experience)</p>
+                    <p><strong>@Html.DisplayNameFor(model => model.Message):</strong> @Html.DisplayFor(modelItem => item.Message)</p>
+                    <a href="~/Graduate/Person?ui=@unique_id" class="bntDownload">查看更多</a>
+                </div>
+                <div class="master-face-right">
+                    <h4>@Html.DisplayFor(modelItem => item.Username)</h4>
+                    <img src="@item.Photo_Address" alt="" class="img-circle topmar">
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="row">
+                <div class=" col-xs-12 col-sm-12 col-md-7 col-lg-7-right">
+                    <p><strong>@Html.DisplayNameFor(model => model.Graduate_Data):</strong> @Html.DisplayFor(modelItem => item.Graduate_Data)</p>
+                    <p><strong>@Html.DisplayNameFor(model => model.Learning_experience):</strong> @Html.DisplayFor(modelItem => item.Learning_experience)</p>
+                    <p><strong>@Html.DisplayNameFor(model => model.Message):</strong> @Html.DisplayFor(modelItem => item.Message)</p>
+                    <a href="~/Graduate/Person?ui=@unique_id" class="bntDownload-left">查看更多</a>
+                </div>
+                <div class="master-face-left">
+                    <h4>@Html.DisplayFor(modelItem => item.Username)</h4>
+                    <img src="@item.Photo_Address" alt="" class="img-circle topmar">
+                </div>
+            </div>
+        }
+    }
+
+</div>
+
+
+
+     
+                
+

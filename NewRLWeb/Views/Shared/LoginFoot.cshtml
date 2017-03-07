@@ -1,0 +1,22 @@
+﻿@*@using (Ajax.BeginForm("LoginFoot", "Users", new { ReturnUrl = Request.QueryString["ReturnUrl"] },new AjaxOptions { HttpMethod = "Post", UpdateTargetId = "loginhead", InsertionMode = InsertionMode.Replace }))*@
+@*@using (Html.BeginForm("LoginFoot", "Users", new { ReturnUrlController = ViewContext.RouteData.Route.GetRouteData(this.Context).Values["controller"],ReturnUrlAction=ViewContext.RouteData.Route.GetRouteData(this.Context).Values["action"]  }, FormMethod.Post))
+{*@
+<!--周煜2017.2.22-->
+@if (Session["LoginFair"] != null)
+{
+    if (Session["LoginFair"].ToString() == "true")
+    {
+        <h6>用户名或者密码错误</h6>
+    }
+}
+@using (Html.BeginForm("LoginFoot", "Users", new { ReturnUrl = Request.Url.ToString() }, FormMethod.Post))
+{ 
+    
+    <form class="footer-form" id="LoginForm" >
+        账号：<input class="commom-width-height" type="text" id="userID" name="userID" required="required" />
+        <br /><br />
+        密码：<input class="commom-width-height" type="password" id="userPassword" name="userPassword" />
+        <br /><br />
+        <input class="footer-form-submit" type="submit" value="登录" />
+    </form>
+}

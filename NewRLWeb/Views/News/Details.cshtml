@@ -1,0 +1,102 @@
+﻿@model NewRLWeb.Models.News
+
+@{
+    ViewBag.Title = "Details";
+}
+    <fieldset>
+    <legend>新闻——详情</legend>
+
+    @Html.HiddenFor(model => model.NewsID)
+
+
+    <div class="row">
+        <div class="col-xs-12 col-md-8">
+            <div class="row">
+                <div class="col-xs-12 col-md-8">
+                    @Html.LabelFor(model => model.Title)
+                    @Html.TextBoxFor(model => model.Title, new { @class = "form-control", @readonly = "readonly" })
+                </div>
+                <div class="col-xs-6 col-md-4">
+                    @Html.LabelFor(model => model.Glance_Number)
+                    @Html.TextBoxFor(model => model.Glance_Number, new { @class = "form-control", @readonly = "readonly", @maxlength = "50" })
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-xs-6 col-sm-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.News_Type)
+                        @Html.TextBoxFor(model => model.News_Type, new { @class = "form-control", @readonly = "readonly" })
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Publicationtime)
+                        <input data-val="true" data-val-date="字段 发布日期 必须是日期。" data-val-required="发布日期 字段是必需的。" readonly="readonly" id="Publicationtime" name="Publicationtime" type="text" value="@Model.Publicationtime.ToShortDateString()" class="form-control">
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Author)
+                        @Html.TextBoxFor(model => model.Author, new { @class = "form-control", @readonly = "readonly", @maxlength = "10" })
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Abstract)
+                <textarea readonly="readonly" maxlength="100" class="form-control" style="border: 0; resize: none;" data-val="true" data-val-required="您需要填写摘要" id="Abstract" name="Abstract" rows="3">@Model.Abstract</textarea>
+            </div>
+        </div>
+        <div class="col-xs-6 col-md-4">
+            <label for="PhotoAddress">标题图片</label>
+            <div class="editor-field">
+                <div>
+                    @if (string.IsNullOrWhiteSpace(Model.PhotoAddress))
+                    {
+                        <img id="xmTanImg" width="250" height="150" src="~/Images/empty.gif" />
+                    }
+                    else
+                    {
+                        <img id="xmTanImg" width="250" height="150" src="@Url.Content(Model.PhotoAddress)" alt="images" />
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-xs-9">
+            @Html.LabelFor(model => model.Coverage)
+            @Html.TextBoxFor(model => model.Coverage, new { @class = "form-control", @readonly = "readonly" })
+        </div>
+    </div>
+    <br />
+    @if (!string.IsNullOrWhiteSpace(Model.Link))
+    {
+        <div class="row">
+            <div class="col-xs-9">
+                @Html.LabelFor(model => model.Link)
+                @Html.TextBoxFor(model => model.Link, new { @class = "form-control", @readonly = "readonly" })
+            </div>
+        </div>
+    }
+    <br />
+    @if (!string.IsNullOrWhiteSpace(Model.NewsSource))
+    {
+        <div class="row">
+            <div class="col-xs-9">
+                @Html.LabelFor(model => model.NewsSource)
+                @Html.TextBoxFor(model => model.NewsSource, new { @class = "form-control", @readonly = "readonly" })
+            </div>
+        </div>
+        <br />
+    }
+    <br />
+
+</fieldset>
+
+    <p>
+        @Ajax.ActionLink("编辑", "Edit", "News", new { id = Model.NewsID }, new AjaxOptions() { UpdateTargetId = "mainContent", HttpMethod = "Get", OnBegin = "active", InsertionMode = InsertionMode.Replace }) |
+        @Html.ActionLink("返回", "List", "News")
+    </p>

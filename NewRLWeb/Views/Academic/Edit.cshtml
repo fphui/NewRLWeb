@@ -1,0 +1,159 @@
+﻿@model NewRLWeb.Models.Academic_Exchange
+
+@{
+    ViewBag.Title = "Edit";
+    if (ViewBag.Reload != null)
+    {
+        bool isreload = ViewBag.Reload;
+        if (isreload)
+        {
+            Layout = "~/Views/Shared/_Manage.cshtml";
+        }
+    }
+}
+
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+<script src="~/Scripts/jquery-1.7.1.min.js"></script>
+<script src="~/Scripts/jquery-ui-1.8.24.js"></script>
+<link rel="stylesheet" href="http://jqueryui.com/resources/demos/style.css">
+<script type="text/javascript">
+
+    //判断浏览器是否支持FileReader接口
+    if (typeof FileReader == 'undefined') {
+        document.getElementById("xmTanDiv").InnerHTML = "<h1>当前浏览器不支持FileReader接口</h1>";
+        //使选择控件不可操作
+        document.getElementById("xdaTanFileImg").setAttribute("disabled", "disabled");
+    }
+    //选择图片，马上预览
+    function xmTanUploadImg(obj) {
+        var file = obj.files[0];
+
+        console.log(obj); console.log(file);
+        console.log("file.size = " + file.size);  //file.size 单位为byte
+
+        var reader = new FileReader();
+
+        //读取文件过程方法
+        reader.onloadstart = function (e) {
+            console.log("开始读取....");
+        }
+        reader.onprogress = function (e) {
+            console.log("正在读取中....");
+        }
+        reader.onabort = function (e) {
+            console.log("中断读取....");
+        }
+        reader.onerror = function (e) {
+            console.log("读取异常....");
+        }
+        reader.onload = function (e) {
+            console.log("成功读取....");
+
+            var img = document.getElementById("xmTanImg");
+            img.src = e.target.result;
+            //或者 img.src = this.result;  //e.target == this
+        }
+
+        reader.readAsDataURL(file)
+    };
+
+    $(function () {
+        $("#BeginTime").datepicker();
+    });
+    $(function () {
+        $("#EndTime").datepicker();
+    });
+</script>
+<!--//////////////////////////////////////////////////////周煜 2017.1.15////////////////////////////////////////////////////////////////////-->
+@*<script src="/Scripts/jquery-1.7.1.min.js"></script>
+    <script src="/Scripts/jquery-ui-1.8.24.js"></script>
+    <link rel="stylesheet" href="/resources/demos/style.css" />*@
+<div style="height: 520px; position: relative;">
+    @using (Html.BeginForm("Edit", "Academic", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {   <!--提交表单的一种方式-->
+    <!--使用form提交表单-->
+        @*<form action="/News/NewsSubmit" enctype="multipart/form-data" method="post" id="newsCreate">*@
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+
+        <fieldset>
+            <legend>学术交流——编辑</legend>
+            @Html.HiddenFor(model => model.AcademicID)
+            @Html.HiddenFor(model => model.Coverage)
+            <div class="row">
+                <div class="col-xs-12 col-md-8">
+                    <div class="row">
+
+                        <div class="form-group" style="margin-left:15px">
+                            @Html.LabelFor(model => model.AcademicName, new { @id = "Title_lab" })
+                            @Html.TextBoxFor(model => model.AcademicName, new { @class = "form-control", @required = "required", @maxlength = "20" })
+                            @Html.ValidationMessageFor(model => model.AcademicName)
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="form-group" style="margin-left:15px">
+                            @Html.LabelFor(model => model.Abstract, new { @id = "Abstract_lab" })
+                            <textarea class="form-control" maxlength="100" required="required" style="resize: none;" data-val="true" data-val-required="您需要填写摘要" id="Abstract" name="Abstract" rows="2">@Model.Abstract</textarea>
+                            @Html.ValidationMessageFor(model => model.Abstract)
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            @Html.LabelFor(model => model.BeginTime)
+                            <input data-val="true" data-val-date="字段 开始日期 必须是日期。" data-val-required="开始日期 字段是必需的。" required="required" readonly="readonly" id="BeginTime" name="BeginTime" type="text" value="@Model.BeginTime.ToShortDateString()" class="form-control">
+                            @Html.ValidationMessageFor(model => model.BeginTime)
+                        </div>
+                        <div class="col-xs-6">
+                            @Html.LabelFor(model => model.EndTime)
+                            <input data-val="true" data-val-date="字段 结束日期 必须是日期。" data-val-required="结束日期 字段是必需的。" required="required" readonly="readonly" id="EndTime" name="EndTime" type="text" value="@Model.EndTime.ToShortDateString()" class="form-control">
+                            @Html.ValidationMessageFor(model => model.EndTime)
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-md-4">
+                    <label for="Pho_Address">学术展示图片</label>
+                    <div>
+                        <div>
+                            @if (string.IsNullOrEmpty(Model.PhotoAddress))
+                            {
+                                <img id="xmTanImg" width="350" height="230" src="~/Images/empty.gif" />
+                            }
+                            else
+                            {
+                                <img id="xmTanImg" width="350" height="230" src="@Url.Content(Model.PhotoAddress)" alt="images" />
+                                <div style="display:none">
+                                    @Html.EditorFor(model => model.PhotoAddress)
+                                    @Html.ValidationMessageFor(model => model.PhotoAddress)
+                                </div>
+                            }
+                        </div>
+                        <div>
+                            <input type="file" id="xdaTanFileImg" name="xdaTanFileImg" onchange="xmTanUploadImg(this)" accept="image/*" />
+                            <div id="xmTanDiv"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-md-8">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Link)
+                        @Html.TextBoxFor(model => model.Link, new { @class = "form-control", @placeholder = "请输入网址" })
+                        @Html.ValidationMessageFor(model => model.Link)
+                    </div>
+                </div>
+            </div>
+            <p>
+                <input type="submit" @*onclick="create_submit()"*@ value="确定" name="Edit" style="right: 17%; position: absolute; bottom: 0; " />
+            </p>
+        </fieldset>
+    }
+</div>
+<div>
+    @Html.ActionLink("返回", "List", new AjaxOptions { UpdateTargetId = "mainContent", HttpMethod = "Get", InsertionMode = InsertionMode.Replace })
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

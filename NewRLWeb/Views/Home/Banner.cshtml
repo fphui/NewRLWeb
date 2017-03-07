@@ -1,0 +1,136 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width">
+    <title></title>
+</head>
+<body>
+    <div class="row">
+        <div class="col-md-8">
+            <a class="bigone" href="../News/Index">
+                <img src="/Content/Home/images/bigone.jpg" alt="..." />
+            </a>
+        </div>
+        <div class="col-md-4">
+            <div class="row">
+                <div class="col-md-12"> 
+                    <video controls="controls" width="350" style=" padding-bottom: 23px;" poster="~/Images/RL_meitu_1.jpg ">
+                        <source src="/Videos/rlwzMP4.webm" type="video/webm" />
+                        <source src="/Videos/RLWZ_1.mp4" type="video/mp4" />
+                    </video>
+                    @*<div class="player">
+        <video src="./Content/Home/rlwzMP4.webm"></video>
+        <div class="controls">
+            <!-- 播放/暂停 -->
+            <a href="javascript:;" class="switch fa fa-play"></a>
+            <!-- 全屏 -->
+            <a href="javascript:;" class="expand fa fa-expand"></>
+            <!-- 进度条 -->
+            <div class="progress">
+                <div class="loaded"></div>
+                <div class="line"></div>
+                <div class="bar"></div>
+            </div>
+            <!-- 时间 -->
+            <div class="timer">
+                <span class="current">00:00:00</span> /
+                <span class="total">00:00:00</span>
+            </div>
+            <!-- 声音 -->
+        </div>
+    </div>
+    <script type="text/javascript">
+        var video = document.querySelector("video");
+        var isPlay = document.querySelector(".switch");
+        var expand = document.querySelector(".expand");
+        var progress = document.querySelector(".progress");
+        var loaded = document.querySelector(".progress > .loaded");
+        var currPlayTime = document.querySelector(".timer > .current");
+        var totalTime = document.querySelector(".timer > .total");
+
+        //当视频可播放的时候
+        video.oncanplay = function () {
+            //显示视频
+            this.style.display = "block";
+            //显示视频总时长
+            totalTime.innerHTML = getFormatTime(this.duration);
+        };
+
+        //播放按钮控制
+        isPlay.onclick = function () {
+            if (video.paused) {
+                video.play();
+            } else {
+                video.pause();
+            }
+            this.classList.toggle("fa-pause");
+        };
+
+        //全屏
+        expand.onclick = function () {
+            video.webkitRequestFullScreen();
+        };
+
+        //播放进度
+        video.ontimeupdate = function () {
+            var currTime = this.currentTime,    //当前播放时间
+                duration = this.duration;       // 视频总时长
+            //百分比
+            var pre = currTime / duration * 100 + "%";
+            //显示进度条
+            loaded.style.width = pre;
+
+            //显示当前播放进度时间
+            currPlayTime.innerHTML = getFormatTime(currTime);
+        };
+
+        //跳跃播放
+        progress.onclick = function (e) {
+            var event = e || window.event;
+            video.currentTime = (event.offsetX / this.offsetWidth) * video.duration;
+        };
+
+        //播放完毕还原设置
+        video.onended = function () {
+            //切换播放按钮状态
+            isPlay.classList.remove("fa-pause");
+            isPlay.classList.add("fa-play");
+            //进度条为0
+            loaded.style.width = 0;
+            //还原当前播放时间
+            currPlayTime.innerHTML = getFormatTime();
+            //视频恢复到播放开始状态
+            video.currentTime = 0;
+        };
+
+        function getFormatTime(time) {
+            var time = time || 0;
+
+            var h = parseInt(time / 3600),
+                m = parseInt(time % 3600 / 60),
+                s = parseInt(time % 60);
+            h = h < 10 ? "0" + h : h;
+            m = m < 10 ? "0" + m : m;
+            s = s < 10 ? "0" + s : s;
+
+            return h + ":" + m + ":" + s;
+        }
+    </script>*@
+                </div>
+                <div class="col-md-12">     
+                    <a class="smalltwo" href="">
+                        <img src="~/Content/Home/images/small2.jpg" alt="..." />
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+   
+
+</body>
+</html>

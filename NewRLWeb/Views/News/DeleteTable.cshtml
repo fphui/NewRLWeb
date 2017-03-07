@@ -1,0 +1,107 @@
+﻿@model IEnumerable<NewRLWeb.Models.News>
+
+@{
+    ViewBag.Title = "DeleteTable";
+    //Layout = "~/Views/Shared/_Manage.cshtml";
+}
+<style type="text/css">
+    .onecenter {
+        text-align: center;
+        width: 200px;
+    }
+</style>
+<script>
+    $("#chkAll").click(function () {
+        if (this.checked) {
+            $("input[name='checks']").each(function () { this.checked = true; });
+        }
+        else {
+            $("input[name='checks']").each(function () { this.checked = false; });
+        }
+    });
+</script>
+<div style="height: 480px; position: relative;">
+    @using (Html.BeginForm("MultDelete", "News", FormMethod.Post))
+    {
+        <table class="table table-hover">
+            <tr>
+                <th>
+                    <input type="checkbox" id="chkAll" />全选
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Title)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Author)
+                </th>
+                @*<th>
+                        @Html.DisplayNameFor(model => model.PhotoAddress)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Coverage)
+                    </th>*@
+                <th>
+                    @Html.DisplayNameFor(model => model.News_Type)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Publicationtime)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Glance_Number)
+                </th>
+                @*<th>
+                        @Html.DisplayNameFor(model => model.Link)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.NewsSource)
+                    </th>*@
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @*@Html.CheckBox("checks", new { value = @ })*@
+                        <input type="checkbox" id="checks" name="checks" value="@item.NewsID" />
+                    </td>
+                    <td>
+                        @*@Html.DisplayFor(modelItem => item.Title)*@
+                        @UIHelper.StrSub(item.Title,25)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Author)
+                    </td>
+                    @*<td>
+                            @Html.DisplayFor(modelItem => item.PhotoAddress)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Coverage)
+                        </td>*@
+                    <td>
+                        @Html.DisplayFor(modelItem => item.News_Type)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Publicationtime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Glance_Number)
+                    </td>
+                    @*<td>
+                            @Html.DisplayFor(modelItem => item.Link)
+                        </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.NewsSource)
+                            </td>*@
+                    @*<td>
+                            @Html.ActionLink("Edit", "Edit", new { id=item.NewsID }) |
+                            @Html.ActionLink("Details", "Details", new { id=item.NewsID }) |
+                            @Html.ActionLink("Delete", "Delete", new { id=item.NewsID })
+                        </td>*@
+                </tr>
+            }
+
+        </table>
+    <input type="submit" name="BtnDelete" value="删除" style="right: 13%; position: absolute; bottom: 0; " />
+    }
+</div>

@@ -1,0 +1,33 @@
+﻿@model IEnumerable<NewRLWeb.Models.Photos>
+
+@{
+    Layout = null;
+}
+
+<h2>SelectPhoto</h2>
+
+<style>
+    .img{
+        width:32%;
+       height:auto;
+    }
+    .imgBox{
+    
+        width:33.3%;
+         height:33%;
+    }
+</style>
+
+<script type="text/javascript">
+    function choose()
+    {
+
+
+    }
+
+</script>
+
+@foreach (var a in Model)
+{
+    <a class="imgBox"href="#" onclick="a()"><img class="img" src="@a.Address" alt="加载失败！" name="@a.PhotoID" /></a>
+}

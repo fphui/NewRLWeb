@@ -1,0 +1,35 @@
+﻿@model NewRLWeb.Models.Rules_Management
+
+@{
+    ViewBag.Title = "Details";
+}
+
+
+<fieldset>
+    <legend>条例——详情</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Author)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Author)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Coverage)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Coverage)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Publicationtime)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Publicationtime)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("编辑", "Edit", new { id=Model.ID }) |
+    @Html.ActionLink("返回", "Index")
+</p>

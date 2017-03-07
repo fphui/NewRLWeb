@@ -1,0 +1,40 @@
+﻿@model IEnumerable<NewRLWeb.Models.Large_type>
+
+@{
+    ViewBag.Title = "List";
+}
+
+<h2>List</h2>
+
+<p>
+    @Ajax.ActionLink("Create New", "Create", "Types", new AjaxOptions() { UpdateTargetId = "mainContent", HttpMethod = "Get", OnBegin = "active", InsertionMode = InsertionMode.Replace })
+</p>
+<table border='1' cellspacing="0" cellpadding="0">
+    <tr>
+        <th>编号</th>
+        <th>@Html.DisplayNameFor(model => model.L_Type)</th>
+
+    </tr>
+    @{var i = 0;}
+    @foreach (var item in Model)
+    {
+        i++;
+        <tr>
+            <td class='onecenter'>
+                @i
+            </td>
+            <td class='onecenter'>
+                @Html.DisplayFor(modelItem => item.L_Type)
+            </td>
+            <td class='onecenter'>
+                @*@Ajax.ActionLink("Edit", "Edit", "Types", new { id = item.L_Type }, new AjaxOptions() { UpdateTargetId = "mainContent", HttpMethod = "Get", OnBegin = "active", InsertionMode = InsertionMode.Replace }) |*@
+                @Ajax.ActionLink("Details", "Details", "Types", new { id = item.L_Type }, new AjaxOptions() { UpdateTargetId = "mainContent", HttpMethod = "Get", OnBegin = "active", InsertionMode = InsertionMode.Replace }) |
+                @*@Ajax.ActionLink("Delete", "Delete", "Types", new { id = item.L_Type }, new AjaxOptions() { UpdateTargetId = "mainContent", HttpMethod = "Get", OnBegin = "active", InsertionMode = InsertionMode.Replace }))*@
+                @Ajax.ActionLink("添加小类别", "AddSType", "Types", new { id = item.L_Type }, new AjaxOptions() { UpdateTargetId = "mainContent", HttpMethod = "Get", OnBegin = "active", InsertionMode = InsertionMode.Replace }))
+            </td>
+        </tr>
+    }
+
+</table>
+
+

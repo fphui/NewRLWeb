@@ -1,0 +1,18 @@
+﻿@model IEnumerable<NewRLWeb.Models.Album>
+<link href="~/Content/Album/Index.css" rel="stylesheet" type="text/css" />
+<link href="~/Content/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="~/Content/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="album col-md-4">
+            <a href="@item.Link"><img src="@item.Pho_Address" /></a>    
+            <div class="vertical-align-middle">
+                <h4 class="album_title">@item.Albumname</h4>
+                <div class="time divider">
+                    <span>@item.Publicationtime.ToShortDateString()</span>
+                </div>
+            </div>
+        </div>
+    }
+</div>

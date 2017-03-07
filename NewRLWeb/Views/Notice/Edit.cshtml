@@ -1,0 +1,114 @@
+﻿@model NewRLWeb.Models.Notice
+@using System.Globalization;
+@{
+    ViewBag.Title = "Edit";
+    
+    if (ViewBag.Reload != null)
+    {
+        bool isreload = ViewBag.Reload;
+        if (isreload)
+        {
+            Layout = "~/Views/Shared/_Manage.cshtml";
+        }
+    }
+}
+@*<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">*@
+<script src="~/Scripts/jquery-1.7.1.min.js"></script>
+<script src="~/Scripts/jquery-ui-1.8.24.js"></script>
+@*<link rel="stylesheet" href="http://jqueryui.com/resources/demos/style.css">*@
+
+<script>
+        $(function () {
+            $("#Publicationtime").datepicker();
+        });
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#chkAll").click();
+        $("input[name='Mail']").each(function () { this.checked = false; });
+    });
+    //提交验证
+    function create_submit() {
+        if ($("#Author").val() != "") {
+            if ($("#Coverage").val() != "") {
+                if ($("#Publicationtime").val() != "") {
+                    $('form').submit();
+                } else {
+                    alert("请选择合适时间!");
+                }
+            } else {
+                alert("请填写内容!");
+            }
+        } else {
+            alert("请填写发布人!");
+        }
+    };
+</script>
+<div style="height: 500px; position: relative;">
+@using (Ajax.BeginForm("Edit", "Notice", new AjaxOptions { UpdateTargetId = "mainContent", HttpMethod = "Post", InsertionMode = InsertionMode.Replace }))
+{
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+
+
+
+        <fieldset>
+            <legend>Notice</legend>
+
+            @Html.HiddenFor(model => model.NoticeID)
+            
+            <div class="row">
+                <div class="col-xs-9 col-md-6" style="height: 460px; position: relative; margin-left:20px">
+                    <br />
+                    <div class=" row">
+                        <div>
+                            <div class="editor-label">
+                                @Html.LabelFor(model => model.Author)
+                            </div>
+                            <div class="col-xs-4 col-md-4" style="margin-left:-16px">
+                                @Html.TextBoxFor(model => model.Author, new { @class = "form-control", @required = "required", @maxlength = "10" })
+                                @Html.ValidationMessageFor(model => model.Author)
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div>
+                            <div class="editor-label">
+                                @Html.LabelFor(model => model.Coverage)
+                            </div>
+                            <div>
+                                @*@Html.EditorFor(model => model.Coverage)*@
+                                <textarea class="form-control" @*style="resize: none;"*@ data-val="true" data-val-required="您需要填写内容" id="Coverage" name="Coverage" rows="3" maxlength="300">@Model.Coverage</textarea>
+                                @Html.ValidationMessageFor(model => model.Coverage)
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="editor-label">
+                            @Html.LabelFor(model => model.Publicationtime)
+                            </div>
+                        <div class="col-xs-6 col-md-4" style="margin-left:-16px">
+                            <input data-val="true" data-val-date="字段 发布日期 必须是日期。" data-val-required="发布日期 字段是必需的。" readonly="readonly" id="Publicationtime" name="Publicationtime" type="text" value="@Model.Publicationtime.ToShortDateString()" class="form-control">
+                            @Html.ValidationMessageFor(model => model.Publicationtime)
+                        </div>
+                    </div>
+                    <p>
+                        <input type="submit" value="确定" style="right: 1%; position: absolute; bottom: 20%; " />
+                    </p>
+                </div>
+                <div class="col-xs-7 col-md-5" style="height: 460px; overflow-y:scroll">
+                    @Html.Action("E_mail")
+                </div>
+            </div>
+        </fieldset>
+    }
+</div>
+    <div>
+        @Html.ActionLink("返回", "List", "Notice")
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }

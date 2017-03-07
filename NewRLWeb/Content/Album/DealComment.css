@@ -1,0 +1,10 @@
+﻿.comment-div {
+    width:300px;
+    font-size:16px;
+    float:left;
+    list-style: none;
+	padding-top: 15px;
+    padding: 0 0 0 40px;
+	position: relative;
+	*zoom: 1
+}

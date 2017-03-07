@@ -1,0 +1,341 @@
+* {
+    font-family: "Microsoft YaHei","微软雅黑","SimSum","Tahoma","Verdana","Helvetica","Arial","sans-serif";
+}
+
+body {
+    background: #f0f0f0 !important;
+    /*background-image: url('./images/black-Linen.png');*/
+    background-position: initial initial;
+    background-repeat: initial initial;
+    margin: 0px;
+    padding: 0px;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+h1 {
+    margin-top: 0px;
+    color: #eee;
+}
+
+h2 {
+    font-size: 1.75em;
+}
+
+h3 {
+    font-size: 1.25em;
+}
+
+hr {
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #fff;
+}
+
+/*左侧导航*/
+.sidebar-nav {
+    width: 228px;
+    height: 100%; /**/
+    background-color: #333333; /**/
+    position: absolute;
+    float: left;
+    border-top: none;
+    border-left: none;
+    -webkit-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.9);
+    -moz-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.9);
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.9);
+    /*margin: 0em 6px;*/
+}
+
+    .sidebar-nav form.search {
+        padding: .5em 0em;
+        padding-right: 1em;
+        margin: 0em;
+    }
+
+        .sidebar-nav form.search input {
+            background: #eee;
+            margin: 0px auto;
+            position: relative;
+            width: 100%;
+        }
+
+    .sidebar-nav .nav-header {
+        border-top: 1px solid #4d4d4d;
+        border-bottom: 1px solid #0d0d0d;
+        border-left: none;
+        color: #ddd;
+        display: block;
+        background: #333333;
+        background: -webkit-gradient(linear, left bottom, left top, color-stop(0, #333333), color-stop(1, #404040));
+        background: -ms-linear-gradient(bottom, #333333, #404040);
+        background: -moz-linear-gradient(center bottom, #333333 0%, #404040 100%);
+        background: -o-linear-gradient(bottom, #333333, #404040);
+        filter: progid:dximagetransform.microsoft.gradient(startColorStr='#e6e6e6', EndColorStr='#ffffff');
+        -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#404040',EndColorStr='#333333')";
+        font-weight: bold;
+        font-weight: normal;
+        /*font-size: 1em;*/
+        /*font-size: 12px;*/
+        font-size: 0.75em; /*2017.03.02 BLM*/
+        letter-spacing: 2px;
+        /*line-height: 2.5em;*/
+        line-height: 1.8em; /*2017.03.02 BLM*/
+        /*padding: 0em .25em;*/
+        padding: 0em 0.15em; /*2017.03.02 BLM*/
+        margin-bottom: 0px;
+        text-shadow: none;
+        text-transform: none;
+    }
+
+        .sidebar-nav .nav-header .label {
+            float: right;
+            margin-top: .5em;
+            margin-right: .25em;
+            line-height: 1.5em;
+        }
+
+        .sidebar-nav .nav-header:hover {
+            background: #333333;
+            background: -webkit-gradient(linear, left bottom, left top, color-stop(0, #333333), color-stop(1, #454545));
+            background: -ms-linear-gradient(bottom, #333333, #454545);
+            background: -moz-linear-gradient(center bottom, #333333 0%, #454545 100%);
+            background: -o-linear-gradient(bottom, #333333, #454545);
+            filter: progid:dximagetransform.microsoft.gradient(startColorStr='#e6e6e6', EndColorStr='#ffffff');
+            -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#454545',EndColorStr='#333333')";
+        }
+
+        .sidebar-nav .nav-header.collapsed .icon-chevron-up::before {
+            content: "\f078";
+        }
+
+        .sidebar-nav .nav-header .icon-chevron-up {
+            float: right;
+        }
+
+        .sidebar-nav .nav-header .label {
+            float: right;
+            margin-top: .7em;
+            line-height: 1.5em;
+        }
+
+        .sidebar-nav .nav-header i[class^="icon-"] {
+            margin-right: .75em;
+        }
+
+    .sidebar-nav .nav-list {
+        margin: 0px;
+        background: #2e2e2e;
+        border: 0px;
+    }
+
+        .sidebar-nav .nav-list > .act {
+            /*font-size:10px;*/
+            font-size: 0.625em;
+            letter-spacing: 2px;
+            /*height: 35px;*/
+            height: 16px;
+            /*padding-top: 10px;*/
+            width: 100%;
+            /*padding-left: 30px;*/
+        }
+
+            .sidebar-nav .nav-list > .act > a {
+                text-shadow: none;
+                color: #ddd !important;
+                width: 100%; /*2017.2.27 BLM*/
+                padding-left: 40px; /*2017.2.27 BLM*/
+                /*padding-top: 10px;
+                padding-bottom: 10px;*/
+                padding-top: 0px !important; /*2017.03.02 BLM*/
+                padding-bottom: 0px !important;
+            }
+                /*2017.2.28 BLM start*/
+                .sidebar-nav .nav-list > .act > a:hover {
+                    background-color: #262626;
+                    color: #ddd;
+                }
+
+                .sidebar-nav .nav-list > .act > a:active {
+                    background-color: #262626;
+                    color: #ddd;
+                }
+
+                .sidebar-nav .nav-list > .act > a:after {
+                    background-color: #262626;
+                    color: #ddd;
+                }
+
+                .sidebar-nav .nav-list > .act > a:visited {
+                    background-color: #262626;
+                    color: #ddd;
+                    /*background: #2e2e2e;*/
+                }
+        /*2017.2.28 BLM end*/
+
+        .sidebar-nav .nav-list.collapse {
+            border-bottom: 0px;
+        }
+/*-----2016.12.5卜令梅---------------------------------------------*/
+.manage-contain {
+    background-color: #f0f0f0;
+    /*background-color:#cecaca;*/
+    margin-left: 235px;
+    margin-top: 0px;
+    padding-top: 20px;
+    /*min-height: 700px;*/
+    height: 100%;
+}
+/*头部条*/
+.manage-header {
+    height: 50px;
+}
+/*导航向右*/
+.navbar-right {
+    float: right;
+}
+/*-----2016.12.5卜令梅-------------------------------------------*/
+
+
+/* 2017.03.02 BLM 增加上传文件按钮样式start*/
+.inputFileWrapper label {
+    display: block;
+    float: left;
+    position: relative;
+    width: 100%;
+}
+
+.inputFileWrapper input[type="file"] {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    clip: rect(0,0,0,0);
+}
+
+.inputFileWrapper .custorm-style {
+    display: block;
+    /*height: 50px;*/
+}
+
+    .inputFileWrapper .custorm-style .right-button {
+        width: 20%;
+        height: 34px;
+        line-height: 32px;
+        /*background: #808080;*/
+        /*background: #b8d0ef;*/
+        background: #999999;
+        color: #fff;
+        display: block;
+        text-align: center;
+        float: left;
+        border-radius: 0 5px 5px 0;
+    }
+
+        .inputFileWrapper .custorm-style .right-button:hover {
+            /*background-color:#6699cc;*/
+            background-color: #808080;
+        }
+
+    .inputFileWrapper .custorm-style .left-text {
+        width: 80%;
+        height: 34px;
+        line-height: 32px;
+        display: block;
+        float: left;
+        padding: 4px;
+        border: 1px solid #ccc;
+        overflow: hidden;
+        -ms-text-overflow: ellipsis;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        border-radius: 5px 0 0 5px;
+        background-color: #fff;
+    }
+
+
+.fileinput-button {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+}
+
+    .fileinput-button input {
+        position: absolute;
+        right: 0px;
+        top: 0px;
+        opacity: 0;
+        -ms-filter: 'alpha(opacity=0)';
+        font-size: 200px;
+    }
+
+
+/*浏览 选择图片 */
+.a-upload {
+    margin-top: 20px;
+    padding: 6px 10px;
+    text-align: center;
+    height: 34px;
+    width: 90px;
+    position: relative;
+    cursor: pointer;
+    /*color: #888;*/
+    color: #ffffff;
+    /*background: #fafafa;*/
+    /*background: #e2e2e2;*/
+    background: #999999;
+    /*border: 1px solid #ddd;*/
+    border-radius: 4px;
+    overflow: hidden;
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+}
+
+    .a-upload input {
+        position: absolute;
+        font-size: 100px;
+        right: 0;
+        top: 0;
+        opacity: 0;
+        filter: alpha(opacity=0);
+        cursor: pointer;
+    }
+
+    .a-upload:hover {
+        /*color: #444;*/
+        /*background: #ddd;*/
+        background: #808080;
+        /*border-color: #ccc;*/
+        text-decoration: none;
+    }
+
+
+.submitbtn1 {
+    margin-top: 20px;
+    padding: 6px 10px;
+    text-align: center;
+    height: 34px;
+    width: 90px;
+    position: relative;
+    cursor: pointer;
+    color: #ffffff;
+    background: #999999;
+    border-radius: 4px;
+    overflow: hidden;
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+}
+
+    .submitbtn1:hover {
+        background: #808080;
+    }
+
+
+
+    .lablestyle{
+        letter-spacing:1px;
+    }
+
+/*2017.03.02 BLM 增加上传文件按钮样式  end*/
